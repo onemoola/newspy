@@ -14,6 +14,36 @@ Natural Language machine learning.
 - [ ] Twitter
 - [ ] RSS feeds
 
+## Getting started
+
+1. Install and confirm the Python version
+
+```bash
+python --version
+```
+
+2. Create the virtual environment
+
+```bash
+python -m venv .venv
+
+# Activate virtual environment
+.venv/bin/activate # Linux or MacOS
+.venv/Script/activate # Windows
+```
+
+3. Install the requirements
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+4. Install the git hook scripts
+
+```bash
+pre-commit install
+```
+
 ## To Do
 
 - [X] Add GitHub Action for Continuous Integration (CI)
