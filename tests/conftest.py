@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from models import Article, ArticlesRes, Source
+from newspy.models import Article, ArticlesRes, Source
 
 
 @pytest.fixture
