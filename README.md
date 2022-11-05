@@ -1,7 +1,6 @@
 # Newspy
 
-The news client written in Python that fetches and curates the world news across the web. It curates the news using the
-Natural Language machine learning.
+The news client written in Python that fetches and curates the world news across the web.
 
 ## Requirements
 
@@ -11,7 +10,7 @@ Natural Language machine learning.
 
 ## News Sources
 
-- [ ] News API. Requires API Key from: https://newsapi.org/
+- [X] News API. Requires API Key from: https://newsapi.org/
 - [ ] Twitter
 - [ ] RSS feeds
 
@@ -57,9 +56,7 @@ yarn install
 yarn husky add .husky/commit-msg 'yarn commitlint --edit $1'
 ```
 
-## To Do
+## Chores
 
 - [X] Add GitHub Action for Continuous Integration (CI)
 - [ ] Add GitHub Action for Continuous Deployment (CD)
-- [ ] Integrate with the Google Cloud Storage
-- [ ] Integrate with the Google Cloud Natural Language API

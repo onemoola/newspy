@@ -1,7 +1,7 @@
 {
   "name": "newspy",
   "version": "1.0.0",
-  "description": "The news client written in Python that fetches and curates the world news across the web. It curates the news using the Natural Language machine learning.",
+  "description": "The news client written in Python that fetches and curates the world news across the web.",
   "repository": "https://github.com/msotho/newspy.git",
   "author": "Sechaba Mofokeng <sechaba@onemoola.com>",
   "license": "MIT",
