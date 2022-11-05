@@ -4,7 +4,7 @@ from enum import Enum
 from pydantic import BaseModel, Field
 from slugify import slugify
 
-import utils
+from newspy import utils
 
 
 class Publisher(BaseModel):

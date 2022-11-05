@@ -1,9 +1,9 @@
 import logging
 from enum import StrEnum
 
-from exceptions import NewspyException
-from http_client import HttpMethod, HttpClient
-from models import (
+from newspy.exceptions import NewspyException
+from newspy.http_client import HttpMethod, HttpClient
+from newspy.models import (
     Publication,
     ArticlesRes,
     Category,
@@ -45,12 +45,12 @@ class NewsapiClient:
         self._api_key = api_key
 
     def fetch_publications(
-        self,
-        endpoint: NewsapiEndpoint,
-        search_text: str,
-        category: Category | None = None,
-        country: Country | None = None,
-        sources: list[Source] | None = None,
+            self,
+            endpoint: NewsapiEndpoint,
+            search_text: str,
+            category: Category | None = None,
+            country: Country | None = None,
+            sources: list[Source] | None = None,
     ) -> list[Publication]:
         if category and sources:
             raise NewspyException(
@@ -81,11 +81,11 @@ class NewsapiClient:
         return publications
 
     def fetch_sources(
-        self,
-        endpoint=NewsapiEndpoint.SOURCES,
-        category: Category | None = None,
-        language: Language | None = None,
-        country: Country | None = None,
+            self,
+            endpoint=NewsapiEndpoint.SOURCES,
+            category: Category | None = None,
+            language: Language | None = None,
+            country: Country | None = None,
     ) -> list[str]:
         params = {"apiKey": self._api_key}
 

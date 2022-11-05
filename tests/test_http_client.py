@@ -1,7 +1,7 @@
 import responses
 
-from http_client import HttpClient, HttpMethod
-from models import ArticlesRes
+from newspy.http_client import HttpClient, HttpMethod
+from newspy.models import ArticlesRes
 
 API_KEY = "seckfkdLkkekeKy"
 
