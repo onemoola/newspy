@@ -6,6 +6,7 @@ Natural Language machine learning.
 ## Requirements
 
 * Python 3.10+
+* yarn (for the semantic-release versioning)
 * API Key from the New API Organisation: https://newsapi.org/
 
 ## News Sources
@@ -42,6 +43,18 @@ pip install -r requirements-dev.txt
 
 ```bash
 pre-commit install
+```
+
+5. Yarn install semantic-release dependencies
+
+```bash
+yarn install
+```
+
+6. Set up husky pre-commit hook
+
+```bash
+yarn husky add .husky/commit-msg 'yarn commitlint --edit $1'
 ```
 
 ## To Do
