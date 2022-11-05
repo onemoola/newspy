@@ -1,11 +1,10 @@
 from datetime import datetime
-from enum import StrEnum
+from enum import Enum
 
 from pydantic import BaseModel, Field
 from slugify import slugify
 
 import utils
-from exceptions import NewspyException
 
 
 class Publisher(BaseModel):
@@ -28,7 +27,7 @@ class Publication(BaseModel):
     published: datetime
 
 
-class Category(StrEnum):
+class Category(str, Enum):
     BUSINESS = "business"
     ENTERTAINMENT = "entertainment"
     GENERAL = "general"
@@ -38,7 +37,7 @@ class Category(StrEnum):
     TECHNOLOGY = "technology"
 
 
-class Language(StrEnum):
+class Language(str, Enum):
     AR = "ar"
     DE = "de"
     EN = "en"
@@ -55,7 +54,7 @@ class Language(StrEnum):
     ZH = "zh"
 
 
-class Country(StrEnum):
+class Country(str, Enum):
     AE = "ae"
     AR = "ar"
     AT = "at"
@@ -149,31 +148,22 @@ class Article(BaseModel):
     published_at: str = Field(alias="publishedAt")
     content: str
 
-    def __post_init__(self):
-        if isinstance(self.source, dict):
-            self.source = Source.parse_obj(self.source)
+    def to_publication(self) -> Publication:
+        publisher = Publisher(
+            id=self.source.id if self.source.id else None,
+            name=self.source.name,
+        )
 
-    def to_publications(self) -> Publication:
-        try:
-            publisher = Publisher(
-                id=self.source.id if self.source.id else None,
-                name=self.source.name,
-            )
-
-            return Publication(
-                slug=f"{slugify(self.source.name)}-{slugify(self.title)}",
-                url=self.url,
-                urlToImage=self.url_to_image,
-                title=self.title,
-                abstract=self.description,
-                author=self.author if self.author else None,
-                publisher=publisher,
-                published=utils.to_datetime(self.published_at),
-            )
-
-        except (AttributeError, TypeError, ValueError) as e:
-            msg = f"Failed to parse the News API article to publication: {self}"
-            raise NewspyException(status_status=500, code=-1, msg=msg)
+        return Publication(
+            slug=f"{slugify(self.source.name)}-{slugify(self.title)}",
+            url=self.url,
+            url_to_image=self.url_to_image,
+            title=self.title,
+            abstract=self.description,
+            author=self.author if self.author else None,
+            publisher=publisher,
+            published=utils.to_datetime(self.published_at),
+        )
 
 
 class ArticlesRes(BaseModel):
@@ -182,10 +172,3 @@ class ArticlesRes(BaseModel):
     status: str
     totalResults: int
     articles: list[Article]
-
-    def __post_init__(self):
-        if isinstance(self.articles, list):
-            self.articles = [
-                Article.parse_obj(article) if isinstance(article, dict) else article
-                for article in self.articles
-            ]

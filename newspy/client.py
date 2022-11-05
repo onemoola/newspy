@@ -76,7 +76,7 @@ class NewsapiClient:
         publications = []
         article_res = ArticlesRes.parse_obj(resp_json)
         for article in article_res.articles:
-            publications.append(article.to_publications())
+            publications.append(article.to_publication())
 
         return publications
 

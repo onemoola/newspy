@@ -1,5 +1,5 @@
 import json
-from enum import StrEnum
+from enum import Enum
 
 import requests
 import urllib3
@@ -7,7 +7,7 @@ import urllib3
 from exceptions import NewspyException
 
 
-class HttpMethod(StrEnum):
+class HttpMethod(str, Enum):
     GET = "GET"
     POST = "POST"
 
@@ -87,25 +87,28 @@ class HttpClient:
         self,
         method: HttpMethod,
         url: str,
-        payload: dict | None = None,
+        headers: dict | None = None,
         params: dict | None = None,
-        token: str | None = None,
+        payload: dict | None = None,
     ) -> json:
         args = {}
-        headers = _auth_headers(token=token)
+        if headers is None:
+            headers = {"Content-Type": "application/json"}
 
-        if "content_type" in params:
-            headers["Content-Type"] = params["content_type"]
-            if payload:
-                args["data"] = str(payload)
-        else:
-            headers["Content-Type"] = "application/json"
-            if payload:
+        if payload:
+            if headers["Content-Type"] == "application/json":
                 args["data"] = json.dumps(payload)
+            else:
+                args["data"] = str(payload)
 
         try:
             response = self._session.request(
-                method, url, headers=headers, timeout=self._requests_timeout, **args
+                method,
+                url,
+                headers=headers,
+                timeout=self._requests_timeout,
+                params=params,
+                **args,
             )
 
             response.raise_for_status()
