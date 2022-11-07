@@ -26,14 +26,6 @@ class HttpClient:
             backoff_factor: float = 0.3,
     ) -> None:
         """
-        :param requests_session:
-            A Requests session object or a truthy value to create one.
-            A falsy value disables sessions.
-            It should generally be a good idea to keep sessions enabled
-            for performance reasons (connection pooling).
-        :param proxies:
-            Definition of proxies (optional).
-            See Requests doc https://2.python-requests.org/en/master/user/advanced/#proxies
         :param requests_timeout:
             Tell Requests to stop waiting for a response after a given
             number of seconds
@@ -49,9 +41,9 @@ class HttpClient:
         """
         self._requests_timeout = requests_timeout
         self._status_forcelist = status_forcelist
-        self._backoff_factor = backoff_factor
         self._retries = retries
         self._status_retries = status_retries
+        self._backoff_factor = backoff_factor
 
         if isinstance(requests_session, requests.Session):
             self._session = requests_session
