@@ -1,5 +1,5 @@
 import logging
-from enum import StrEnum
+from enum import Enum
 
 from newspy.exceptions import NewspyException
 from newspy.http_client import HttpMethod, HttpClient
@@ -18,13 +18,13 @@ logger = logging.getLogger(__name__)
 BASE_URL = "https://newsapi.org/v2"
 
 
-class NewsapiEndpoint(StrEnum):
+class NewsapiEndpoint(str, Enum):
     EVERYTHING = "EVERYTHING"
     TOP_HEADLINES = "TOP_HEADLINES"
     SOURCES = "SOURCES"
 
 
-def _create_url(endpoint: NewsapiEndpoint) -> str:
+def create_url(endpoint: NewsapiEndpoint) -> str:
     match endpoint:
         case NewsapiEndpoint.EVERYTHING:
             return f"{BASE_URL}/everything"
@@ -44,13 +44,13 @@ class NewsapiClient:
         self._http_client = http_client
         self._api_key = api_key
 
-    def fetch_publications(
-            self,
-            endpoint: NewsapiEndpoint,
-            search_text: str,
-            category: Category | None = None,
-            country: Country | None = None,
-            sources: list[Source] | None = None,
+    def publications(
+        self,
+        endpoint: NewsapiEndpoint,
+        search_text: str,
+        category: Category | None = None,
+        country: Country | None = None,
+        sources: list[Source] | None = None,
     ) -> list[Publication]:
         if category and sources:
             raise NewspyException(
@@ -67,10 +67,10 @@ class NewsapiClient:
         if country and endpoint == NewsapiEndpoint.TOP_HEADLINES:
             params["country"] = country.value
         if sources and len(sources) > 0:
-            params["sources"] = [source.id for source in sources]
+            params["sources"] = ",".join([source.id for source in sources])
 
         resp_json = self._http_client.send(
-            method=HttpMethod.GET, url=_create_url(endpoint=endpoint), params=params
+            method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
         )
 
         publications = []
@@ -80,13 +80,13 @@ class NewsapiClient:
 
         return publications
 
-    def fetch_sources(
-            self,
-            endpoint=NewsapiEndpoint.SOURCES,
-            category: Category | None = None,
-            language: Language | None = None,
-            country: Country | None = None,
-    ) -> list[str]:
+    def sources(
+        self,
+        endpoint=NewsapiEndpoint.SOURCES,
+        category: Category | None = None,
+        language: Language | None = None,
+        country: Country | None = None,
+    ) -> list[Source]:
         params = {"apiKey": self._api_key}
 
         if category:
@@ -97,13 +97,9 @@ class NewsapiClient:
             params["country"] = country.value
 
         resp_json = self._http_client.send(
-            method=HttpMethod.GET, url=_create_url(endpoint=endpoint), params=params
+            method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
         )
 
-        sources = []
         source_res = ArticleSourceRes.parse_obj(resp_json)
-        for source in source_res.sources:
-            if source.id:
-                sources.append(source.id)
 
-        return sources
+        return source_res.sources

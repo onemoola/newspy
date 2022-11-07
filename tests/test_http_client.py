@@ -50,13 +50,7 @@ def test_http_client_when_http_error() -> None:
         **{
             "method": responses.GET,
             "url": f"{BASE_URL}?apiKey={API_KEY}&sources=bloomberg,business-insider&language=en&pageSize=100",
-            "body": json.dumps(
-                {
-                    "error": {
-                        "message": "Bad request"
-                    }
-                }
-            ),
+            "body": json.dumps({"error": {"message": "Bad request"}}),
             "status": 404,
             "content_type": "application/json",
         }
@@ -75,13 +69,7 @@ def test_http_client_when_http_error() -> None:
         **{
             "method": responses.GET,
             "url": f"{BASE_URL}?apiKey={API_KEY}&sources=bloomberg,business-insider&language=en&pageSize=100",
-            "body": json.dumps(
-                {
-                    "error": {
-                        "message": "Bad request"
-                    }
-                }
-            ),
+            "body": json.dumps({"error": {"message": "Bad request"}}),
             "status": 404,
             "content_type": "application/json",
         }
@@ -100,13 +88,7 @@ def test_http_client_when_server_error() -> None:
         **{
             "method": responses.GET,
             "url": f"{BASE_URL}?apiKey={API_KEY}&sources=bloomberg,business-insider&language=en&pageSize=100",
-            "body": json.dumps(
-                {
-                    "error": {
-                        "message": "Bad request"
-                    }
-                }
-            ),
+            "body": json.dumps({"error": {"message": "Bad request"}}),
             "status": 500,
             "content_type": "application/json",
         }
@@ -137,4 +119,3 @@ def test_http_client_when_value_error() -> None:
     )
 
     assert actual is None
-    
