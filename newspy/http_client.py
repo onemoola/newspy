@@ -12,13 +12,6 @@ class HttpMethod(str, Enum):
     POST = "POST"
 
 
-def _auth_headers(token: str) -> dict:
-    if token:
-        return {"Authorization": f"Bearer {token}"}
-
-    return {}
-
-
 class HttpClient:
     MAX_RETRIES = 3
     DEFAULT_RETRY_CODES = (429, 500, 502, 503, 504)
@@ -134,14 +127,14 @@ class HttpClient:
             request = retry_error.request
             try:
                 reason = retry_error.args[0].reason
-            except (IndexError, AttributeError):
+            except (AttributeError, IndexError):
                 reason = None
             raise NewspyException(
                 status_code=429,
                 msg="%s:\n %s" % (request.path_url, "Max Retries"),
                 reason=reason,
             )
-        except ValueError:
+        except (TypeError, ValueError):
             results = None
 
         return results
