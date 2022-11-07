@@ -4,7 +4,7 @@ The news client written in Python that fetches and curates the world news across
 
 ## Requirements
 
-* Python 3.10+
+* Python 3.10
 * yarn (for the semantic-release versioning)
 * API Key from the New API Organisation: https://newsapi.org/
 

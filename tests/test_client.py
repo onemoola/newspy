@@ -3,10 +3,10 @@ from datetime import datetime
 import pytest
 import responses
 
-from http_client import HttpClient
-from models import Category, Source, Publisher, Publication
 from newspy.client import create_url, NewsapiEndpoint, NewsapiClient
 from newspy.exceptions import NewspyException
+from newspy.http_client import HttpClient
+from newspy.models import Category, Source, Publisher, Publication
 
 API_KEY = "seckfkdLkkekeKy"
 
