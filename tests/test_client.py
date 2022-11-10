@@ -1,8 +1,8 @@
 from datetime import datetime
 
 import pytest
-import responses
 
+from conftest import HttpClientMock
 from newspy.client import create_url, NewsapiEndpoint, NewsapiClient
 from newspy.exceptions import NewspyException
 from newspy.http_client import HttpClient
@@ -48,8 +48,7 @@ def test_publications_when_category_and_sources_are_not_none() -> None:
         )
 
 
-@responses.activate
-def test_publications_by_sources(article_res_json) -> None:
+def test_publications_by_sources() -> None:
     expected = [
         Publication(
             slug="fortune-why-a-former-softbank-partner-is-tackling-mid-career-drop-off-for-working-mothers",
@@ -62,17 +61,8 @@ def test_publications_by_sources(article_res_json) -> None:
             published=datetime(2022, 6, 1, 13, 22, 34),
         )
     ]
-    responses.add(
-        **{
-            "method": responses.GET,
-            "url": f"https://newsapi.org/v2/everything?apiKey={API_KEY}&pageSize=100&page=1&q=bitcoin&sources=bloomberg%2Cbusiness-insider",
-            "body": article_res_json,
-            "status": 200,
-            "content_type": "application/json",
-        }
-    )
 
-    newsapi_client = NewsapiClient(http_client=HttpClient(), api_key=API_KEY)
+    newsapi_client = NewsapiClient(http_client=HttpClientMock(), api_key=API_KEY)
     actual = newsapi_client.publications(
         endpoint=NewsapiEndpoint.EVERYTHING,
         search_text="bitcoin",

@@ -1,5 +1,6 @@
 import json
 from enum import Enum
+from typing import Protocol
 
 import requests
 import urllib3
@@ -10,6 +11,21 @@ from newspy.exceptions import NewspyException
 class HttpMethod(str, Enum):
     GET = "GET"
     POST = "POST"
+
+
+class ProtocolClient(Protocol):
+    def _build_session(self) -> None:
+        ...
+
+    def send(
+        self,
+        method: HttpMethod,
+        url: str,
+        headers: dict | None = None,
+        params: dict | None = None,
+        payload: dict | None = None,
+    ) -> json:
+        ...
 
 
 class HttpClient:

@@ -1,8 +1,10 @@
 import logging
 from enum import Enum
 
+from pydantic import ValidationError
+
 from newspy.exceptions import NewspyException
-from newspy.http_client import HttpMethod, HttpClient
+from newspy.http_client import HttpMethod, ProtocolClient
 from newspy.models import (
     Publication,
     ArticlesRes,
@@ -40,17 +42,17 @@ def create_url(endpoint: NewsapiEndpoint) -> str:
 
 
 class NewsapiClient:
-    def __init__(self, http_client: HttpClient, api_key: str) -> None:
+    def __init__(self, http_client: ProtocolClient, api_key: str) -> None:
         self._http_client = http_client
         self._api_key = api_key
 
     def publications(
-        self,
-        endpoint: NewsapiEndpoint,
-        search_text: str,
-        category: Category | None = None,
-        country: Country | None = None,
-        sources: list[Source] | None = None,
+            self,
+            endpoint: NewsapiEndpoint,
+            search_text: str,
+            category: Category | None = None,
+            country: Country | None = None,
+            sources: list[Source] | None = None,
     ) -> list[Publication]:
         if category and sources:
             raise NewspyException(
@@ -74,18 +76,27 @@ class NewsapiClient:
         )
 
         publications = []
-        article_res = ArticlesRes.parse_obj(resp_json)
+
+        try:
+            article_res = ArticlesRes.parse_obj(resp_json)
+        except ValidationError as validation_error:
+            raise NewspyException(
+                status_code=500,
+                msg=f"Failed to validate the News Org articles response json: {resp_json}",
+                reason=str(validation_error.errors()),
+            )
+
         for article in article_res.articles:
             publications.append(article.to_publication())
 
         return publications
 
     def sources(
-        self,
-        endpoint=NewsapiEndpoint.SOURCES,
-        category: Category | None = None,
-        language: Language | None = None,
-        country: Country | None = None,
+            self,
+            endpoint=NewsapiEndpoint.SOURCES,
+            category: Category | None = None,
+            language: Language | None = None,
+            country: Country | None = None,
     ) -> list[Source]:
         params = {"apiKey": self._api_key}
 
@@ -100,6 +111,11 @@ class NewsapiClient:
             method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
         )
 
-        source_res = ArticleSourceRes.parse_obj(resp_json)
-
-        return source_res.sources
+        try:
+            return ArticleSourceRes.parse_obj(resp_json).sources
+        except ValidationError as validation_error:
+            raise NewspyException(
+                status_code=500,
+                msg=f"Failed to validate the News Org sources response json: {resp_json}",
+                reason=str(validation_error.errors())
+            )
