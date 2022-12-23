@@ -39,7 +39,7 @@ jobs:
     - name: Run tests
       run: |
         source .venv/bin/activate
-        pytest tests/
+        pytest --exitfirst --verbose --failed-first --cov=newspy
 
   version:
     runs-on: ubuntu-latest
