@@ -5,13 +5,13 @@ The news client written in Python that fetches and curates the world news across
 ## Requirements
 
 * Python 3.10
+* Poetry 1.3.1+ (for dependency management)
 * yarn (for the semantic-release versioning)
 * API Key from the New API Organisation: https://newsapi.org/
 
 ## News Sources
 
 - [X] News API. Requires API Key from: https://newsapi.org/
-- [ ] Twitter
 - [ ] RSS feeds
 
 ## Getting started
@@ -35,7 +35,7 @@ python -m venv .venv
 3. Install the requirements
 
 ```bash
-pip install -r requirements-dev.txt
+poetry install
 ```
 
 4. Install the git hook scripts
