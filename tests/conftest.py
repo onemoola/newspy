@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from http_client import HttpMethod
+from newspy.http_client import HttpMethod
 from newspy.models import Article, ArticlesRes, Source
 
 

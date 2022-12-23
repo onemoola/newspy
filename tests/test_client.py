@@ -2,11 +2,11 @@ from datetime import datetime
 
 import pytest
 
-from conftest import HttpClientMock
 from newspy.client import create_url, NewsapiEndpoint, NewsapiClient
 from newspy.exceptions import NewspyException
 from newspy.http_client import HttpClient
 from newspy.models import Category, Source, Publisher, Publication
+from tests.conftest import HttpClientMock
 
 API_KEY = "seckfkdLkkekeKy"
 
