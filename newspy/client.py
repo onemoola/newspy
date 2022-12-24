@@ -4,7 +4,7 @@ from enum import Enum
 from pydantic import ValidationError
 
 from newspy.exceptions import NewspyHttpException
-from newspy.http_client import HttpMethod, ProtocolClient
+from newspy.http_client import HttpClient, HttpMethod
 from newspy.models import (
     Publication,
     ArticlesRes,
@@ -42,7 +42,7 @@ def create_url(endpoint: NewsapiEndpoint) -> str:
 
 
 class NewsapiClient:
-    def __init__(self, http_client: ProtocolClient, api_key: str) -> None:
+    def __init__(self, http_client: HttpClient, api_key: str) -> None:
         self._http_client = http_client
         self._api_key = api_key
 
