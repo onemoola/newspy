@@ -19,6 +19,7 @@ pydantic = "1.10.2"
 python-slugify = "6.1.2"
 requests = "2.28.1"
 urllib3 = "1.26.12"
+feedparser = "6.0.10"
 
 [tool.poetry.group.dev.dependencies]
 black = "22.10.0"
