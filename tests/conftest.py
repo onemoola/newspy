@@ -2,8 +2,8 @@ import json
 
 import pytest
 
-from newspy.http_client import HttpMethod
-from newspy.models import Article, ArticlesRes, Source
+from newspy.newsapi.models import Article, ArticlesRes, Source
+from newspy.shared.http_client import HttpMethod
 
 
 # noinspection PyMethodMayBeStatic

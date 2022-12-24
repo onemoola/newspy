@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 
 import pytest
 
-from newspy import utils
+from newspy.shared import utils
 
 
 @pytest.mark.parametrize(

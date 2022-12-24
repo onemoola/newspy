@@ -3,9 +3,9 @@ import json
 import pytest
 import responses
 
-from newspy.exceptions import NewspyHttpException
-from newspy.http_client import HttpClient, HttpMethod
-from newspy.models import ArticlesRes
+from newspy.newsapi.models import ArticlesRes
+from newspy.shared.exceptions import NewspyHttpException
+from newspy.shared.http_client import HttpClient, HttpMethod
 
 API_KEY = "seckfkdLkkekeKy"
 

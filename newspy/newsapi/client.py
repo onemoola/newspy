@@ -3,9 +3,7 @@ from enum import Enum
 
 from pydantic import ValidationError
 
-from newspy.exceptions import NewspyException
-from newspy.http_client import HttpClient, HttpMethod
-from newspy.models import (
+from newspy.newsapi.models import (
     Publication,
     ArticlesRes,
     Category,
@@ -14,6 +12,8 @@ from newspy.models import (
     ArticleSourceRes,
     Source,
 )
+from newspy.shared.exceptions import NewspyException
+from newspy.shared.http_client import HttpClient, HttpMethod
 
 logger = logging.getLogger(__name__)
 

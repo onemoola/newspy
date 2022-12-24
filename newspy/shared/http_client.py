@@ -4,7 +4,7 @@ from enum import Enum
 import requests
 import urllib3
 
-from newspy.exceptions import NewspyHttpException
+from newspy.shared.exceptions import NewspyHttpException
 
 
 class HttpMethod(str, Enum):
