@@ -1,31 +1,15 @@
 import json
 from enum import Enum
-from typing import Protocol
 
 import requests
 import urllib3
 
-from newspy.exceptions import NewspyException
+from newspy.exceptions import NewspyHttpException
 
 
 class HttpMethod(str, Enum):
     GET = "GET"
     POST = "POST"
-
-
-class ProtocolClient(Protocol):
-    def _build_session(self) -> None:
-        ...
-
-    def send(
-        self,
-        method: HttpMethod,
-        url: str,
-        headers: dict | None = None,
-        params: dict | None = None,
-        payload: dict | None = None,
-    ) -> json:
-        ...
 
 
 class HttpClient:
@@ -60,13 +44,10 @@ class HttpClient:
         self._status_retries = status_retries
         self._backoff_factor = backoff_factor
 
-        if isinstance(requests_session, requests.Session):
-            self._session = requests_session
-        else:
-            if requests_session:  # Build a new session.
-                self._build_session()
-            else:  # Use the Requests API module as a "session".
-                self._session = requests.api
+        if requests_session:  # Build a new session.
+            self._build_session()
+        else:  # Use the Requests API module as a "session".
+            self._session = requests.api
 
     def _build_session(self) -> None:
         self._session = requests.Session()
@@ -124,7 +105,7 @@ class HttpClient:
                 msg = response.text or None
                 reason = None
 
-            raise NewspyException(
+            raise NewspyHttpException(
                 status_code=response.status_code,
                 msg="%s:\n %s" % (response.url, msg),
                 reason=reason,
@@ -136,7 +117,7 @@ class HttpClient:
                 reason = retry_error.args[0].reason
             except (AttributeError, IndexError):
                 reason = None
-            raise NewspyException(
+            raise NewspyHttpException(
                 status_code=429,
                 msg="%s:\n %s" % (request.path_url, "Max Retries"),
                 reason=reason,

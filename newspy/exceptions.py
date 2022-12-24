@@ -1,4 +1,4 @@
-class NewspyException(Exception):
+class NewspyHttpException(Exception):
     def __init__(
         self,
         status_code: int,
@@ -9,8 +9,6 @@ class NewspyException(Exception):
         self._status_code = status_code
         self._msg = msg
         self._reason = reason
-        # `headers` is used to support `Retry-After` in the event of a
-        # 429 status code.
         if headers is None:
             headers = {}
         self.headers = headers

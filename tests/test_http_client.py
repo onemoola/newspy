@@ -3,7 +3,7 @@ import json
 import pytest
 import responses
 
-from newspy.exceptions import NewspyException
+from newspy.exceptions import NewspyHttpException
 from newspy.http_client import HttpClient, HttpMethod
 from newspy.models import ArticlesRes
 
@@ -56,7 +56,7 @@ def test_http_client_when_http_error() -> None:
         }
     )
 
-    with pytest.raises(NewspyException):
+    with pytest.raises(NewspyHttpException):
         http_client = HttpClient()
         http_client.send(
             method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS
@@ -75,7 +75,7 @@ def test_http_client_when_http_error() -> None:
         }
     )
 
-    with pytest.raises(NewspyException):
+    with pytest.raises(NewspyHttpException):
         http_client = HttpClient()
         http_client.send(
             method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS
@@ -94,7 +94,7 @@ def test_http_client_when_server_error() -> None:
         }
     )
 
-    with pytest.raises(NewspyException):
+    with pytest.raises(NewspyHttpException):
         http_client = HttpClient()
         http_client.send(
             method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS
