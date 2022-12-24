@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 import pytest
 
@@ -58,7 +58,7 @@ def test_publications_by_sources() -> None:
             abstract="Former SoftBank partner and Facebook India director Kirthiga Reddy is the cofounder of Laddrr, a resource hub for working mothers aiming to prevent mid-career drop-off.",
             author="Emma Hinchliffe, Paige McGlauflin",
             publisher=Publisher(id="fortune", name="Fortune"),
-            published=datetime(2022, 6, 1, 13, 22, 34),
+            published=datetime(2022, 6, 1, 13, 22, 34, tzinfo=timezone.utc),
         )
     ]
 

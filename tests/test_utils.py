@@ -8,7 +8,7 @@ from newspy import utils
 @pytest.mark.parametrize(
     "test_input,expected",
     [
-        ("2022-07-17T07:49:34Z", datetime(2022, 7, 17, 7, 49, 34)),
+        ("2022-07-17T07:49:34Z", datetime(2022, 7, 17, 7, 49, 34, tzinfo=timezone.utc)),
         (
             "2022-07-16T12:00:13+00:00",
             datetime(2022, 7, 16, 12, 0, 13, tzinfo=timezone.utc),
