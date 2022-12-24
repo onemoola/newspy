@@ -3,7 +3,7 @@ from datetime import datetime
 import pytest
 
 from newspy.client import create_url, NewsapiEndpoint, NewsapiClient
-from newspy.exceptions import NewspyHttpException
+from newspy.exceptions import NewspyException
 from newspy.http_client import HttpClient
 from newspy.models import Category, Source, Publisher, Publication
 from tests.conftest import HttpClientMock
@@ -33,12 +33,12 @@ def test_create_url_when_endpoint_is_sources() -> None:
 
 
 def test_create_url_when_endpoint_is_not_recognised() -> None:
-    with pytest.raises(NewspyHttpException):
+    with pytest.raises(NewspyException):
         create_url(endpoint="something-else")
 
 
 def test_publications_when_category_and_sources_are_not_none() -> None:
-    with pytest.raises(NewspyHttpException):
+    with pytest.raises(NewspyException):
         newsapi_client = NewsapiClient(http_client=HttpClient(), api_key=API_KEY)
         newsapi_client.publications(
             endpoint=NewsapiEndpoint.EVERYTHING,
