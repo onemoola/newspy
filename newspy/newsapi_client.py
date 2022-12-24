@@ -4,7 +4,7 @@ from enum import Enum
 from pydantic import ValidationError
 
 from newspy.exceptions import NewspyException
-from newspy.http_client import HttpMethod, ProtocolClient
+from newspy.http_client import HttpClient, HttpMethod
 from newspy.models import (
     Publication,
     ArticlesRes,
@@ -36,13 +36,12 @@ def create_url(endpoint: NewsapiEndpoint) -> str:
             return f"{BASE_URL}/top-headlines/sources"
         case _:
             raise NewspyException(
-                status_code=400,
                 msg=f"The endpoint has to be one of the following values: 'EVERYTHING' or 'TOP_HEADLINES' or 'SOURCES'",
             )
 
 
 class NewsapiClient:
-    def __init__(self, http_client: ProtocolClient, api_key: str) -> None:
+    def __init__(self, http_client: HttpClient, api_key: str) -> None:
         self._http_client = http_client
         self._api_key = api_key
 
@@ -56,7 +55,6 @@ class NewsapiClient:
     ) -> list[Publication]:
         if category and sources:
             raise NewspyException(
-                status_code=400,
                 msg="Choose either the category and sources attributes. Not both.",
             )
 
@@ -79,7 +77,6 @@ class NewsapiClient:
             article_res = ArticlesRes.parse_obj(resp_json)
         except ValidationError as validation_error:
             raise NewspyException(
-                status_code=500,
                 msg=f"Failed to validate the News Org articles response json: {resp_json}",
                 reason=str(validation_error.errors()),
             )
@@ -110,7 +107,6 @@ class NewsapiClient:
             return ArticleSourceRes.parse_obj(resp_json).sources
         except ValidationError as validation_error:
             raise NewspyException(
-                status_code=500,
                 msg=f"Failed to validate the News Org sources response json: {resp_json}",
                 reason=str(validation_error.errors()),
             )
