@@ -10,6 +10,9 @@ def to_datetime(string: str) -> datetime:
         try:
             transformed = datetime.strptime(string, "%Y-%m-%dT%H:%M:%SZ")
         except ValueError:
-            transformed = datetime.strptime(string, "%Y-%m-%dT%H:%M:%S.%fZ")
+            try:
+                transformed = datetime.strptime(string, "%Y-%m-%dT%H:%M:%S.%fZ")
+            except ValueError:
+                transformed = datetime.strptime(string, "%a, %d %b %Y %H:%M:%S %z")
 
     return transformed

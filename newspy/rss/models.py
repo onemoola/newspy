@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from slugify import slugify
 
 from newspy.models import Publication, Publisher
+from newspy.shared import utils
 
 
 class ArticleMediaContent(BaseModel):
@@ -25,4 +26,13 @@ class Article(BaseModel):
     published: str
 
     def to_publication(self, publisher: Publisher) -> Publication:
-        return Publication(slug=f"{slugify(publisher.name)}-{slugify(self.title)}")
+        return Publication(
+            slug=f"{slugify(publisher.name)}-{slugify(self.title)}",
+            url=self.id,
+            url_to_image=self.media_content[0].url,
+            title=self.title,
+            abstract=self.content[0].value,
+            author=None,
+            publisher=publisher,
+            published=utils.to_datetime(self.published),
+        )
