@@ -1,10 +1,33 @@
-name: Publish
+name: Release
 
 on:
-  release:
-    types: [ published, created, edited, released ]
+  push:
+    branches:
+      - main
 
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Semantic release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   deploy:
     runs-on: ubuntu-latest
 
