@@ -1,8 +1,8 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from newspy import utils
+from newspy.shared import utils
 
 
 @pytest.mark.parametrize(
@@ -16,6 +16,10 @@ from newspy import utils
         (
             "2022-07-07T02:37:07.675501Z",
             datetime(2022, 7, 7, 2, 37, 7, 675501, tzinfo=timezone.utc),
+        ),
+        (
+            "Mon, 19 Dec 2022 07:55:18 +0200",
+            datetime(2022, 12, 19, 7, 55, 18, tzinfo=timezone(timedelta(seconds=7200))),
         ),
     ],
 )
