@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/msotho/newspy/compare/v1.1.0...v1.1.1) (2023-01-03)
+
+
+### Bug Fixes
+
+* **workflow:** correct the release github actions workflow ([3a0e033](https://github.com/msotho/newspy/commit/3a0e033f4042e5bf8f424b351a64dab460438b9f))
+
 # [1.1.0](https://github.com/msotho/newspy/compare/v1.0.0...v1.1.0) (2023-01-03)
 
 
