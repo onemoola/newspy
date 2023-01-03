@@ -59,4 +59,4 @@ yarn husky add .husky/commit-msg 'yarn commitlint --edit $1'
 ## Chores
 
 - [X] Add GitHub Action for Continuous Integration (CI)
-- [ ] Add GitHub Action for Continuous Deployment (CD)
+- [X] Add GitHub Action for Continuous Deployment (CD)
