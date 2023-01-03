@@ -1,8 +1,9 @@
 name: Release
 
 on:
-  branches:
-    - main
+  push:
+    branches:
+      - main
 
 jobs:
   version:
