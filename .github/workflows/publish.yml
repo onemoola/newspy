@@ -2,16 +2,17 @@ name: Publish
 
 on:
   release:
-    types: [created]
+    types: [ published, created, edited, released ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Set up Python
-        id: setup-python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
