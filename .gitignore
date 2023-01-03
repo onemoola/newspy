@@ -128,7 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-.github
+/.yarn
+.yarnrc.yml
+node_modules/
 
 .idea/
-node_modules/

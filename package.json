@@ -6,15 +6,15 @@
   "author": "Sechaba Mofokeng <sechaba@onemoola.com>",
   "license": "MIT",
   "devDependencies": {
-    "@commitlint/cli": "^16.2.1",
-    "@commitlint/config-conventional": "^16.2.1",
-    "@semantic-release/changelog": "^6.0.1",
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@semantic-release/changelog": "^6.0.2",
     "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^8.0.2",
+    "@semantic-release/github": "^8.0.7",
     "@semantic-release/release-notes-generator": "^10.0.3",
-    "husky": "^7.0.4",
-    "semantic-release": "^19.0.2"
+    "husky": "^8.0.3",
+    "semantic-release": "^19.0.5"
   },
   "private": true,
   "plugins": [
@@ -46,5 +46,6 @@
         "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
       }
     ]
-  }
+  },
+  "packageManager": "yarn@3.3.0"
 }
