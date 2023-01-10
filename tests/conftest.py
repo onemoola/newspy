@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from newspy.newsapi.models import Article, ArticlesRes, Source
+from newspy.newsapi.models import NewsapiArticle, NewsapiArticlesRes, Source
 from newspy.shared.http_client import HttpMethod
 
 
@@ -43,8 +43,8 @@ def article_source() -> Source:
 
 
 @pytest.fixture
-def article(article_source) -> Article:
-    return Article(
+def article(article_source) -> NewsapiArticle:
+    return NewsapiArticle(
         source=article_source,
         author="Emma Hinchliffe, Paige McGlauflin",
         title="Why a former SoftBank partner is tackling mid-career drop-off for working mothers",
@@ -57,8 +57,8 @@ def article(article_source) -> Article:
 
 
 @pytest.fixture
-def articles_res(article) -> ArticlesRes:
-    return ArticlesRes(status="ok", totalResults=86, articles=[article])
+def articles_res(article) -> NewsapiArticlesRes:
+    return NewsapiArticlesRes(status="ok", totalResults=86, articles=[article])
 
 
 @pytest.fixture

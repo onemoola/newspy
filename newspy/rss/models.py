@@ -1,6 +1,6 @@
 import logging
+from dataclasses import dataclass
 
-from pydantic import BaseModel
 from slugify import slugify
 
 from newspy.models import Publication, Publisher
@@ -9,24 +9,27 @@ from newspy.shared import utils
 logger = logging.getLogger(__name__)
 
 
-class ArticleMediaContent(BaseModel):
+@dataclass
+class RssArticleMediaContent:
     height: str
     width: str
     url: str
     medium: str | None
 
 
-class ArticleContent(BaseModel):
+@dataclass
+class RssArticleContent:
     base: str
     value: str
 
 
-class Article(BaseModel):
+@dataclass
+class RssArticle:
     id: str
     title: str
     links: list[dict]
-    media_content: list[ArticleMediaContent]
-    content: list[ArticleContent]
+    media_content: list[RssArticleMediaContent]
+    content: list[RssArticleContent]
     published: str
 
     def to_publication(self, publisher: Publisher) -> Publication:

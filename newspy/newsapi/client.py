@@ -1,15 +1,12 @@
 import logging
 from enum import Enum
 
-from pydantic import ValidationError
-
+from newspy.models import Language, Country
 from newspy.newsapi.models import (
     Publication,
-    ArticlesRes,
-    Category,
-    Language,
-    Country,
-    ArticleSourceRes,
+    NewsapiArticlesRes,
+    NewsapiCategory,
+    NewsapiArticleSourceRes,
     Source,
 )
 from newspy.shared.exceptions import NewspyException
@@ -48,8 +45,8 @@ class NewsapiClient:
     def publications(
         self,
         endpoint: NewsapiEndpoint,
-        search_text: str,
-        category: Category | None = None,
+        search_text: str | None = None,
+        category: NewsapiCategory | None = None,
         country: Country | None = None,
         sources: list[Source] | None = None,
     ) -> list[Publication]:
@@ -73,20 +70,14 @@ class NewsapiClient:
             method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
         )
 
-        try:
-            article_res = ArticlesRes.parse_obj(resp_json)
-        except ValidationError as validation_error:
-            raise NewspyException(
-                msg=f"Failed to validate the News Org articles response json: {resp_json}",
-                reason=str(validation_error.errors()),
-            )
+        article_res = NewsapiArticlesRes(**resp_json)
 
         return [article.to_publication() for article in article_res.articles]
 
     def sources(
         self,
         endpoint=NewsapiEndpoint.SOURCES,
-        category: Category | None = None,
+        category: NewsapiCategory | None = None,
         language: Language | None = None,
         country: Country | None = None,
     ) -> list[Source]:
@@ -103,10 +94,4 @@ class NewsapiClient:
             method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
         )
 
-        try:
-            return ArticleSourceRes.parse_obj(resp_json).sources
-        except ValidationError as validation_error:
-            raise NewspyException(
-                msg=f"Failed to validate the News Org sources response json: {resp_json}",
-                reason=str(validation_error.errors()),
-            )
+        return NewsapiArticleSourceRes(**resp_json).sources

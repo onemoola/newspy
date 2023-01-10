@@ -1,6 +1,6 @@
 import feedparser
 
-from newspy.rss.models import Article
+from newspy.rss.models import RssArticle
 
 
 def main():
@@ -9,7 +9,7 @@ def main():
     )
     feeds = feed["entries"]
     for feed in feeds:
-        print(Article.parse_obj(feed))
+        print(RssArticle.parse_obj(feed))
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 import pytest
 
 from newspy.newsapi.client import create_url, NewsapiEndpoint, NewsapiClient
-from newspy.newsapi.models import Category, Source, Publisher, Publication
+from newspy.newsapi.models import NewsapiCategory, Source, Publisher, Publication
 from newspy.shared.exceptions import NewspyException
 from newspy.shared.http_client import HttpClient
 from tests.conftest import HttpClientMock
@@ -43,7 +43,7 @@ def test_publications_when_category_and_sources_are_not_none() -> None:
         newsapi_client.publications(
             endpoint=NewsapiEndpoint.EVERYTHING,
             search_text="bitcoin",
-            category=Category.BUSINESS,
+            category=NewsapiCategory.BUSINESS,
             sources=[Source(id="news-org", name="News Organisation")],
         )
 
