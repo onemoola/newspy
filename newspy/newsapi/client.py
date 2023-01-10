@@ -70,7 +70,13 @@ class NewsapiClient:
             method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
         )
 
-        article_res = NewsapiArticlesRes(**resp_json)
+        try:
+            article_res = NewsapiArticlesRes(**resp_json)
+        except TypeError as type_error:
+            raise NewspyException(
+                msg=f"Failed to validate the News Org articles response json: {resp_json}",
+                reason=str(type_error),
+            )
 
         return [article.to_publication() for article in article_res.articles]
 
@@ -94,4 +100,10 @@ class NewsapiClient:
             method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
         )
 
-        return NewsapiArticleSourceRes(**resp_json).sources
+        try:
+            return NewsapiArticleSourceRes(**resp_json).sources
+        except TypeError as type_error:
+            raise NewspyException(
+                msg=f"Failed to validate the News Org sources response json: {resp_json}",
+                reason=str(type_error),
+            )

@@ -1,5 +1,5 @@
-def test_to_publication(article) -> None:
-    actual = article.to_publication()
+def test_to_publication(newsapi_article) -> None:
+    actual = newsapi_article.to_publication()
 
     assert (
         actual.slug

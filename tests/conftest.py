@@ -38,14 +38,14 @@ class HttpClientMock:
 
 
 @pytest.fixture
-def article_source() -> Source:
+def newsapi_article_source() -> Source:
     return Source(id="fortune", name="Fortune")
 
 
 @pytest.fixture
-def article(article_source) -> NewsapiArticle:
+def newsapi_article(newsapi_article_source) -> NewsapiArticle:
     return NewsapiArticle(
-        source=article_source,
+        source=newsapi_article_source,
         author="Emma Hinchliffe, Paige McGlauflin",
         title="Why a former SoftBank partner is tackling mid-career drop-off for working mothers",
         description="Former SoftBank partner and Facebook India director Kirthiga Reddy is the cofounder of Laddrr, a resource hub for working mothers aiming to prevent mid-career drop-off.",
@@ -57,12 +57,12 @@ def article(article_source) -> NewsapiArticle:
 
 
 @pytest.fixture
-def articles_res(article) -> NewsapiArticlesRes:
-    return NewsapiArticlesRes(status="ok", totalResults=86, articles=[article])
+def newsapi_articles_res(newsapi_article) -> NewsapiArticlesRes:
+    return NewsapiArticlesRes(status="ok", totalResults=86, articles=[newsapi_article])
 
 
 @pytest.fixture
-def article_res_json() -> json:
+def newsapi_article_res_json() -> json:
     return json.dumps(
         {
             "status": "ok",

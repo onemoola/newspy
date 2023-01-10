@@ -22,12 +22,12 @@ PARAMS = {
 
 
 @responses.activate
-def test_http_client(article_res_json) -> None:
+def test_http_client(newsapi_article_res_json) -> None:
     responses.add(
         **{
             "method": responses.GET,
             "url": f"{BASE_URL}?apiKey={API_KEY}&sources=bloomberg,business-insider&language=en&pageSize=100",
-            "body": article_res_json,
+            "body": newsapi_article_res_json,
             "status": 200,
             "content_type": "application/json",
         }
