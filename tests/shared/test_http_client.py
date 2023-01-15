@@ -3,7 +3,7 @@ import json
 import pytest
 import responses
 
-from newspy.newsapi.models import ArticlesRes
+from newspy.newsapi.models import NewsapiArticlesRes
 from newspy.shared.exceptions import NewspyHttpException
 from newspy.shared.http_client import HttpClient, HttpMethod
 
@@ -22,12 +22,12 @@ PARAMS = {
 
 
 @responses.activate
-def test_http_client(article_res_json) -> None:
+def test_http_client(newsapi_article_res_json) -> None:
     responses.add(
         **{
             "method": responses.GET,
             "url": f"{BASE_URL}?apiKey={API_KEY}&sources=bloomberg,business-insider&language=en&pageSize=100",
-            "body": article_res_json,
+            "body": newsapi_article_res_json,
             "status": 200,
             "content_type": "application/json",
         }
@@ -38,7 +38,7 @@ def test_http_client(article_res_json) -> None:
         method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS
     )
 
-    article_res = ArticlesRes.parse_obj(actual)
+    article_res = NewsapiArticlesRes(**actual)
     assert article_res.status == "ok"
     assert article_res.totalResults == 86
     assert len(article_res.articles) == 1
