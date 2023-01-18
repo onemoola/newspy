@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/msotho/newspy/compare/v1.1.1...v1.1.2) (2023-01-18)
+
+
+### Bug Fixes
+
+* remove the dependency on the python-slugify ([8b9d38d](https://github.com/msotho/newspy/commit/8b9d38d579a86dc5dae17c45f433cf25eecd1957))
+* remove the dependency on the urllib3 library and use the retry from the requests library ([508bec3](https://github.com/msotho/newspy/commit/508bec315586c4bbbf2434d84d0639236dcc8136))
+
 ## [1.1.1](https://github.com/msotho/newspy/compare/v1.1.0...v1.1.1) (2023-01-03)
 
 
