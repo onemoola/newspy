@@ -1,15 +1,15 @@
 from newspy.models import Publication
-from newspy.newsorg.client import NewsapiClient, NewsapiEndpoint
+from newspy.newsorg.client import NewsorgClient, NewsorgEndpoint
 from newspy.shared.http_client import HttpClient
 
 
 class Newspy:
-    def __init__(self, newsapi_key: str) -> None:
-        self._newsapi_key = newsapi_key
+    def __init__(self, newsorg_key: str) -> None:
+        self._newsorg_key = newsorg_key
 
     def publications(self) -> list[Publication]:
-        newsapi_client = NewsapiClient(
-            http_client=HttpClient(), api_key=self._newsapi_key
+        newsorg_client = NewsorgClient(
+            http_client=HttpClient(), api_key=self._newsorg_key
         )
 
-        return newsapi_client.publications(endpoint=NewsapiEndpoint.TOP_HEADLINES)
+        return newsorg_client.publications(endpoint=NewsorgEndpoint.TOP_HEADLINES)
