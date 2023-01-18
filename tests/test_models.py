@@ -3,5 +3,5 @@ def test_to_publication(newsapi_article) -> None:
 
     assert (
         actual.slug
-        == "fortune-why-a-former-softbank-partner-is-tackling-mid-career-drop-off-for-working-mothers"
+        == "fortune-why-a-former-softbank-partner-is-tackling-midcareer-dropoff-for-working-mothers"
     )

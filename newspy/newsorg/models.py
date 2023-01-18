@@ -1,10 +1,9 @@
 from dataclasses import dataclass
 from enum import Enum
 
-from slugify import slugify
-
 from newspy.models import Publication, Publisher, Source
 from newspy.shared import utils
+from newspy.shared.utils import slugify
 
 
 class NewsapiCategory(str, Enum):

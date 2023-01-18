@@ -2,7 +2,7 @@ import logging
 from enum import Enum
 
 from newspy.models import Language, Country
-from newspy.newsapi.models import (
+from newspy.newsorg.models import (
     Publication,
     NewsapiArticlesRes,
     NewsapiCategory,

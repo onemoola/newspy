@@ -3,7 +3,7 @@ import json
 import pytest
 import responses
 
-from newspy.newsapi.models import NewsapiArticlesRes
+from newspy.newsorg.models import NewsapiArticlesRes
 from newspy.shared.exceptions import NewspyHttpException
 from newspy.shared.http_client import HttpClient, HttpMethod
 
