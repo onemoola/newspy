@@ -6,7 +6,7 @@ from newspy.shared import utils
 from newspy.shared.utils import slugify
 
 
-class NewsapiCategory(str, Enum):
+class NewsorgCategory(str, Enum):
     BUSINESS = "business"
     ENTERTAINMENT = "entertainment"
     GENERAL = "general"
@@ -17,16 +17,16 @@ class NewsapiCategory(str, Enum):
 
 
 @dataclass
-class NewsapiArticlesReq:
-    """News API article requests"""
+class NewsorgArticlesReq:
+    """Newsorg API article requests"""
 
     url: str
     params: dict | None = None
 
 
 @dataclass
-class NewsapiArticleSourceRes:
-    """News API article source response"""
+class NewsorgArticleSourceRes:
+    """Newsorg API article source response"""
 
     status: str
     sources: list[Source]
@@ -40,8 +40,8 @@ class NewsapiArticleSourceRes:
 
 
 @dataclass
-class NewsapiArticle:
-    """News API articles"""
+class NewsorgArticle:
+    """Newsorg API articles"""
 
     source: Source
     author: str | None
@@ -75,16 +75,16 @@ class NewsapiArticle:
 
 
 @dataclass
-class NewsapiArticlesRes:
-    """Response from the News API"""
+class NewsorgArticlesRes:
+    """Response from the Newsorg API"""
 
     status: str
     totalResults: int
-    articles: list[NewsapiArticle]
+    articles: list[NewsorgArticle]
 
     def __post_init__(self):
         if isinstance(self.articles, list):
             self.articles = [
-                NewsapiArticle(**article) if isinstance(article, dict) else article
+                NewsorgArticle(**article) if isinstance(article, dict) else article
                 for article in self.articles
             ]

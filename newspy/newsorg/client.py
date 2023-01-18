@@ -4,9 +4,9 @@ from enum import Enum
 from newspy.models import Language, Country
 from newspy.newsorg.models import (
     Publication,
-    NewsapiArticlesRes,
-    NewsapiCategory,
-    NewsapiArticleSourceRes,
+    NewsorgArticlesRes,
+    NewsorgCategory,
+    NewsorgArticleSourceRes,
     Source,
 )
 from newspy.shared.exceptions import NewspyException
@@ -17,19 +17,19 @@ logger = logging.getLogger(__name__)
 BASE_URL = "https://newsapi.org/v2"
 
 
-class NewsapiEndpoint(str, Enum):
+class NewsorgEndpoint(str, Enum):
     EVERYTHING = "EVERYTHING"
     TOP_HEADLINES = "TOP_HEADLINES"
     SOURCES = "SOURCES"
 
 
-def create_url(endpoint: NewsapiEndpoint) -> str:
+def create_url(endpoint: NewsorgEndpoint) -> str:
     match endpoint:
-        case NewsapiEndpoint.EVERYTHING:
+        case NewsorgEndpoint.EVERYTHING:
             return f"{BASE_URL}/everything"
-        case NewsapiEndpoint.TOP_HEADLINES:
+        case NewsorgEndpoint.TOP_HEADLINES:
             return f"{BASE_URL}/top-headlines"
-        case NewsapiEndpoint.SOURCES:
+        case NewsorgEndpoint.SOURCES:
             return f"{BASE_URL}/top-headlines/sources"
         case _:
             raise NewspyException(
@@ -37,16 +37,16 @@ def create_url(endpoint: NewsapiEndpoint) -> str:
             )
 
 
-class NewsapiClient:
+class NewsorgClient:
     def __init__(self, http_client: HttpClient, api_key: str) -> None:
         self._http_client = http_client
         self._api_key = api_key
 
     def publications(
         self,
-        endpoint: NewsapiEndpoint,
+        endpoint: NewsorgEndpoint,
         search_text: str | None = None,
-        category: NewsapiCategory | None = None,
+        category: NewsorgCategory | None = None,
         country: Country | None = None,
         sources: list[Source] | None = None,
     ) -> list[Publication]:
@@ -59,9 +59,9 @@ class NewsapiClient:
 
         if search_text:
             params["q"] = search_text
-        if category and endpoint == NewsapiEndpoint.TOP_HEADLINES:
+        if category and endpoint == NewsorgEndpoint.TOP_HEADLINES:
             params["category"] = category.value
-        if country and endpoint == NewsapiEndpoint.TOP_HEADLINES:
+        if country and endpoint == NewsorgEndpoint.TOP_HEADLINES:
             params["country"] = country.value
         if sources and len(sources) > 0:
             params["sources"] = ",".join([source.id for source in sources])
@@ -71,7 +71,7 @@ class NewsapiClient:
         )
 
         try:
-            article_res = NewsapiArticlesRes(**resp_json)
+            article_res = NewsorgArticlesRes(**resp_json)
         except TypeError as type_error:
             raise NewspyException(
                 msg=f"Failed to validate the News Org articles response json: {resp_json}",
@@ -82,8 +82,8 @@ class NewsapiClient:
 
     def sources(
         self,
-        endpoint=NewsapiEndpoint.SOURCES,
-        category: NewsapiCategory | None = None,
+        endpoint=NewsorgEndpoint.SOURCES,
+        category: NewsorgCategory | None = None,
         language: Language | None = None,
         country: Country | None = None,
     ) -> list[Source]:
@@ -101,7 +101,7 @@ class NewsapiClient:
         )
 
         try:
-            return NewsapiArticleSourceRes(**resp_json).sources
+            return NewsorgArticleSourceRes(**resp_json).sources
         except TypeError as type_error:
             raise NewspyException(
                 msg=f"Failed to validate the News Org sources response json: {resp_json}",
