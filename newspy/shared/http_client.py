@@ -2,7 +2,7 @@ import json
 from enum import Enum
 
 import requests
-import urllib3
+from requests.adapters import HTTPAdapter, Retry
 
 from newspy.shared.exceptions import NewspyHttpException
 
@@ -51,7 +51,7 @@ class HttpClient:
 
     def _build_session(self) -> None:
         self._session = requests.Session()
-        retry = urllib3.Retry(
+        retry = Retry(
             total=self._retries,
             connect=None,
             read=False,
@@ -61,7 +61,7 @@ class HttpClient:
             status_forcelist=self._status_forcelist,
         )
 
-        adapter = requests.adapters.HTTPAdapter(max_retries=retry)
+        adapter = HTTPAdapter(max_retries=retry)
         self._session.mount("https://", adapter)
 
     def send(
