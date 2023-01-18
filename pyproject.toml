@@ -15,9 +15,7 @@ documentation = "https://github.com/onemoola/newspy#readme"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-python-slugify = "6.1.2"
 requests = "2.28.1"
-urllib3 = "1.26.12"
 feedparser = "6.0.10"
 
 [tool.poetry.group.dev.dependencies]

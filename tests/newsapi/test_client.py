@@ -2,8 +2,8 @@ from datetime import datetime, timezone
 
 import pytest
 
-from newspy.newsapi.client import create_url, NewsapiEndpoint, NewsapiClient
-from newspy.newsapi.models import (
+from newspy.newsorg.client import create_url, NewsapiEndpoint, NewsapiClient
+from newspy.newsorg.models import (
     NewsapiCategory,
     Source,
     Publisher,
@@ -56,7 +56,7 @@ def test_publications_when_category_and_sources_are_not_none() -> None:
 def test_publications_by_sources() -> None:
     expected = [
         Publication(
-            slug="fortune-why-a-former-softbank-partner-is-tackling-mid-career-drop-off-for-working-mothers",
+            slug="fortune-why-a-former-softbank-partner-is-tackling-midcareer-dropoff-for-working-mothers",
             url="https://fortune.com/2022/06/01/former-softbank-partner-tackling-mid-career-drop-off-for-working-mothers/",
             url_to_image="https://content.fortune.com/wp-content/uploads/2022/05/Kirthiga1.jpg?resize=1200,600",
             title="Why a former SoftBank partner is tackling mid-career drop-off for working mothers",
