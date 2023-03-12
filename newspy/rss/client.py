@@ -1,15 +1,16 @@
-import feedparser
-
-from newspy.rss.models import RssArticle
-
+# businesslive.co.za
+# ft.com
+# reuters.com
+# bbc.com
+# theguardian.com
+# thetimes.co.uk
+# wsj.com
+# bloomberg.com
+# economist.com
+# nytimes.com
 
 def main():
-    feed = feedparser.parse(
-        "https://www.businesslive.co.za/rss/?publication=bl&section=markets"
-    )
-    feeds = feed["entries"]
-    for feed in feeds:
-        print(RssArticle.parse_obj(feed))
+    pass
 
 
 if __name__ == "__main__":
