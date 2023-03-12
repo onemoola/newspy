@@ -102,8 +102,8 @@ class HttpClient:
 
             if headers["Content-Type"] == "application/json":
                 results = response.json()
-            elif headers["Content-Type"] == "application/xml":
-                results = parse_xml(response.text)
+            elif headers["Content-Type"] == "application/rss+xml":
+                results = parse_xml(response.content)
             else:
                 results = response.text
         except requests.exceptions.HTTPError as http_error:
@@ -152,8 +152,8 @@ def parse_xml(data: str) -> list[dict[str, str]] | None:
             items.append({
                 "title": title,
                 "description": description,
-                "link": link,
-                "pubDate": pub_date
+                "url": link,
+                "publishedAt": pub_date
             })
         return items
     except (ElementTree.ParseError, AttributeError):
