@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/msotho/newspy/compare/v1.1.2...v1.2.0) (2023-04-07)
+
+
+### Features
+
+* add parser for xml ([c42e8d5](https://github.com/msotho/newspy/commit/c42e8d5766d3f37f8532a37041592118079f6deb))
+
 ## [1.1.2](https://github.com/msotho/newspy/compare/v1.1.1...v1.1.2) (2023-01-18)
 
 
