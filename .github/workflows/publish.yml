@@ -1,6 +1,12 @@
 name: Publish
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to publish to the Python Package Index (PyPI) repository'
+        required: true
+        type: string
 
 jobs:
   deploy:
@@ -18,8 +24,10 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
+          version: 1.4.2
           virtualenvs-create: true
           virtualenvs-in-project: true
+          installer-parallel: true
 
       - name: Load cached venv
         id: cached-pip-wheels
@@ -37,5 +45,5 @@ jobs:
       - name: Build and publish
         run: |
           poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
-          poetry version $(git describe --tags --abbrev=0)
+          poetry version ${{ inputs.tag }}
           poetry publish --build
