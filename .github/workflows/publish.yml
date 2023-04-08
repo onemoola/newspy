@@ -1,12 +1,6 @@
 name: Publish
 
-on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag to publish to the Python Package Index (PyPI) repository'
-        required: true
-        type: string
+on: workflow_dispatch
 
 jobs:
   deploy:
@@ -45,5 +39,4 @@ jobs:
       - name: Build and publish
         run: |
           poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
-          poetry version ${{ inputs.tag }}
           poetry publish --build
