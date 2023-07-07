@@ -41,8 +41,8 @@ jobs:
       - name: Update version
         run: |
           poetry version $(git describe --tags --abbrev=0)
-          git config --global user.name "Firstname Lastname"
-          git config --global user.email "your_email@youremail.com"
+          git config --global user.name "newspy"
+          git config --global user.email "newspy@youremail.com"
           
           git add pyproject.toml
           git commit -m "chore: bump version to $(git describe --tags --abbrev=0)"
