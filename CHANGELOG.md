@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/msotho/newspy/compare/v1.2.0...v1.2.1) (2023-07-07)
+
+
+### Bug Fixes
+
+* default the top headlines to business category ([2e63406](https://github.com/msotho/newspy/commit/2e63406cd37d8f65f6cd42edd80cd192ad31e271))
+
 # [1.2.0](https://github.com/msotho/newspy/compare/v1.1.2...v1.2.0) (2023-04-07)
 
 
