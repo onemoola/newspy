@@ -39,4 +39,8 @@ jobs:
           installer-parallel: true
 
       - name: Update version
-        run: poetry version $(git describe --tags --abbrev=0)
+        run: |
+          poetry version $(git describe --tags --abbrev=0)
+          git add pyproject.toml
+          git commit -m "chore: bump version to $(git describe --tags --abbrev=0)"
+          git push origin main
