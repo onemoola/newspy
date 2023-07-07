@@ -1,5 +1,6 @@
 from newspy.models import Publication
 from newspy.newsorg.client import NewsorgClient, NewsorgEndpoint
+from newspy.newsorg.models import NewsorgCategory
 from newspy.shared.http_client import HttpClient
 
 
@@ -12,4 +13,6 @@ class Newspy:
             http_client=HttpClient(), api_key=self._newsorg_key
         )
 
-        return newsorg_client.publications(endpoint=NewsorgEndpoint.TOP_HEADLINES)
+        return newsorg_client.publications(
+            endpoint=NewsorgEndpoint.TOP_HEADLINES, category=NewsorgCategory.BUSINESS
+        )
