@@ -5,6 +5,19 @@ features.
 If you're unclear on how to proceed after reading this guide, please create an issue and tag it with the `question`
 label.
 
+## Table of Contents
+
+- [Reporting Bugs or Suggesting Enhancements](#reporting-bugs-or-suggesting-enhancements)
+- [Contributing to the codebase](#contributing-to-the-codebase)
+    - [Forking the repository](#forking-the-repository)
+    - [Picking an issue](#picking-an-issue)
+    - [Setting up your local environment](#setting-up-your-local-environment)
+    - [Install the right versions of Python (3.10+) and Poetry (1.4.2+)](#install-the-right-versions-of-python-310-and-poetry-142)
+    - [Install the requirements](#install-the-requirements)
+    - [Install the git hook scripts](#install-the-git-hook-scripts)
+    - [Yarn install semantic-release dependencies](#yarn-install-semantic-release-dependencies)
+    - [Set up husky pre-commit hook](#set-up-husky-pre-commit-hook)
+
 ## Reporting Bugs or Suggesting Enhancements
 
 Before creating a bug report, please check that your bug has not already been reported, and that your bug exists on the
