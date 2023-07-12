@@ -9,14 +9,7 @@ The news client written in Python that fetches and curates the world news across
 - [Basic usage](#basic-usage)
     - [Create virtual environment](#create-virtual-environment)
     - [Get the news](#get-the-news)
-- [Local setup](#local-setup)
-    - [Install Python and Poetry](#install-python-and-poetry)
-    - [Clone the repository](#clone-the-repository)
-    - [Create and activate the virtual environment](#create-and-activate-the-virtual-environment)
-    - [Install the requirements](#install-the-requirements)
-    - [Install the git hook scripts](#install-the-git-hook-scripts)
-    - [Yarn install semantic-release dependencies](#yarn-install-semantic-release-dependencies)
-    - [Set up husky pre-commit hook](#set-up-husky-pre-commit-hook)
+- [Contributing](#contributing)
 
 ## Requirements
 
