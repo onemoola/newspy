@@ -133,6 +133,3 @@ dmypy.json
 node_modules/
 
 .idea/
-
-poetry.lock
-yarn.lock
