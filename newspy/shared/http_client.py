@@ -1,10 +1,16 @@
 import json
 from enum import Enum
+from xml.etree import ElementTree
 
 import requests
-import urllib3
+from requests.adapters import HTTPAdapter, Retry
 
 from newspy.shared.exceptions import NewspyHttpException
+
+
+class ContentType(str, Enum):
+    JSON = "application/json"
+    XML = "application/xml"
 
 
 class HttpMethod(str, Enum):
@@ -16,13 +22,13 @@ class HttpClient:
     MAX_RETRIES = 3
 
     def __init__(
-        self,
-        requests_session: bool = True,
-        requests_timeout: int = 5,
-        status_forcelist: tuple = (429, 500, 502, 503, 504),
-        retries: int = MAX_RETRIES,
-        status_retries: int = MAX_RETRIES,
-        backoff_factor: float = 0.3,
+            self,
+            requests_session: bool = True,
+            requests_timeout: int = 5,
+            status_forcelist: tuple = (429, 500, 502, 503, 504),
+            retries: int = MAX_RETRIES,
+            status_retries: int = MAX_RETRIES,
+            backoff_factor: float = 0.3,
     ) -> None:
         """
         :param requests_timeout:
@@ -51,9 +57,9 @@ class HttpClient:
 
     def _build_session(self) -> None:
         self._session = requests.Session()
-        retry = urllib3.Retry(
+        retry = Retry(
             total=self._retries,
-            connect=None,
+            connect=1,
             read=False,
             allowed_methods=frozenset(["GET", "POST"]),
             status=self._status_retries,
@@ -61,16 +67,16 @@ class HttpClient:
             status_forcelist=self._status_forcelist,
         )
 
-        adapter = requests.adapters.HTTPAdapter(max_retries=retry)
+        adapter = HTTPAdapter(max_retries=retry)
         self._session.mount("https://", adapter)
 
     def send(
-        self,
-        method: HttpMethod,
-        url: str,
-        headers: dict | None = None,
-        params: dict | None = None,
-        payload: dict | None = None,
+            self,
+            method: HttpMethod,
+            url: str,
+            headers: dict | None = None,
+            params: dict | None = None,
+            payload: dict | None = None,
     ) -> json:
         args = {}
         if headers is None:
@@ -93,7 +99,13 @@ class HttpClient:
             )
 
             response.raise_for_status()
-            results = response.json()
+
+            if headers["Content-Type"] == "application/json":
+                results = response.json()
+            elif headers["Content-Type"] == "application/rss+xml":
+                results = parse_xml(response.content)
+            else:
+                results = response.text
         except requests.exceptions.HTTPError as http_error:
             response = http_error.response
             try:
@@ -126,3 +138,24 @@ class HttpClient:
             results = None
 
         return results
+
+
+def parse_xml(data: str) -> list[dict[str, str]] | None:
+    try:
+        root = ElementTree.fromstring(data)
+        items = []
+        for item in root.findall(".//item"):
+            title = item.find("title").text.strip()
+            description = item.find("description").text.strip()
+            link = item.find("link").text.strip()
+            pub_date = item.find("pubDate").text.strip()
+            items.append({
+                "title": title,
+                "description": description,
+                "url": link,
+                "publishedAt": pub_date
+            })
+        return items
+    except (ElementTree.ParseError, AttributeError):
+        # Handle XML parsing errors
+        return None

@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from newspy.newsapi.models import Article, ArticlesRes, Source
+from newspy.newsorg.models import NewsorgArticle, NewsorgArticlesRes, Source
 from newspy.shared.http_client import HttpMethod
 
 
@@ -38,14 +38,14 @@ class HttpClientMock:
 
 
 @pytest.fixture
-def article_source() -> Source:
+def newsorg_article_source() -> Source:
     return Source(id="fortune", name="Fortune")
 
 
 @pytest.fixture
-def article(article_source) -> Article:
-    return Article(
-        source=article_source,
+def newsorg_article(newsorg_article_source) -> NewsorgArticle:
+    return NewsorgArticle(
+        source=newsorg_article_source,
         author="Emma Hinchliffe, Paige McGlauflin",
         title="Why a former SoftBank partner is tackling mid-career drop-off for working mothers",
         description="Former SoftBank partner and Facebook India director Kirthiga Reddy is the cofounder of Laddrr, a resource hub for working mothers aiming to prevent mid-career drop-off.",
@@ -57,12 +57,12 @@ def article(article_source) -> Article:
 
 
 @pytest.fixture
-def articles_res(article) -> ArticlesRes:
-    return ArticlesRes(status="ok", totalResults=86, articles=[article])
+def newsorg_articles_res(newsorg_article) -> NewsorgArticlesRes:
+    return NewsorgArticlesRes(status="ok", totalResults=86, articles=[newsorg_article])
 
 
 @pytest.fixture
-def article_res_json() -> json:
+def newsorg_article_res_json() -> json:
     return json.dumps(
         {
             "status": "ok",

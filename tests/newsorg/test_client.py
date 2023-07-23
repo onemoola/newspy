@@ -2,8 +2,13 @@ from datetime import datetime, timezone
 
 import pytest
 
-from newspy.newsapi.client import create_url, NewsapiEndpoint, NewsapiClient
-from newspy.newsapi.models import Category, Source, Publisher, Publication
+from newspy.newsorg.client import create_url, NewsorgEndpoint, NewsorgClient
+from newspy.newsorg.models import (
+    NewsorgCategory,
+    Source,
+    Publisher,
+    Publication,
+)
 from newspy.shared.exceptions import NewspyException
 from newspy.shared.http_client import HttpClient
 from tests.conftest import HttpClientMock
@@ -13,21 +18,21 @@ API_KEY = "seckfkdLkkekeKy"
 
 def test_create_url_when_endpoint_is_everything() -> None:
     expected = "https://newsapi.org/v2/everything"
-    actual = create_url(endpoint=NewsapiEndpoint.EVERYTHING)
+    actual = create_url(endpoint=NewsorgEndpoint.EVERYTHING)
 
     assert actual == expected
 
 
 def test_create_url_when_endpoint_is_top_headlines() -> None:
     expected = "https://newsapi.org/v2/top-headlines"
-    actual = create_url(endpoint=NewsapiEndpoint.TOP_HEADLINES)
+    actual = create_url(endpoint=NewsorgEndpoint.TOP_HEADLINES)
 
     assert actual == expected
 
 
 def test_create_url_when_endpoint_is_sources() -> None:
     expected = "https://newsapi.org/v2/top-headlines/sources"
-    actual = create_url(endpoint=NewsapiEndpoint.SOURCES)
+    actual = create_url(endpoint=NewsorgEndpoint.SOURCES)
 
     assert actual == expected
 
@@ -39,11 +44,11 @@ def test_create_url_when_endpoint_is_not_recognised() -> None:
 
 def test_publications_when_category_and_sources_are_not_none() -> None:
     with pytest.raises(NewspyException):
-        newsapi_client = NewsapiClient(http_client=HttpClient(), api_key=API_KEY)
-        newsapi_client.publications(
-            endpoint=NewsapiEndpoint.EVERYTHING,
+        newsorg_client = NewsorgClient(http_client=HttpClient(), api_key=API_KEY)
+        newsorg_client.publications(
+            endpoint=NewsorgEndpoint.EVERYTHING,
             search_text="bitcoin",
-            category=Category.BUSINESS,
+            category=NewsorgCategory.BUSINESS,
             sources=[Source(id="news-org", name="News Organisation")],
         )
 
@@ -51,7 +56,7 @@ def test_publications_when_category_and_sources_are_not_none() -> None:
 def test_publications_by_sources() -> None:
     expected = [
         Publication(
-            slug="fortune-why-a-former-softbank-partner-is-tackling-mid-career-drop-off-for-working-mothers",
+            slug="fortune-why-a-former-softbank-partner-is-tackling-midcareer-dropoff-for-working-mothers",
             url="https://fortune.com/2022/06/01/former-softbank-partner-tackling-mid-career-drop-off-for-working-mothers/",
             url_to_image="https://content.fortune.com/wp-content/uploads/2022/05/Kirthiga1.jpg?resize=1200,600",
             title="Why a former SoftBank partner is tackling mid-career drop-off for working mothers",
@@ -62,9 +67,9 @@ def test_publications_by_sources() -> None:
         )
     ]
 
-    newsapi_client = NewsapiClient(http_client=HttpClientMock(), api_key=API_KEY)
-    actual = newsapi_client.publications(
-        endpoint=NewsapiEndpoint.EVERYTHING,
+    newsorg_client = NewsorgClient(http_client=HttpClientMock(), api_key=API_KEY)
+    actual = newsorg_client.publications(
+        endpoint=NewsorgEndpoint.EVERYTHING,
         search_text="bitcoin",
         sources=[
             Source(id="bloomberg", name="Bloomberg"),

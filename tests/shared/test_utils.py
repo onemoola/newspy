@@ -23,7 +23,29 @@ from newspy.shared import utils
         ),
     ],
 )
-def test_create_published(test_input, expected):
-    actual = utils.to_datetime(string=test_input)
+def test_create_published(test_input, expected) -> None:
+    actual = utils.to_datetime(date_string=test_input)
+
+    assert actual == expected
+
+
+@pytest.mark.parametrize(
+    "test_input,expected",
+    [
+        ("This is a Test Sentence", "this-is-a-test-sentence"),
+        ("Hello, World!", "hello-world"),
+        ("How are you today", "how-are-you-today"),
+        (
+            "Amazon to acquire MGM for $8.45 billion. Scientists discover new planet in our solar system",
+            "amazon-to-acquire-mgm-for-845-billion-scientists-discover-new-planet-in-our-solar-system",
+        ),
+        (
+            "New York City reopens after COVID-19 pandemic",
+            "new-york-city-reopens-after-covid19-pandemic",
+        ),
+    ],
+)
+def test_slugify(test_input, expected) -> None:
+    actual = utils.slugify(sentence=test_input)
 
     assert actual == expected
