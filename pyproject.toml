@@ -22,7 +22,7 @@ black = {extras = ["d"], version = "^23.7.0"}
 pre-commit = "3.3.3"
 pytest = "7.4.0"
 pytest-cov = "4.1.0"
-responses = "0.23.1"
+responses = "0.23.3"
 
 [build-system]
 requires = ["poetry-core"]
