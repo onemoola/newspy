@@ -1,13 +1,13 @@
 import logging
 from enum import Enum
 
-from newspy.models import Language, Country
+from newspy.shared.models import Language, Country
 from newspy.newsorg.models import (
-    Publication,
     NewsorgArticlesRes,
     NewsorgCategory,
-    NewsorgArticleSourceRes,
-    Source,
+    NewsorgSourceRes,
+    NewsorgSource,
+    NewsorgArticle,
 )
 from newspy.shared.exceptions import NewspyException
 from newspy.shared.http_client import HttpClient, HttpMethod
@@ -23,7 +23,7 @@ class NewsorgEndpoint(str, Enum):
     SOURCES = "SOURCES"
 
 
-def create_url(endpoint: NewsorgEndpoint) -> str:
+def create_newsorg_url(endpoint: NewsorgEndpoint) -> str:
     match endpoint:
         case NewsorgEndpoint.EVERYTHING:
             return f"{BASE_URL}/everything"
@@ -42,14 +42,14 @@ class NewsorgClient:
         self._http_client = http_client
         self._api_key = api_key
 
-    def publications(
+    def get_articles(
         self,
-        endpoint: NewsorgEndpoint,
+        endpoint: NewsorgEndpoint = NewsorgEndpoint.TOP_HEADLINES,
         search_text: str | None = None,
         category: NewsorgCategory | None = None,
         country: Country | None = None,
-        sources: list[Source] | None = None,
-    ) -> list[Publication]:
+        sources: list[NewsorgSource] | None = None,
+    ) -> list[NewsorgArticle]:
         if category and sources:
             raise NewspyException(
                 msg="Choose either the category and sources attributes. Not both.",
@@ -67,26 +67,27 @@ class NewsorgClient:
             params["sources"] = ",".join([source.id for source in sources])
 
         resp_json = self._http_client.send(
-            method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
+            method=HttpMethod.GET,
+            url=create_newsorg_url(endpoint=endpoint),
+            params=params,
         )
 
         try:
             article_res = NewsorgArticlesRes(**resp_json)
-        except TypeError as type_error:
+        except TypeError as err:
             raise NewspyException(
                 msg=f"Failed to validate the News Org articles response json: {resp_json}",
-                reason=str(type_error),
+                reason=str(err),
             )
 
-        return [article.to_publication() for article in article_res.articles]
+        return article_res.articles
 
-    def sources(
+    def get_sources(
         self,
-        endpoint=NewsorgEndpoint.SOURCES,
         category: NewsorgCategory | None = None,
         language: Language | None = None,
         country: Country | None = None,
-    ) -> list[Source]:
+    ) -> list[NewsorgSource]:
         params = {"apiKey": self._api_key}
 
         if category:
@@ -97,13 +98,17 @@ class NewsorgClient:
             params["country"] = country.value
 
         resp_json = self._http_client.send(
-            method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
+            method=HttpMethod.GET,
+            url=create_newsorg_url(endpoint=NewsorgEndpoint.SOURCES),
+            params=params,
         )
 
         try:
-            return NewsorgArticleSourceRes(**resp_json).sources
+            source_res = NewsorgSourceRes(**resp_json)
         except TypeError as type_error:
             raise NewspyException(
                 msg=f"Failed to validate the News Org sources response json: {resp_json}",
                 reason=str(type_error),
             )
+
+        return source_res.sources

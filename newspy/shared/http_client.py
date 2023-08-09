@@ -22,13 +22,13 @@ class HttpClient:
     MAX_RETRIES = 3
 
     def __init__(
-            self,
-            requests_session: bool = True,
-            requests_timeout: int = 5,
-            status_forcelist: tuple = (429, 500, 502, 503, 504),
-            retries: int = MAX_RETRIES,
-            status_retries: int = MAX_RETRIES,
-            backoff_factor: float = 0.3,
+        self,
+        requests_session: bool = True,
+        requests_timeout: int = 5,
+        status_forcelist: tuple = (429, 500, 502, 503, 504),
+        retries: int = MAX_RETRIES,
+        status_retries: int = MAX_RETRIES,
+        backoff_factor: float = 0.3,
     ) -> None:
         """
         :param requests_timeout:
@@ -71,12 +71,12 @@ class HttpClient:
         self._session.mount("https://", adapter)
 
     def send(
-            self,
-            method: HttpMethod,
-            url: str,
-            headers: dict | None = None,
-            params: dict | None = None,
-            payload: dict | None = None,
+        self,
+        method: HttpMethod,
+        url: str,
+        headers: dict | None = None,
+        params: dict | None = None,
+        payload: dict | None = None,
     ) -> json:
         args = {}
         if headers is None:
@@ -149,12 +149,14 @@ def parse_xml(data: str) -> list[dict[str, str]] | None:
             description = item.find("description").text.strip()
             link = item.find("link").text.strip()
             pub_date = item.find("pubDate").text.strip()
-            items.append({
-                "title": title,
-                "description": description,
-                "url": link,
-                "publishedAt": pub_date
-            })
+            items.append(
+                {
+                    "title": title,
+                    "description": description,
+                    "url": link,
+                    "published": pub_date,
+                }
+            )
         return items
     except (ElementTree.ParseError, AttributeError):
         # Handle XML parsing errors

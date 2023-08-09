@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 
 import pytest
 
-from newspy.newsorg.client import create_url, NewsorgEndpoint, NewsorgClient
+from newspy.newsorg.client import create_newsorg_url, NewsorgEndpoint, NewsorgClient
 from newspy.newsorg.models import (
     NewsorgCategory,
     Source,
@@ -18,34 +18,34 @@ API_KEY = "seckfkdLkkekeKy"
 
 def test_create_url_when_endpoint_is_everything() -> None:
     expected = "https://newsapi.org/v2/everything"
-    actual = create_url(endpoint=NewsorgEndpoint.EVERYTHING)
+    actual = create_newsorg_url(endpoint=NewsorgEndpoint.EVERYTHING)
 
     assert actual == expected
 
 
 def test_create_url_when_endpoint_is_top_headlines() -> None:
     expected = "https://newsapi.org/v2/top-headlines"
-    actual = create_url(endpoint=NewsorgEndpoint.TOP_HEADLINES)
+    actual = create_newsorg_url(endpoint=NewsorgEndpoint.TOP_HEADLINES)
 
     assert actual == expected
 
 
 def test_create_url_when_endpoint_is_sources() -> None:
     expected = "https://newsapi.org/v2/top-headlines/sources"
-    actual = create_url(endpoint=NewsorgEndpoint.SOURCES)
+    actual = create_newsorg_url(endpoint=NewsorgEndpoint.SOURCES)
 
     assert actual == expected
 
 
 def test_create_url_when_endpoint_is_not_recognised() -> None:
     with pytest.raises(NewspyException):
-        create_url(endpoint="something-else")
+        create_newsorg_url(endpoint="something-else")
 
 
 def test_publications_when_category_and_sources_are_not_none() -> None:
     with pytest.raises(NewspyException):
         newsorg_client = NewsorgClient(http_client=HttpClient(), api_key=API_KEY)
-        newsorg_client.publications(
+        newsorg_client.get_articles(
             endpoint=NewsorgEndpoint.EVERYTHING,
             search_text="bitcoin",
             category=NewsorgCategory.BUSINESS,
@@ -68,7 +68,7 @@ def test_publications_by_sources() -> None:
     ]
 
     newsorg_client = NewsorgClient(http_client=HttpClientMock(), api_key=API_KEY)
-    actual = newsorg_client.publications(
+    actual = newsorg_client.get_articles(
         endpoint=NewsorgEndpoint.EVERYTHING,
         search_text="bitcoin",
         sources=[

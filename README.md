@@ -47,7 +47,7 @@ from newspy import Newspy
 newsorg_key = "YOUR_NEWSORG_KEY"
 
 client = Newspy(newsorg_key=newsorg_key)
-client.publications()
+client.get_publications()
 ```
 
 ## Contributing
