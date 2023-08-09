@@ -76,17 +76,22 @@ class Country(str, Enum):
     ZA = "za"
 
 
-@dataclass
-class Source:
-    """Publication source data model"""
+class Category(str, Enum):
+    BUSINESS = "business"
+    FINANCIAL = "financial"
+    ENTERTAINMENT = "entertainment"
+    GENERAL = "general"
+    HEALTH = "health"
+    SCIENCE = "science"
+    SPORTS = "sports"
+    TECHNOLOGY = "technology"
 
-    name: str
-    id: str | None = field(default=None)
-    description: str | None = field(default=None)
-    url: str | None = field(default=None)
-    category: str | None = field(default=None)
-    language: str | None = field(default=None)
-    country: str | None = field(default=None)
+
+class Source(str, Enum):
+    """Source domain model"""
+
+    NEWSORG = "newsorg"
+    RSS = "rss"
 
 
 @dataclass
@@ -95,6 +100,7 @@ class Publisher:
 
     id: str | None
     name: str
+    source: Source
 
 
 @dataclass
@@ -103,7 +109,7 @@ class Publication:
 
     slug: str
     url: str
-    url_to_image: str
+    url_to_image: str | None
     title: str
     abstract: str
     author: str | None

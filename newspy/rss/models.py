@@ -1,9 +1,7 @@
 import logging
 from dataclasses import dataclass
 
-from slugify import slugify
-
-from newspy.models import Publication, Publisher
+from newspy.shared.models import Publication, Publisher, Source, Language, Category
 from newspy.shared import utils
 
 logger = logging.getLogger(__name__)
@@ -24,28 +22,51 @@ class RssArticleContent:
 
 
 @dataclass
-class RssArticle:
+class RssSource:
     id: str
+    name: str
+    description: str
+    url: str
+    category: Category
+    language: Language
+
+    def to_publisher(self) -> Publisher:
+        return Publisher(id=self.id, name=self.name, source=Source.RSS)
+
+
+@dataclass
+class RssArticle:
     title: str
-    links: list[dict]
-    media_content: list[RssArticleMediaContent]
-    content: list[RssArticleContent]
+    description: str
+    url: str
     published: str
 
     def to_publication(self, publisher: Publisher) -> Publication:
         try:
             return Publication(
-                slug=f"{slugify(publisher.name)}-{slugify(self.title)}",
-                url=self.id,
-                url_to_image=self.media_content[0].url,
+                slug=f"{utils.slugify(publisher.name)}-{utils.slugify(self.title)}",
+                url=self.url,
+                url_to_image=None,
                 title=self.title,
-                abstract=self.content[0].value,
+                abstract=self.description,
                 author=None,
                 publisher=publisher,
                 published=utils.to_datetime(self.published),
             )
         except ValueError:
             logger.warning(
-                msg=f"Failed to parse the article with title: {self.title}, id: {self.id}, publisher: {publisher.name}"
+                msg=f"Failed to parse the article with title: {self.title}, publisher: {publisher.name}"
             )
             pass
+
+
+@dataclass
+class RssArticleRes:
+    sources: list[RssSource]
+
+    def __post_init__(self):
+        if isinstance(self.sources, list):
+            self.sources = [
+                RssSource(**source) if isinstance(source, dict) else source
+                for source in self.sources
+            ]
