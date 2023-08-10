@@ -8,7 +8,8 @@ The news client written in Python that fetches and curates the world news across
 - [News Sources](#news-sources)
 - [Basic usage](#basic-usage)
     - [Create virtual environment](#create-virtual-environment)
-    - [Get the news](#get-the-news)
+    - [Get the news from Newsorg API](#get-the-news-from-newsorg-api)
+    - [Get the news from RSS Feeds](#get-the-news-from-rss-feeds)
 - [Contributing](#contributing)
 
 ## Requirements
