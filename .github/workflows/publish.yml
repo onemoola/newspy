@@ -1,10 +1,18 @@
 name: Publish
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to publish to the GCloud Container Registry'
+        required: true
+        type: string
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ inputs.tag }}
 
     steps:
       - name: Checkout
@@ -25,15 +33,13 @@ jobs:
 
       - name: Update version
         run: |
-          poetry version $(git describe --tags --abbrev=0)
+          poetry version $VERSION
           
           git config --global user.name "newspy"
           git config --global user.email "newspy@youremail.com"
           
-          git remote add origin https://github.com/onemoola/newspy
-          
           git add pyproject.toml
-          git commit -m "chore: bump version to $(git describe --tags --abbrev=0)"
+          git commit -m "chore: bump version to $VERSION"
           git push origin main
 
       - name: Load cached venv
