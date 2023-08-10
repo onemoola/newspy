@@ -1,7 +1,7 @@
 import logging
-import os
 from enum import Enum
 
+from newspy.client import default_client_config
 from newspy.shared.models import Language, Country
 from newspy.newsorg.models import (
     NewsorgArticlesRes,
@@ -16,20 +16,6 @@ from newspy.shared.http_client import HttpClient, HttpMethod
 logger = logging.getLogger(__name__)
 
 BASE_URL = "https://newsapi.org/v2"
-
-
-default_client_config = {}
-
-
-def configure(newsorg_api_key: str | None = None) -> None:
-    global default_client_config
-
-    if newsorg_api_key is None:
-        newsorg_api_key = os.getenv("NEWSORG_API_KEY")
-
-    default_client_config = {
-        "newsorg_api_key": newsorg_api_key,
-    }
 
 
 class NewsorgEndpoint(str, Enum):
