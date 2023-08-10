@@ -26,6 +26,8 @@ jobs:
       - name: Update version
         run: |
           poetry version $(git describe --tags --abbrev=0)
+          
+          git init
           git config --global user.name "newspy"
           git config --global user.email "newspy@youremail.com"
           
