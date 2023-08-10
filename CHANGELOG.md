@@ -1,3 +1,20 @@
+# [2.0.0](https://github.com/onemoola/newspy/compare/v1.2.1...v2.0.0) (2023-08-10)
+
+
+### Code Refactoring
+
+* make it easier to call each client ([0d6b5dd](https://github.com/onemoola/newspy/commit/0d6b5dd8949a189589d761e6c8ca1741b081c443))
+
+
+### Features
+
+* add rss feed client ([0319975](https://github.com/onemoola/newspy/commit/03199752fa0fa8a6f91ac8b71feeeb6038a9a291))
+
+
+### BREAKING CHANGES
+
+* removes need for class
+
 ## [1.2.1](https://github.com/msotho/newspy/compare/v1.2.0...v1.2.1) (2023-07-07)
 
 
