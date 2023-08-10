@@ -1,18 +1,14 @@
-from newspy.models import Publication
-from newspy.newsorg.client import NewsorgClient, NewsorgEndpoint
-from newspy.newsorg.models import NewsorgCategory
-from newspy.shared.http_client import HttpClient
+import os
+
+default_client_config = {}
 
 
-class Newspy:
-    def __init__(self, newsorg_key: str) -> None:
-        self._newsorg_key = newsorg_key
+def configure(newsorg_api_key: str | None = None) -> None:
+    global default_client_config
 
-    def publications(self) -> list[Publication]:
-        newsorg_client = NewsorgClient(
-            http_client=HttpClient(), api_key=self._newsorg_key
-        )
+    if newsorg_api_key is None:
+        newsorg_api_key = os.getenv("NEWSORG_API_KEY")
 
-        return newsorg_client.publications(
-            endpoint=NewsorgEndpoint.TOP_HEADLINES, category=NewsorgCategory.BUSINESS
-        )
+    default_client_config = {
+        "newsorg_api_key": newsorg_api_key,
+    }

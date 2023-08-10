@@ -1,9 +1,14 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 
-from newspy.models import Publication, Publisher, Source
 from newspy.shared import utils
-from newspy.shared.utils import slugify
+from newspy.shared.models import (
+    Publication,
+    Publisher,
+    Source,
+    Country,
+    Language,
+)
 
 
 class NewsorgCategory(str, Enum):
@@ -25,16 +30,30 @@ class NewsorgArticlesReq:
 
 
 @dataclass
-class NewsorgArticleSourceRes:
+class NewsorgSource:
+    name: str
+    id: str | None = field(default=None)
+    description: str | None = field(default=None)
+    url: str | None = field(default=None)
+    category: NewsorgCategory | None = field(default=None)
+    language: Language | None = field(default=None)
+    country: Country | None = field(default=None)
+
+    def to_publisher(self) -> Publisher:
+        return Publisher(id=self.id, name=self.name, source=Source.NEWSORG)
+
+
+@dataclass
+class NewsorgSourceRes:
     """Newsorg API article source response"""
 
     status: str
-    sources: list[Source]
+    sources: list[NewsorgSource]
 
     def __post_init__(self):
         if isinstance(self.sources, list):
             self.sources = [
-                Source(**source) if isinstance(source, dict) else source
+                NewsorgSource(**source) if isinstance(source, dict) else source
                 for source in self.sources
             ]
 
@@ -43,7 +62,7 @@ class NewsorgArticleSourceRes:
 class NewsorgArticle:
     """Newsorg API articles"""
 
-    source: Source
+    source: NewsorgSource
     author: str | None
     title: str
     description: str
@@ -54,16 +73,17 @@ class NewsorgArticle:
 
     def __post_init__(self):
         if isinstance(self.source, dict):
-            self.source = Source(**self.source)
+            self.source = NewsorgSource(**self.source)
 
     def to_publication(self) -> Publication:
         publisher = Publisher(
             id=self.source.id,
             name=self.source.name,
+            source=Source.NEWSORG,
         )
 
         return Publication(
-            slug=f"{slugify(self.source.name)}-{slugify(self.title)}",
+            slug=f"{utils.slugify(self.source.name)}-{utils.slugify(self.title)}",
             url=self.url,
             url_to_image=self.urlToImage,
             title=self.title,

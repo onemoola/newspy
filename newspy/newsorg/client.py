@@ -1,16 +1,17 @@
 import logging
 from enum import Enum
 
-from newspy.models import Language, Country
+from newspy import client
 from newspy.newsorg.models import (
-    Publication,
     NewsorgArticlesRes,
     NewsorgCategory,
-    NewsorgArticleSourceRes,
-    Source,
+    NewsorgSourceRes,
+    NewsorgSource,
+    NewsorgArticle,
 )
 from newspy.shared.exceptions import NewspyException
 from newspy.shared.http_client import HttpClient, HttpMethod
+from newspy.shared.models import Language, Country
 
 logger = logging.getLogger(__name__)
 
@@ -37,73 +38,88 @@ def create_url(endpoint: NewsorgEndpoint) -> str:
             )
 
 
-class NewsorgClient:
-    def __init__(self, http_client: HttpClient, api_key: str) -> None:
-        self._http_client = http_client
-        self._api_key = api_key
+def _create_params(page_size: int = None, page: int = None) -> dict[str, str]:
+    newsorg_api_key = client.default_client_config.get("newsorg_api_key")
 
-    def publications(
-        self,
-        endpoint: NewsorgEndpoint,
-        search_text: str | None = None,
-        category: NewsorgCategory | None = None,
-        country: Country | None = None,
-        sources: list[Source] | None = None,
-    ) -> list[Publication]:
-        if category and sources:
-            raise NewspyException(
-                msg="Choose either the category and sources attributes. Not both.",
-            )
-
-        params = {"apiKey": self._api_key, "pageSize": 100, "page": 1}
-
-        if search_text:
-            params["q"] = search_text
-        if category and endpoint == NewsorgEndpoint.TOP_HEADLINES:
-            params["category"] = category.value
-        if country and endpoint == NewsorgEndpoint.TOP_HEADLINES:
-            params["country"] = country.value
-        if sources and len(sources) > 0:
-            params["sources"] = ",".join([source.id for source in sources])
-
-        resp_json = self._http_client.send(
-            method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
+    if newsorg_api_key is None:
+        raise NewspyException(
+            msg="The Newsorg API key is not configured. Please configure it by calling the configure function.",
         )
 
-        try:
-            article_res = NewsorgArticlesRes(**resp_json)
-        except TypeError as type_error:
-            raise NewspyException(
-                msg=f"Failed to validate the News Org articles response json: {resp_json}",
-                reason=str(type_error),
-            )
+    if page_size is None and page is None:
+        return {"apiKey": newsorg_api_key}
 
-        return [article.to_publication() for article in article_res.articles]
+    return {"apiKey": newsorg_api_key, "pageSize": page_size, "page": page}
 
-    def sources(
-        self,
-        endpoint=NewsorgEndpoint.SOURCES,
-        category: NewsorgCategory | None = None,
-        language: Language | None = None,
-        country: Country | None = None,
-    ) -> list[Source]:
-        params = {"apiKey": self._api_key}
 
-        if category:
-            params["category"] = category.value
-        if language:
-            params["language"] = language.value
-        if country:
-            params["country"] = country.value
+def get_articles(
+    endpoint: NewsorgEndpoint = NewsorgEndpoint.TOP_HEADLINES,
+    search_text: str | None = None,
+    category: NewsorgCategory | None = None,
+    country: Country | None = None,
+    sources: list[NewsorgSource] | None = None,
+) -> list[NewsorgArticle]:
+    params = _create_params(page_size=100, page=1)
 
-        resp_json = self._http_client.send(
-            method=HttpMethod.GET, url=create_url(endpoint=endpoint), params=params
+    if category and sources:
+        raise NewspyException(
+            msg="Choose either the category and sources attributes. Not both.",
         )
 
-        try:
-            return NewsorgArticleSourceRes(**resp_json).sources
-        except TypeError as type_error:
-            raise NewspyException(
-                msg=f"Failed to validate the News Org sources response json: {resp_json}",
-                reason=str(type_error),
-            )
+    if search_text:
+        params["q"] = search_text
+    if category and endpoint == NewsorgEndpoint.TOP_HEADLINES:
+        params["category"] = category.name
+    if country and endpoint == NewsorgEndpoint.TOP_HEADLINES:
+        params["country"] = country.name
+    if sources and len(sources) > 0:
+        params["sources"] = ",".join([source.id for source in sources])
+
+    http_client = HttpClient()
+    resp_json = http_client.send(
+        method=HttpMethod.GET,
+        url=create_url(endpoint=endpoint),
+        params=params,
+    )
+
+    try:
+        article_res = NewsorgArticlesRes(**resp_json)
+    except TypeError as exc:
+        raise NewspyException(
+            msg=f"Failed to validate the News Org articles response json: {resp_json}",
+            reason=str(exc),
+        )
+
+    return article_res.articles
+
+
+def get_sources(
+    category: NewsorgCategory | None = None,
+    language: Language | None = None,
+    country: Country | None = None,
+) -> list[NewsorgSource]:
+    params = _create_params()
+
+    if category:
+        params["category"] = category.value
+    if language:
+        params["language"] = language.value
+    if country:
+        params["country"] = country.value
+
+    http_client = HttpClient()
+    resp_json = http_client.send(
+        method=HttpMethod.GET,
+        url=create_url(endpoint=NewsorgEndpoint.SOURCES),
+        params=params,
+    )
+
+    try:
+        source_res = NewsorgSourceRes(**resp_json)
+    except TypeError as exc:
+        raise NewspyException(
+            msg=f"Failed to validate the News Org sources response json: {resp_json}",
+            reason=str(exc),
+        )
+
+    return source_res.sources

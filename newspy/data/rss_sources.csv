@@ -1,0 +1,11 @@
+id,name,description,url,category,language
+wsj-markets,The Wall Street Journal Markets,The Wall Street Journal (WSJ) Markets RSS,https://feeds.a.dj.com/rss/RSSMarketsMain.xml,financial,en
+wsj-business,The Wall Street Journal Business,The Wall Street Journal (WSJ) Business RSS,https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml,business,en
+ft-markets,Financial Times Markets,Financial Times (FT) Markets RSS,https://www.ft.com/markets?format=rss,financial,en
+ft-companies,Financial Times Companies,Financial Times (FT) Companies RSS,https://www.ft.com/companies?format=rss,business,en
+ft-personal-finance,Financial Times Personal Finance,Financial Times (FT) Personal Finance RSS,https://www.ft.com/personal-finance?format=rss,financial,en
+yahoo-finance,Yahoo Finance,Yahoo Finance RSS,https://finance.yahoo.com/rss/,financial,en
+investing-com-za,Investing.com ZA,Investing.com ZA RSS,https://za.investing.com/rss/news_25.rss,financial,en
+investing-com-crypto,Investing.com Crypto,Investing.com Crypto RSS,https://za.investing.com/rss/news_301.rss,financial,en
+cnbc-finance,CNBC Finance,CNBC Finance RSS,https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664,financial,en
+cnbc-business,CNBC Business,CNBC Business RSS,https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147,business,en
