@@ -2,8 +2,7 @@ import pytest
 import responses
 
 from newspy import client
-from newspy.newsorg import newsorg
-from newspy.newsorg.client import NewsorgEndpoint
+from newspy import newsorg, NewsorgEndpoint
 from newspy.newsorg.models import (
     NewsorgCategory,
     NewsorgSource,

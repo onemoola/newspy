@@ -21,7 +21,7 @@ The news client written in Python that fetches and curates the world news across
 ## News Sources
 
 - [X] News API. Requires API Key from: https://newsapi.org/
-- [ ] RSS feeds
+- [X] RSS feeds
 
 ## Basic usage
 
@@ -39,15 +39,31 @@ python -m venv .venv
 pip install newspy
 ```
 
-### Get the news
+### Get the news from Newsorg API
 
 ```python
-from newspy import Newspy
+from newspy import client
+from newspy import newsorg, NewsorgEndpoint
 
-newsorg_key = "YOUR_NEWSORG_KEY"
+newsorg_api_key = "YOUR_NEWSORG_KEY"
 
-client = Newspy(newsorg_key=newsorg_key)
-client.get_publications()
+client.configure(newsorg_api_key=newsorg_api_key)
+newsorg_articles = newsorg.get_articles(
+    endpoint=NewsorgEndpoint.TOP_HEADLINES,
+    search_text="bitcoin",
+)
+
+print(newsorg_articles)
+```
+
+### Get the news from RSS Feeds
+
+```python
+from newspy import rss
+
+rss_articles = rss.get_articles()
+
+print(rss_articles)
 ```
 
 ## Contributing

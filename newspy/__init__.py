@@ -1,2 +1,3 @@
-from newspy.newsorg import newsorg  # noqa
-from newspy.rss import rss  # noqa
+from newspy.newsorg import client as newsorg  # noqa
+from newspy.newsorg.client import NewsorgEndpoint  # noqa
+from newspy.rss import client as rss  # noqa
