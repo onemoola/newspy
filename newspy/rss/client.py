@@ -3,7 +3,6 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from newspy.rss.models import RssSource, RssArticle
-from newspy.shared.exceptions import NewspyException
 from newspy.shared.http_client import HttpClient, HttpMethod
 
 
@@ -27,21 +26,15 @@ def get_articles(sources: list[RssSource] | None = None) -> list[RssArticle]:
 
             resp_json = future.result()
 
-            try:
-                if resp_json:
-                    for article in resp_json:
-                        articles.append(RssArticle(**article))
-            except TypeError as err:
-                raise NewspyException(
-                    msg=f"Failed to validate the RSS articles response json: {resp_json}",
-                    reason=str(err),
-                )
+            if resp_json:
+                for article in resp_json:
+                    articles.append(RssArticle(**article))
 
     return articles
 
 
-def get_sources() -> list[RssSource]:
-    with open(Path("newspy/data/rss_sources.csv"), "r") as f:
+def get_sources(file_path=Path("newspy/data/rss_sources.csv")) -> list[RssSource]:
+    with open(file_path, "r") as f:
         reader = csv.DictReader(f)
         sources = [RssSource(**row) for row in reader]
 

@@ -1,15 +1,14 @@
 from dataclasses import dataclass, field
 from enum import Enum
 
+from newspy.shared import utils
 from newspy.shared.models import (
     Publication,
     Publisher,
     Source,
     Country,
     Language,
-    Category,
 )
-from newspy.shared import utils
 
 
 class NewsorgCategory(str, Enum):
@@ -36,7 +35,7 @@ class NewsorgSource:
     id: str | None = field(default=None)
     description: str | None = field(default=None)
     url: str | None = field(default=None)
-    category: Category | None = field(default=None)
+    category: NewsorgCategory | None = field(default=None)
     language: Language | None = field(default=None)
     country: Country | None = field(default=None)
 

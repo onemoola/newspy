@@ -1,0 +1,3 @@
+id,name,description,url,category,language
+wsj-markets,The Wall Street Journal Markets,The Wall Street Journal (WSJ) Markets RSS,https://feeds.a.dj.com/rss/RSSMarketsMain.xml,financial,en
+wsj-business,The Wall Street Journal Business,The Wall Street Journal (WSJ) Business RSS,https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml,business,en
