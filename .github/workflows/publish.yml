@@ -30,6 +30,8 @@ jobs:
           git config --global user.name "newspy"
           git config --global user.email "newspy@youremail.com"
           
+          git remote add origin https://github.com/onemoola/newspy
+          
           git add pyproject.toml
           git commit -m "chore: bump version to $(git describe --tags --abbrev=0)"
           git push origin main
