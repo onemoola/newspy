@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/onemoola/newspy/compare/v2.0.0...v2.0.1) (2023-08-12)
+
+
+### Bug Fixes
+
+* compress and get the data source from remote ([3a4b617](https://github.com/onemoola/newspy/commit/3a4b6176a39c7f613bc2005d3035b194af8b9877))
+
 # [2.0.0](https://github.com/onemoola/newspy/compare/v1.2.1...v2.0.0) (2023-08-10)
 
 
