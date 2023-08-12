@@ -230,3 +230,49 @@ def test_parse_xml() -> None:
     actual = http_client.parse_xml(xml)
 
     assert actual == expected
+
+
+@responses.activate
+def test_http_client_when_content_type_is_text():
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://www.ft.com/",
+            "body": "Hello World",
+            "status": 200,
+            "content_type": "text/html",
+        }
+    )
+
+    client = HttpClient()
+    actual = client.send(
+        method=HttpMethod.GET,
+        url="https://www.ft.com/",
+        headers={"Content-Type": "text/html"},
+        params=None,
+    )
+
+    assert actual == "Hello World"
+
+
+@responses.activate
+def test_http_client_when_content_type_is_zip():
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://www.ft.com/",
+            "body": "Hello World",
+            "status": 200,
+            "content_type": "application/zip",
+        }
+    )
+
+    client = HttpClient()
+    actual = client.send(
+        method=HttpMethod.GET,
+        url="https://www.ft.com/",
+        headers={"Content-Type": "application/zip"},
+        params=None,
+    )
+
+    assert actual == b"Hello World"

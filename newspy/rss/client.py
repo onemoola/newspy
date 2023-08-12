@@ -1,9 +1,13 @@
 import csv
+import gzip
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from typing import NewType
 
 from newspy.rss.models import RssSource, RssArticle
 from newspy.shared.http_client import HttpClient, HttpMethod
+
+URL = NewType("URL", str)
 
 
 def get_articles(sources: list[RssSource] | None = None) -> list[RssArticle]:
@@ -33,8 +37,24 @@ def get_articles(sources: list[RssSource] | None = None) -> list[RssArticle]:
     return articles
 
 
-def get_sources(file_path=Path("newspy/data/rss_sources.csv")) -> list[RssSource]:
-    with open(file_path, "r") as f:
+def get_sources(
+    file_path: (Path | URL) = URL(
+        "https://github.com/onemoola/newspy/tree/main/data/rss_sources.csv.gz"
+    ),
+) -> list[RssSource]:
+    if isinstance(file_path, Path):
+        file_content = file_path
+    elif isinstance(file_path, str):
+        http_client = HttpClient()
+        file_content = http_client.send(
+            method=HttpMethod.GET,
+            url=file_path,
+            headers={"Content-Type": "application/zip"},
+        )
+    else:
+        return []
+
+    with gzip.open(file_content, "rt") as f:
         reader = csv.DictReader(f)
         sources = [RssSource(**row) for row in reader]
 

@@ -100,12 +100,16 @@ class HttpClient:
 
             response.raise_for_status()
 
-            if headers["Content-Type"] == "application/json":
-                results = response.json()
-            elif headers["Content-Type"] == "application/rss+xml":
-                results = parse_xml(response.content)
-            else:
-                results = response.text
+            match headers["Content-Type"]:
+                case "application/json":
+                    results = response.json()
+                case "application/rss+xml":
+                    results = parse_xml(response.content)
+                case "application/zip":
+                    results = response.content
+                case _:
+                    results = response.text
+
         except requests.exceptions.HTTPError as http_error:
             response = http_error.response
             try:

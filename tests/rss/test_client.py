@@ -3,6 +3,7 @@ from pathlib import Path
 import responses
 
 from newspy import rss
+from newspy.rss.client import URL
 from newspy.rss.models import RssSource, RssCategory, RssArticle
 from newspy.shared.models import Language
 
@@ -76,7 +77,7 @@ def test_get_rss_articles_return_none(rss_articles_res_broken_xml) -> None:
     assert actual == []
 
 
-def test_get_rss_sources() -> None:
+def test_get_rss_sources_from_local_path() -> None:
     expected = [
         RssSource(
             id="wsj-markets",
@@ -95,6 +96,52 @@ def test_get_rss_sources() -> None:
             language=Language.EN,
         ),
     ]
-    actual = rss.get_sources(file_path=Path("tests/data/rss_sources.csv"))
+    actual = rss.get_sources(file_path=Path("tests/data/rss_sources.csv.gz"))
 
     assert actual == expected
+
+
+@responses.activate
+def test_get_rss_resources_from_remote_path():
+    expected = [
+        RssSource(
+            id="wsj-markets",
+            name="The Wall Street Journal Markets",
+            description="The Wall Street Journal (WSJ) Markets RSS",
+            url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            category=RssCategory.FINANCIAL,
+            language=Language.EN,
+        ),
+        RssSource(
+            id="wsj-business",
+            name="The Wall Street Journal Business",
+            description="The Wall Street Journal (WSJ) Business RSS",
+            url="https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
+            category=RssCategory.BUSINESS,
+            language=Language.EN,
+        ),
+    ]
+
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://github.com/onemoola/newspy/tree/main/data/rss_sources.csv.gz",
+            "body": "tests/data/rss_sources.csv.gz",
+            "status": 200,
+            "content_type": "application/zip",
+        }
+    )
+
+    actual = rss.get_sources(
+        file_path=URL(
+            "https://github.com/onemoola/newspy/tree/main/data/rss_sources.csv.gz"
+        )
+    )
+
+    assert actual == expected
+
+
+def test_get_rss_resources_from_invalid_path():
+    actual = rss.get_sources(file_path=123)  # type: ignore
+
+    assert actual == []
