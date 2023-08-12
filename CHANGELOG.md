@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/onemoola/newspy/compare/v2.0.1...v2.0.2) (2023-08-12)
+
+
+### Bug Fixes
+
+* convert to bytes and url to raw ([bfeecc1](https://github.com/onemoola/newspy/commit/bfeecc16dfb5be3cf663d106c8934d15b790e50e))
+
 ## [2.0.1](https://github.com/onemoola/newspy/compare/v2.0.0...v2.0.1) (2023-08-12)
 
 
