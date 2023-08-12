@@ -125,8 +125,8 @@ def test_get_rss_resources_from_remote_path():
     responses.add(
         **{
             "method": responses.GET,
-            "url": "https://github.com/onemoola/newspy/tree/main/data/rss_sources.csv.gz",
-            "body": "tests/data/rss_sources.csv.gz",
+            "url": "https://github.com/onemoola/newspy/blob/main/data/rss_sources.csv.gz?raw=true",
+            "body": open("tests/data/rss_sources.csv.gz", "rb").read(),
             "status": 200,
             "content_type": "application/zip",
         }
@@ -134,7 +134,7 @@ def test_get_rss_resources_from_remote_path():
 
     actual = rss.get_sources(
         file_path=URL(
-            "https://github.com/onemoola/newspy/tree/main/data/rss_sources.csv.gz"
+            "https://github.com/onemoola/newspy/blob/main/data/rss_sources.csv.gz?raw=true"
         )
     )
 
