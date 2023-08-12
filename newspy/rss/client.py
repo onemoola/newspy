@@ -1,5 +1,6 @@
 import csv
 import gzip
+import io
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import NewType
@@ -39,7 +40,7 @@ def get_articles(sources: list[RssSource] | None = None) -> list[RssArticle]:
 
 def get_sources(
     file_path: (Path | URL) = URL(
-        "https://github.com/onemoola/newspy/tree/main/data/rss_sources.csv.gz"
+        "https://github.com/onemoola/newspy/blob/main/data/rss_sources.csv.gz?raw=true"
     ),
 ) -> list[RssSource]:
     if isinstance(file_path, Path):
@@ -51,6 +52,7 @@ def get_sources(
             url=file_path,
             headers={"Content-Type": "application/zip"},
         )
+        file_content = io.BytesIO(file_content)
     else:
         return []
 
