@@ -1,3 +1,11 @@
+# [2.1.0](https://github.com/onemoola/newspy/compare/v2.0.2...v2.1.0) (2023-08-13)
+
+
+### Features
+
+* add most newsorg params ([0a2a506](https://github.com/onemoola/newspy/commit/0a2a506721b7cba7ad05dd4f131e39d9b737c7b7))
+* add the default client for sources and articles ([a7c92f2](https://github.com/onemoola/newspy/commit/a7c92f22a09bc1df4bb5cd2b5684e6cb057d553f))
+
 ## [2.0.2](https://github.com/onemoola/newspy/compare/v2.0.1...v2.0.2) (2023-08-12)
 
 
