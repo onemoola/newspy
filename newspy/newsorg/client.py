@@ -1,27 +1,22 @@
 import logging
-from enum import Enum
+from datetime import date
 
 from newspy import client
 from newspy.newsorg.models import (
     NewsorgArticlesRes,
     NewsorgCategory,
+    NewsorgEndpoint,
     NewsorgSourceRes,
     NewsorgSource,
     NewsorgArticle,
 )
 from newspy.shared.exceptions import NewspyException
 from newspy.shared.http_client import HttpClient, HttpMethod
-from newspy.shared.models import Language, Country
+from newspy.shared.models import Country, Language
 
 logger = logging.getLogger(__name__)
 
 BASE_URL = "https://newsapi.org/v2"
-
-
-class NewsorgEndpoint(str, Enum):
-    EVERYTHING = "EVERYTHING"
-    TOP_HEADLINES = "TOP_HEADLINES"
-    SOURCES = "SOURCES"
 
 
 def create_url(endpoint: NewsorgEndpoint) -> str:
@@ -30,15 +25,24 @@ def create_url(endpoint: NewsorgEndpoint) -> str:
             return f"{BASE_URL}/everything"
         case NewsorgEndpoint.TOP_HEADLINES:
             return f"{BASE_URL}/top-headlines"
-        case NewsorgEndpoint.SOURCES:
-            return f"{BASE_URL}/top-headlines/sources"
         case _:
             raise NewspyException(
                 msg=f"The endpoint has to be one of the following values: 'EVERYTHING' or 'TOP_HEADLINES' or 'SOURCES'",
             )
 
 
-def _create_params(page_size: int = None, page: int = None) -> dict[str, str]:
+def create_params(
+    endpoint: NewsorgEndpoint = NewsorgEndpoint.TOP_HEADLINES,
+    search_text: str | None = None,
+    category: NewsorgCategory | None = None,
+    country: Country | None = None,
+    language: Language | None = None,
+    sources: list[NewsorgSource] | None = None,
+    from_date: date | None = None,
+    to_date: date | None = None,
+    page_size: int | None = None,
+    page: int | None = None,
+) -> dict[str, str]:
     newsorg_api_key = client.default_client_config.get("newsorg_api_key")
 
     if newsorg_api_key is None:
@@ -46,10 +50,52 @@ def _create_params(page_size: int = None, page: int = None) -> dict[str, str]:
             msg="The Newsorg API key is not configured. Please configure it by calling the configure function.",
         )
 
-    if page_size is None and page is None:
-        return {"apiKey": newsorg_api_key}
+    if category and sources:
+        raise NewspyException(
+            msg="Choose either the category and sources attributes. Not both.",
+        )
 
-    return {"apiKey": newsorg_api_key, "pageSize": page_size, "page": page}
+    if country and sources:
+        raise NewspyException(
+            msg="Choose either the country and sources attributes. Not both.",
+        )
+
+    params = {"apiKey": newsorg_api_key}
+
+    if search_text:
+        params["q"] = search_text
+    if sources and len(sources) > 0:
+        params["sources"] = ",".join([source.id for source in sources])
+
+    if endpoint.TOP_HEADLINES:
+        if country:
+            params["country"] = country.value
+
+        if category:
+            params["category"] = category.value
+
+    if endpoint.EVERYTHING:
+        if from_date and to_date:
+            if from_date > to_date:
+                raise NewspyException(
+                    msg="The from date cannot be greater than the to date.",
+                )
+
+            params["from"] = from_date.strftime("%Y-%m-%d")
+            params["to"] = to_date.strftime("%Y-%m-%d")
+
+        if language:
+            params["language"] = language.value
+
+    if not page_size:
+        page_size = 100
+    params["pageSize"] = page_size
+
+    if not page:
+        page = 1
+    params["page"] = page
+
+    return params
 
 
 def get_articles(
@@ -57,23 +103,25 @@ def get_articles(
     search_text: str | None = None,
     category: NewsorgCategory | None = None,
     country: Country | None = None,
+    language: Language | None = None,
     sources: list[NewsorgSource] | None = None,
+    from_date: date | None = None,
+    to_date: date | None = None,
+    page_size: int | None = None,
+    page: int | None = None,
 ) -> list[NewsorgArticle]:
-    params = _create_params(page_size=100, page=1)
-
-    if category and sources:
-        raise NewspyException(
-            msg="Choose either the category and sources attributes. Not both.",
-        )
-
-    if search_text:
-        params["q"] = search_text
-    if category and endpoint == NewsorgEndpoint.TOP_HEADLINES:
-        params["category"] = category.name
-    if country and endpoint == NewsorgEndpoint.TOP_HEADLINES:
-        params["country"] = country.name
-    if sources and len(sources) > 0:
-        params["sources"] = ",".join([source.id for source in sources])
+    params = create_params(
+        endpoint=endpoint,
+        search_text=search_text,
+        category=category,
+        country=country,
+        language=language,
+        sources=sources,
+        from_date=from_date,
+        to_date=to_date,
+        page_size=page_size,
+        page=page,
+    )
 
     http_client = HttpClient()
     resp_json = http_client.send(
@@ -98,19 +146,12 @@ def get_sources(
     language: Language | None = None,
     country: Country | None = None,
 ) -> list[NewsorgSource]:
-    params = _create_params()
-
-    if category:
-        params["category"] = category.value
-    if language:
-        params["language"] = language.value
-    if country:
-        params["country"] = country.value
+    params = create_params(category=category, language=language, country=country)
 
     http_client = HttpClient()
     resp_json = http_client.send(
         method=HttpMethod.GET,
-        url=create_url(endpoint=NewsorgEndpoint.SOURCES),
+        url=f"{BASE_URL}/top-headlines/sources",
         params=params,
     )
 

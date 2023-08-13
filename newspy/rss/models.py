@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 from newspy.shared import utils
-from newspy.shared.models import Publication, Publisher, Source, Language
+from newspy.shared.models import Article, Source, Language, Channel
 
 logger = logging.getLogger(__name__)
 
@@ -42,43 +42,28 @@ class RssSource:
     category: RssCategory
     language: Language
 
-    def to_publisher(self) -> Publisher:
-        return Publisher(id=self.id, name=self.name, source=Source.RSS)
+    def to_source(self) -> Source:
+        return Source(id=self.id, name=self.name, channel=Channel.RSS)
 
 
 @dataclass
 class RssArticle:
+    source: RssSource
     title: str
     description: str
     url: str
     published: str
 
-    def to_publication(self, publisher: Publisher) -> Publication:
-        try:
-            return Publication(
-                slug=f"{utils.slugify(publisher.name)}-{utils.slugify(self.title)}",
-                url=self.url,
-                url_to_image=None,
-                title=self.title,
-                abstract=self.description,
-                author=None,
-                publisher=publisher,
-                published=utils.to_datetime(self.published),
-            )
-        except ValueError:
-            logger.warning(
-                msg=f"Failed to parse the article with title: {self.title}, publisher: {publisher.name}"
-            )
-            pass
+    def to_article(self) -> Article:
+        source = self.source.to_source()
 
-
-@dataclass
-class RssArticleRes:
-    sources: list[RssSource]
-
-    def __post_init__(self):
-        if isinstance(self.sources, list):
-            self.sources = [
-                RssSource(**source) if isinstance(source, dict) else source
-                for source in self.sources
-            ]
+        return Article(
+            slug=f"{utils.slugify(source.name)}-{utils.slugify(self.title)}",
+            url=self.url,
+            url_to_image=None,
+            title=self.title,
+            abstract=self.description,
+            author=None,
+            source=source,
+            published=utils.to_datetime(self.published),
+        )

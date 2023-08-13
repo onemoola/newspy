@@ -3,12 +3,17 @@ from enum import Enum
 
 from newspy.shared import utils
 from newspy.shared.models import (
-    Publication,
-    Publisher,
+    Article,
     Source,
     Country,
     Language,
+    Channel,
 )
+
+
+class NewsorgEndpoint(str, Enum):
+    EVERYTHING = "EVERYTHING"
+    TOP_HEADLINES = "TOP_HEADLINES"
 
 
 class NewsorgCategory(str, Enum):
@@ -39,8 +44,8 @@ class NewsorgSource:
     language: Language | None = field(default=None)
     country: Country | None = field(default=None)
 
-    def to_publisher(self) -> Publisher:
-        return Publisher(id=self.id, name=self.name, source=Source.NEWSORG)
+    def to_source(self) -> Source:
+        return Source(id=self.id, name=self.name, channel=Channel.NEWSORG)
 
 
 @dataclass
@@ -75,21 +80,17 @@ class NewsorgArticle:
         if isinstance(self.source, dict):
             self.source = NewsorgSource(**self.source)
 
-    def to_publication(self) -> Publication:
-        publisher = Publisher(
-            id=self.source.id,
-            name=self.source.name,
-            source=Source.NEWSORG,
-        )
+    def to_article(self) -> Article:
+        source = self.source.to_source()
 
-        return Publication(
+        return Article(
             slug=f"{utils.slugify(self.source.name)}-{utils.slugify(self.title)}",
             url=self.url,
             url_to_image=self.urlToImage,
             title=self.title,
             abstract=self.description,
             author=self.author,
-            publisher=publisher,
+            source=source,
             published=utils.to_datetime(self.publishedAt),
         )
 

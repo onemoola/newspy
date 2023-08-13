@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 
@@ -87,24 +87,24 @@ class Category(str, Enum):
     TECHNOLOGY = "technology"
 
 
-class Source(str, Enum):
+class Channel(str, Enum):
     """Source domain model"""
 
-    NEWSORG = "newsorg"
-    RSS = "rss"
+    NEWSORG = "NEWSORG"
+    RSS = "RSS"
 
 
 @dataclass
-class Publisher:
+class Source:
     """Publisher domain model"""
 
     id: str | None
     name: str
-    source: Source
+    channel: Channel
 
 
 @dataclass
-class Publication:
+class Article:
     """Publication domain model"""
 
     slug: str
@@ -113,5 +113,5 @@ class Publication:
     title: str
     abstract: str
     author: str | None
-    publisher: Publisher
+    source: Source
     published: datetime

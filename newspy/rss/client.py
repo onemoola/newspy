@@ -1,7 +1,7 @@
 import csv
 import gzip
 import io
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import NewType
 
@@ -19,8 +19,8 @@ def get_articles(sources: list[RssSource] | None = None) -> list[RssArticle]:
 
     articles = []
     with ThreadPoolExecutor() as executor:
-        for source in sources:
-            future = executor.submit(
+        futures = [
+            executor.submit(
                 http_client.send,
                 method=HttpMethod.GET,
                 url=source.url,
@@ -28,12 +28,29 @@ def get_articles(sources: list[RssSource] | None = None) -> list[RssArticle]:
                 params=None,
                 payload=None,
             )
+            for source in sources
+        ]
 
+        for future in as_completed(futures):
             resp_json = future.result()
 
             if resp_json:
                 for article in resp_json:
-                    articles.append(RssArticle(**article))
+                    try:
+                        source = filter(
+                            lambda s: s.url == article["source_url"], sources
+                        )
+                        articles.append(
+                            RssArticle(
+                                source=next(source),
+                                title=article["title"],
+                                description=article["description"],
+                                url=article["url"],
+                                published=article["published"],
+                            )
+                        )
+                    except KeyError:
+                        pass
 
     return articles
 

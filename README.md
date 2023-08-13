@@ -8,6 +8,7 @@ The news client written in Python that fetches and curates the world news across
 - [News Sources](#news-sources)
 - [Basic usage](#basic-usage)
     - [Create virtual environment](#create-virtual-environment)
+    - [Get the news from Newsorg API and RSS Feeds](#get-the-news-from-newsorg-api-and-rss-feeds)
     - [Get the news from Newsorg API](#get-the-news-from-newsorg-api)
     - [Get the news from RSS Feeds](#get-the-news-from-rss-feeds)
 - [Contributing](#contributing)
@@ -40,15 +41,32 @@ python -m venv .venv
 pip install newspy
 ```
 
-### Get the news from Newsorg API
+### Get the news from Newsorg API and RSS Feeds
 
 ```python
-from newspy import client
-from newspy import newsorg, NewsorgEndpoint
+import newspy.client as newspy
 
 newsorg_api_key = "YOUR_NEWSORG_KEY"
 
-client.configure(newsorg_api_key=newsorg_api_key)
+newspy.configure(newsorg_api_key=newsorg_api_key)
+
+news_articles = newspy.get_articles()
+print(news_articles)
+
+news_sources = newspy.get_sources()
+print(news_sources)
+```
+
+### Get the news from Newsorg API
+
+```python
+import newspy.client as newspy
+from newspy import newsorg
+from newspy.newsorg.models import NewsorgEndpoint
+
+newsorg_api_key = "YOUR_NEWSORG_KEY"
+
+newspy.configure(newsorg_api_key=newsorg_api_key)
 newsorg_articles = newsorg.get_articles(
     endpoint=NewsorgEndpoint.TOP_HEADLINES,
     search_text="bitcoin",

@@ -22,12 +22,28 @@ def test_get_rss_articles(rss_articles_res_xml) -> None:
 
     expected = [
         RssArticle(
+            source=RssSource(
+                id="wsj-markets",
+                name="The Wall Street Journal Markets",
+                description="The Wall Street Journal (WSJ) Markets RSS",
+                url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+                category=RssCategory.FINANCIAL,
+                language=Language.EN,
+            ),
             title="Three global cities are pulling ahead since the peak of the pandemic",
             description="Miami, Dubai and Singapore boom by welcoming those chased out of rival international hubs",
             url="https://www.ft.com/content/1cf1b55e-bb8d-435a-95a3-5d21149939b6",
             published="Sun, 12 Mar 2023 13:00:35 GMT",
         ),
         RssArticle(
+            source=RssSource(
+                id="wsj-markets",
+                name="The Wall Street Journal Markets",
+                description="The Wall Street Journal (WSJ) Markets RSS",
+                url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+                category=RssCategory.FINANCIAL,
+                language=Language.EN,
+            ),
             title="UK seeks to tap Middle East money to buy out SVB unit",
             description="‘Lead white knight’ eyeing British arm of tech lender that had billions in deposits",
             url="https://www.ft.com/content/cde4aa95-1cb5-408d-b35f-3216eaee46ae",

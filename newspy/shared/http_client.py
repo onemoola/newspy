@@ -147,6 +147,7 @@ class HttpClient:
 def parse_xml(data: str) -> list[dict[str, str]] | None:
     try:
         root = ElementTree.fromstring(data)
+        source_url = root.find("channel/link").text.strip()
         items = []
         for item in root.findall(".//item"):
             title = item.find("title").text.strip()
@@ -155,6 +156,7 @@ def parse_xml(data: str) -> list[dict[str, str]] | None:
             pub_date = item.find("pubDate").text.strip()
             items.append(
                 {
+                    "source_url": source_url,
                     "title": title,
                     "description": description,
                     "url": link,
