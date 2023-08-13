@@ -44,7 +44,8 @@ pip install newspy
 
 ```python
 from newspy import client
-from newspy import newsorg, NewsorgEndpoint
+from newspy import newsorg
+from newspy.newsorg.models import NewsorgEndpoint
 
 newsorg_api_key = "YOUR_NEWSORG_KEY"
 

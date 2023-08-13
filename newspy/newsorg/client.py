@@ -1,27 +1,22 @@
 import logging
 from datetime import date
-from enum import Enum
 
 from newspy import client
 from newspy.newsorg.models import (
     NewsorgArticlesRes,
     NewsorgCategory,
+    NewsorgEndpoint,
     NewsorgSourceRes,
     NewsorgSource,
     NewsorgArticle,
 )
 from newspy.shared.exceptions import NewspyException
 from newspy.shared.http_client import HttpClient, HttpMethod
-from newspy.shared.models import Language, Country
+from newspy.shared.models import Country, Language
 
 logger = logging.getLogger(__name__)
 
 BASE_URL = "https://newsapi.org/v2"
-
-
-class NewsorgEndpoint(str, Enum):
-    EVERYTHING = "EVERYTHING"
-    TOP_HEADLINES = "TOP_HEADLINES"
 
 
 def create_url(endpoint: NewsorgEndpoint) -> str:

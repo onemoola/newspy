@@ -137,7 +137,7 @@ def rss_articles_res_xml() -> str:
                     <description>
                         <![CDATA[ News Feed ]]>
                     </description>
-                    <link>https://www.ft.com/news-feed</link>
+                    <link>https://feeds.a.dj.com/rss/RSSMarketsMain.xml</link>
                     <generator>RSS for Node</generator>
                     <lastBuildDate>Sun, 12 Mar 2023 13:26:24 GMT</lastBuildDate>
                     <atom:link href="https://www.ft.com/news-feed?format=rss" rel="self" type="application/rss+xml"/>

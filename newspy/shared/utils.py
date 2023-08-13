@@ -14,7 +14,14 @@ def to_datetime(date_string: str) -> datetime:
             try:
                 transformed = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S.%fZ")
             except ValueError:
-                transformed = datetime.strptime(date_string, "%a, %d %b %Y %H:%M:%S %z")
+                try:
+                    transformed = datetime.strptime(
+                        date_string, "%a, %d %b %Y %H:%M:%S %z"
+                    )
+                except ValueError:
+                    transformed = datetime.strptime(
+                        date_string, "%a, %d %b %Y %H:%M:%S %Z"
+                    )
 
     return transformed
 

@@ -21,6 +21,10 @@ from newspy.shared import utils
             "Mon, 19 Dec 2022 07:55:18 +0200",
             datetime(2022, 12, 19, 7, 55, 18, tzinfo=timezone(timedelta(seconds=7200))),
         ),
+        (
+            "Sun, 12 Mar 2023 13:00:35 GMT",
+            datetime(2023, 3, 12, 13, 0, 35),
+        ),
     ],
 )
 def test_create_published(test_input, expected) -> None:

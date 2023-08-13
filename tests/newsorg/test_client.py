@@ -4,9 +4,10 @@ import pytest
 import responses
 
 from newspy import client
-from newspy import newsorg, NewsorgEndpoint
+from newspy import newsorg
 from newspy.newsorg.models import (
     NewsorgCategory,
+    NewsorgEndpoint,
     NewsorgSource,
     NewsorgArticle,
 )
