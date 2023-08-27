@@ -1,3 +1,19 @@
+# [2.2.0](https://github.com/onemoola/newspy/compare/v2.1.0...v2.2.0) (2023-08-27)
+
+
+### Bug Fixes
+
+* make the newsorg top headlines require either text, country, category and language ([db6e8d7](https://github.com/onemoola/newspy/commit/db6e8d718fa3e676cdff141ded41ae0ee1ae733c))
+* make the newsorg top headlines require either text, country, category and language ([3628c2d](https://github.com/onemoola/newspy/commit/3628c2d26ea820a3b65766a99d925fc37b54708c))
+* make the newsorg top headlines require either text, country, category and language ([6c48a06](https://github.com/onemoola/newspy/commit/6c48a0644f127688ef3a2837acb98b9a0757c9db))
+* make the newsorg top headlines require either text, country, category and language ([4a9c7c8](https://github.com/onemoola/newspy/commit/4a9c7c8d12a698cad6562f8a1ebff7beb8bf4dce))
+* make the newsorg top headlines require either text, country, category and language ([8011d8b](https://github.com/onemoola/newspy/commit/8011d8b55591fe5abe02fbe3a2b821eaade79587))
+
+
+### Features
+
+* add country and language params ([48abcc6](https://github.com/onemoola/newspy/commit/48abcc684c94d7a993d0f9e669c48e7dbb9f3936))
+
 # [2.1.0](https://github.com/onemoola/newspy/compare/v2.0.2...v2.1.0) (2023-08-13)
 
 
