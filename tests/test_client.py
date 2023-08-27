@@ -1,10 +1,8 @@
 from datetime import datetime, timezone
-from unittest import mock
 
 import responses
 
 import newspy.client as newspy
-from newspy.rss.models import RssSource, RssCategory
 from newspy.shared.models import Source, Channel, Article, Language
 
 API_KEY = "seckfkdLkkekeKy"
@@ -69,11 +67,8 @@ def test_get_sources(newsorg_sources_res_json) -> None:
     assert actual.sort(key=lambda x: x.id) == expected.sort(key=lambda x: x.id)
 
 
-@mock.patch("newspy.rss.client.get_sources", return_value=[])
 @responses.activate
-def test_get_articles(
-    mocked_get_rss_sources, newsorg_articles_res_json, rss_articles_res_xml
-) -> None:
+def test_get_articles(newsorg_articles_res_json, rss_articles_res_xml) -> None:
     expected = [
         Article(
             slug="fortune-why-a-former-softbank-partner-is-tackling-midcareer-dropoff-for-working-mothers",
@@ -121,16 +116,15 @@ def test_get_articles(
         ),
     ]
 
-    mocked_get_rss_sources.return_value = [
-        RssSource(
-            id="wsj-markets",
-            name="The Wall Street Journal Markets",
-            description="The Wall Street Journal (WSJ) Markets RSS",
-            url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
-            category=RssCategory.FINANCIAL,
-            language=Language.EN,
-        )
-    ]
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://github.com/onemoola/newspy/blob/main/data/rss_sources.csv.gz?raw=true",
+            "body": open("tests/data/rss_sources.csv.gz", "rb").read(),
+            "status": 200,
+            "content_type": "application/zip",
+        }
+    )
 
     responses.add(
         **{
@@ -147,6 +141,16 @@ def test_get_articles(
             "method": responses.GET,
             "url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
             "body": rss_articles_res_xml,
+            "status": 200,
+            "content_type": "application/rss+xml",
+        }
+    )
+
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
+            "body": None,
             "status": 200,
             "content_type": "application/rss+xml",
         }
