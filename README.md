@@ -8,9 +8,9 @@ The news client written in Python that fetches and curates the world news across
 - [News Sources](#news-sources)
 - [Basic usage](#basic-usage)
     - [Create virtual environment](#create-virtual-environment)
-    - [Get the news from Newsorg API and RSS Feeds](#get-the-news-from-newsorg-api-and-rss-feeds)
-    - [Get the news from Newsorg API](#get-the-news-from-newsorg-api)
-    - [Get the news from RSS Feeds](#get-the-news-from-rss-feeds)
+    - [RSS feeds client](#rss-feeds-client)
+    - [Newsorg client](#newsorg-client)
+    - [Newspy client](#newspy-client)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -41,32 +41,52 @@ python -m venv .venv
 pip install newspy
 ```
 
-### Get the news from Newsorg API and RSS Feeds
+### RSS feeds client
+
+#### Get available news sources from RSS feeds
+
+```python
+from newspy import rss
+
+rss_sources = rss.get_sources()
+print(rss_sources)
+```
+
+#### Get articles from RSS feeds
+
+```python
+rss_articles = rss.get_articles()
+print(rss_articles)
+```
+
+### Newsorg client
+
+#### Configure your Newsorg API key
+
+You can get one here: https://newsapi.org/
 
 ```python
 import newspy.client as newspy
 
 newsorg_api_key = "YOUR_NEWSORG_KEY"
-
 newspy.configure(newsorg_api_key=newsorg_api_key)
-
-news_articles = newspy.get_articles()
-print(news_articles)
-
-news_sources = newspy.get_sources()
-print(news_sources)
 ```
 
-### Get the news from Newsorg API
+#### Get available news sources from Newsorg
 
 ```python
-import newspy.client as newspy
+from newspy import newsorg
+
+newsorg_sources = newsorg.get_sources()
+print(newsorg_sources)
+```
+
+#### Get articles from Newsorg
+
+```python
 from newspy import newsorg
 from newspy.newsorg.models import NewsorgEndpoint
 
-newsorg_api_key = "YOUR_NEWSORG_KEY"
-
-newspy.configure(newsorg_api_key=newsorg_api_key)
 newsorg_articles = newsorg.get_articles(
     endpoint=NewsorgEndpoint.TOP_HEADLINES,
     search_text="bitcoin",
@@ -75,15 +95,40 @@ newsorg_articles = newsorg.get_articles(
 print(newsorg_articles)
 ```
 
-### Get the news from RSS Feeds
+### Newspy client
+
+The newspy client makes it convenient to get articles from both the RSS feeds and Newsorg APIs.
+
+#### Configure your Newsapi API key
 
 ```python
-from newspy import rss
+import newspy.client as newspy
 
-rss_articles = rss.get_articles()
-
-print(rss_articles)
+newsorg_api_key = "YOUR_NEWSORG_KEY"
+newspy.configure(newsorg_api_key=newsorg_api_key)
 ```
+
+#### Get available news sources from both RSS feeds and Newsorg
+
+```python
+import newspy.client as newspy
+
+news_sources = newspy.get_sources()
+print(news_sources)
+```
+
+#### Get articles from both RSS feeds and Newsorg
+
+```python
+import newspy.client as newspy
+
+news_articles = newspy.get_articles()
+print(news_articles)
+```
+
+## Examples
+
+See the [examples](./examples) directory for more examples.
 
 ## Contributing
 

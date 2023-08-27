@@ -11,7 +11,7 @@ from newspy.shared.http_client import HttpClient, HttpMethod
 URL = NewType("URL", str)
 
 
-def get_articles(sources: list[RssSource] | None = None) -> list[RssArticle]:
+def get_articles(sources: list[RssSource] | None = None, **kwargs) -> list[RssArticle]:
     if not sources:
         sources = get_sources()
 
@@ -59,6 +59,7 @@ def get_sources(
     file_path: (Path | URL) = URL(
         "https://github.com/onemoola/newspy/blob/main/data/rss_sources.csv.gz?raw=true"
     ),
+    **kwargs,
 ) -> list[RssSource]:
     if isinstance(file_path, Path):
         file_content = file_path

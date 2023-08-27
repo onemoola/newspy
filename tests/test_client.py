@@ -1,10 +1,8 @@
 from datetime import datetime, timezone
-from unittest import mock
 
 import responses
 
 import newspy.client as newspy
-from newspy.rss.models import RssSource, RssCategory
 from newspy.shared.models import Source, Channel, Article, Language
 
 API_KEY = "seckfkdLkkekeKy"
@@ -46,7 +44,7 @@ def test_get_sources(newsorg_sources_res_json) -> None:
     responses.add(
         **{
             "method": responses.GET,
-            "url": f"https://newsapi.org/v2/top-headlines/sources?apiKey={API_KEY}&pageSize=100&page=1",
+            "url": f"https://newsapi.org/v2/top-headlines/sources?apiKey={API_KEY}",
             "body": newsorg_sources_res_json,
             "status": 200,
             "content_type": "application/json",
@@ -66,17 +64,11 @@ def test_get_sources(newsorg_sources_res_json) -> None:
     newspy.configure(newsorg_api_key=API_KEY)
     actual = newspy.get_sources()
 
-    for a, e in zip(actual, expected):
-        assert a.id == e.id
-        assert a.name == e.name
-        assert a.channel == e.channel
+    assert actual.sort(key=lambda x: x.id) == expected.sort(key=lambda x: x.id)
 
 
-@mock.patch("newspy.rss.get_sources", return_value=[])
 @responses.activate
-def test_get_articles(
-    mocked_get_rss_sources, newsorg_articles_res_json, rss_articles_res_xml
-) -> None:
+def test_get_articles(newsorg_articles_res_json, rss_articles_res_xml) -> None:
     expected = [
         Article(
             slug="fortune-why-a-former-softbank-partner-is-tackling-midcareer-dropoff-for-working-mothers",
@@ -124,21 +116,20 @@ def test_get_articles(
         ),
     ]
 
-    mocked_get_rss_sources.return_value = [
-        RssSource(
-            id="wsj-markets",
-            name="The Wall Street Journal Markets",
-            description="The Wall Street Journal (WSJ) Markets RSS",
-            url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
-            category=RssCategory.FINANCIAL,
-            language=Language.EN,
-        )
-    ]
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://github.com/onemoola/newspy/blob/main/data/rss_sources.csv.gz?raw=true",
+            "body": open("tests/data/rss_sources.csv.gz", "rb").read(),
+            "status": 200,
+            "content_type": "application/zip",
+        }
+    )
 
     responses.add(
         **{
             "method": responses.GET,
-            "url": f"https://newsapi.org/v2/top-headlines?apiKey={API_KEY}&pageSize=100&page=1",
+            "url": f"https://newsapi.org/v2/top-headlines?apiKey={API_KEY}&language=en&pageSize=100&page=1",
             "body": newsorg_articles_res_json,
             "status": 200,
             "content_type": "application/json",
@@ -155,7 +146,17 @@ def test_get_articles(
         }
     )
 
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
+            "body": None,
+            "status": 200,
+            "content_type": "application/rss+xml",
+        }
+    )
+
     newspy.configure(newsorg_api_key=API_KEY)
-    actual = newspy.get_articles()
+    actual = newspy.get_articles(language=Language.EN)
 
     assert actual == expected

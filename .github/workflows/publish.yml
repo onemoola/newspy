@@ -12,7 +12,7 @@ jobs:
   deploy:
     permissions:
       contents: write
-      
+
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ inputs.tag }}
@@ -29,7 +29,7 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.4.2
+          version: 1.5.1
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
@@ -45,17 +45,10 @@ jobs:
           git commit -m "chore: bump version to $VERSION"
           git push origin main
 
-      - name: Load cached venv
-        id: cached-pip-wheels
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
 
-      - name: Install library
+      - name: Install project
         run: poetry install --no-interaction
 
       - name: Build and publish
