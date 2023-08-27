@@ -46,7 +46,7 @@ def test_get_sources(newsorg_sources_res_json) -> None:
     responses.add(
         **{
             "method": responses.GET,
-            "url": f"https://newsapi.org/v2/top-headlines/sources?apiKey={API_KEY}&pageSize=100&page=1",
+            "url": f"https://newsapi.org/v2/top-headlines/sources?apiKey={API_KEY}",
             "body": newsorg_sources_res_json,
             "status": 200,
             "content_type": "application/json",
@@ -135,7 +135,7 @@ def test_get_articles(
     responses.add(
         **{
             "method": responses.GET,
-            "url": f"https://newsapi.org/v2/top-headlines?apiKey={API_KEY}&pageSize=100&page=1",
+            "url": f"https://newsapi.org/v2/top-headlines?apiKey={API_KEY}&language=en&pageSize=100&page=1",
             "body": newsorg_articles_res_json,
             "status": 200,
             "content_type": "application/json",
@@ -153,6 +153,6 @@ def test_get_articles(
     )
 
     newspy.configure(newsorg_api_key=API_KEY)
-    actual = newspy.get_articles()
+    actual = newspy.get_articles(language=Language.EN)
 
     assert actual == expected

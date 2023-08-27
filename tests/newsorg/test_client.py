@@ -47,7 +47,7 @@ def test_articles_when_category_and_sources_are_not_none() -> None:
         )
 
 
-def test_create_params_when_endpoint_is_top_headlines() -> None:
+def test_create_articles_params_when_endpoint_is_top_headlines() -> None:
     expected = {
         "apiKey": API_KEY,
         "q": "bitcoin",
@@ -59,7 +59,7 @@ def test_create_params_when_endpoint_is_top_headlines() -> None:
     }
 
     client.configure(newsorg_api_key=API_KEY)
-    actual = newsorg.create_params(
+    actual = newsorg.create_articles_params(
         endpoint=NewsorgEndpoint.TOP_HEADLINES,
         search_text="bitcoin",
         category=NewsorgCategory.BUSINESS,
@@ -72,19 +72,26 @@ def test_create_params_when_endpoint_is_top_headlines() -> None:
     assert actual == expected
 
 
-def test_create_params_when_newsorg_api_key_is_none() -> None:
+def test_create_articles_params_when_endpoint_is_top_headlines_when_all_params_are_none() -> (
+    None
+):
+    with pytest.raises(NewspyException):
+        newsorg.create_articles_params(endpoint=NewsorgEndpoint.TOP_HEADLINES)
+
+
+def test_create_articles_params_when_newsorg_api_key_is_none() -> None:
     client.configure(newsorg_api_key=None)
 
     with pytest.raises(NewspyException):
-        newsorg.create_params(
+        newsorg.create_articles_params(
             endpoint=NewsorgEndpoint.TOP_HEADLINES,
             search_text="bitcoin",
         )
 
 
-def test_create_params_when_category_and_sources_are_not_none() -> None:
+def test_create_articles_params_when_category_and_sources_are_not_none() -> None:
     with pytest.raises(NewspyException):
-        newsorg.create_params(
+        newsorg.create_articles_params(
             endpoint=NewsorgEndpoint.TOP_HEADLINES,
             search_text="bitcoin",
             category=NewsorgCategory.BUSINESS,
@@ -92,9 +99,9 @@ def test_create_params_when_category_and_sources_are_not_none() -> None:
         )
 
 
-def test_create_params_when_country_and_sources_are_not_none() -> None:
+def test_create_articles_params_when_country_and_sources_are_not_none() -> None:
     with pytest.raises(NewspyException):
-        newsorg.create_params(
+        newsorg.create_articles_params(
             endpoint=NewsorgEndpoint.TOP_HEADLINES,
             search_text="bitcoin",
             country=Country.US,
@@ -102,15 +109,15 @@ def test_create_params_when_country_and_sources_are_not_none() -> None:
         )
 
 
-def test_create_params_when_endpoint_is_not_recognised() -> None:
+def test_create_articles_params_when_endpoint_is_not_recognised() -> None:
     with pytest.raises(NewspyException):
-        newsorg.create_params(
+        newsorg.create_articles_params(
             endpoint="something-else",  # type: ignore
             search_text="bitcoin",
         )
 
 
-def test_create_params_when_endpoint_is_everything() -> None:
+def test_create_articles_params_when_endpoint_is_everything() -> None:
     expected = {
         "apiKey": API_KEY,
         "q": "bitcoin",
@@ -123,7 +130,7 @@ def test_create_params_when_endpoint_is_everything() -> None:
     }
 
     client.configure(newsorg_api_key=API_KEY)
-    actual = newsorg.create_params(
+    actual = newsorg.create_articles_params(
         endpoint=NewsorgEndpoint.EVERYTHING,
         search_text="bitcoin",
         sources=[NewsorgSource(id="news-org", name="News Organisation")],
@@ -135,7 +142,7 @@ def test_create_params_when_endpoint_is_everything() -> None:
     assert actual == expected
 
 
-def test_create_params_when_endpoint_is_everything_and_page_size_and_page_are_not_none() -> (
+def test_create_articles_params_when_endpoint_is_everything_and_page_size_and_page_are_not_none() -> (
     None
 ):
     expected = {
@@ -149,7 +156,7 @@ def test_create_params_when_endpoint_is_everything_and_page_size_and_page_are_no
     }
 
     client.configure(newsorg_api_key=API_KEY)
-    actual = newsorg.create_params(
+    actual = newsorg.create_articles_params(
         endpoint=NewsorgEndpoint.EVERYTHING,
         search_text="bitcoin",
         sources=[NewsorgSource(id="news-org", name="News Organisation")],
@@ -162,7 +169,7 @@ def test_create_params_when_endpoint_is_everything_and_page_size_and_page_are_no
     assert actual == expected
 
 
-def test_create_params_when_endpoint_is_everything_and_page_size_and_page_are_none() -> (
+def test_create_articles_params_when_endpoint_is_everything_and_page_size_and_page_are_none() -> (
     None
 ):
     expected = {
@@ -176,7 +183,7 @@ def test_create_params_when_endpoint_is_everything_and_page_size_and_page_are_no
     }
 
     client.configure(newsorg_api_key=API_KEY)
-    actual = newsorg.create_params(
+    actual = newsorg.create_articles_params(
         endpoint=NewsorgEndpoint.EVERYTHING,
         search_text="bitcoin",
         sources=[NewsorgSource(id="news-org", name="News Organisation")],
@@ -187,15 +194,58 @@ def test_create_params_when_endpoint_is_everything_and_page_size_and_page_are_no
     assert actual == expected
 
 
-def test_create_params_when_from_date_is_greater_than_to_date() -> None:
+def test_create_articles_params_when_from_date_is_greater_than_to_date() -> None:
     with pytest.raises(NewspyException):
-        newsorg.create_params(
+        newsorg.create_articles_params(
             endpoint=NewsorgEndpoint.EVERYTHING,
             search_text="bitcoin",
             sources=[NewsorgSource(id="news-org", name="News Organisation")],
             from_date=date(2021, 1, 2),
             to_date=date(2021, 1, 1),
         )
+
+
+def test_create_sources_params_when_all_params_are_none() -> None:
+    expected = {"apiKey": API_KEY}
+
+    client.configure(newsorg_api_key=API_KEY)
+    actual = newsorg.create_sources_params()
+
+    assert actual == expected
+
+
+def test_create_sources_params_when_newsorg_api_key_is_none() -> None:
+    client.configure(newsorg_api_key=None)
+
+    with pytest.raises(NewspyException):
+        newsorg.create_sources_params()
+
+
+def test_create_sources_params_when_language_is_not_none() -> None:
+    expected = {"apiKey": API_KEY, "language": "en"}
+
+    client.configure(newsorg_api_key=API_KEY)
+    actual = newsorg.create_sources_params(language=Language.EN)
+
+    assert actual == expected
+
+
+def test_create_sources_params_when_country_is_not_none() -> None:
+    expected = {"apiKey": API_KEY, "country": "us"}
+
+    client.configure(newsorg_api_key=API_KEY)
+    actual = newsorg.create_sources_params(country=Country.US)
+
+    assert actual == expected
+
+
+def test_create_sources_params_when_category_is_not_none() -> None:
+    expected = {"apiKey": API_KEY, "category": "business"}
+
+    client.configure(newsorg_api_key=API_KEY)
+    actual = newsorg.create_sources_params(category=NewsorgCategory.BUSINESS)
+
+    assert actual == expected
 
 
 @responses.activate
@@ -293,7 +343,7 @@ def test_get_newsorg_sources(newsorg_sources_res_json) -> None:
     responses.add(
         **{
             "method": responses.GET,
-            "url": f"{BASE_URL}/sources?apiKey={API_KEY}&category=general&language=en&country=us&pageSize=100&page=1",
+            "url": f"{BASE_URL}/sources?apiKey={API_KEY}&category=general&language=en&country=us",
             "body": newsorg_sources_res_json,
             "status": 200,
             "content_type": "application/json",
@@ -326,7 +376,7 @@ def test_get_newsorg_source_exception(newsorg_sources_res_broken_json) -> None:
     responses.add(
         **{
             "method": responses.GET,
-            "url": f"{BASE_URL}/sources?apiKey={API_KEY}&category=general&language=en&country=us&pageSize=100&page=1",
+            "url": f"{BASE_URL}/sources?apiKey={API_KEY}&category=general&language=en&country=us",
             "body": newsorg_sources_res_broken_json,
             "status": 200,
             "content_type": "application/json",

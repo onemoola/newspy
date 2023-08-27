@@ -31,7 +31,7 @@ def create_url(endpoint: NewsorgEndpoint) -> str:
             )
 
 
-def create_params(
+def create_articles_params(
     endpoint: NewsorgEndpoint = NewsorgEndpoint.TOP_HEADLINES,
     search_text: str | None = None,
     category: NewsorgCategory | None = None,
@@ -62,12 +62,19 @@ def create_params(
 
     params = {"apiKey": newsorg_api_key}
 
+    if language:
+        params["language"] = language.value
     if search_text:
         params["q"] = search_text
     if sources and len(sources) > 0:
         params["sources"] = ",".join([source.id for source in sources])
 
     if endpoint.TOP_HEADLINES:
+        if not search_text and not language and not country and not category:
+            raise NewspyException(
+                msg="The search text, country, or category attribute is required for the TOP_HEADLINES endpoint.",
+            )
+
         if country:
             params["country"] = country.value
 
@@ -84,9 +91,6 @@ def create_params(
             params["from"] = from_date.strftime("%Y-%m-%d")
             params["to"] = to_date.strftime("%Y-%m-%d")
 
-        if language:
-            params["language"] = language.value
-
     if not page_size:
         page_size = 100
     params["pageSize"] = page_size
@@ -94,6 +98,30 @@ def create_params(
     if not page:
         page = 1
     params["page"] = page
+
+    return params
+
+
+def create_sources_params(
+    category: NewsorgCategory | None = None,
+    country: Country | None = None,
+    language: Language | None = None,
+) -> dict[str, str]:
+    newsorg_api_key = client.default_client_config.get("newsorg_api_key")
+
+    if newsorg_api_key is None:
+        raise NewspyException(
+            msg="The Newsorg API key is not configured. Please configure it by calling the configure function.",
+        )
+
+    params = {"apiKey": newsorg_api_key}
+
+    if category:
+        params["category"] = category.value
+    if country:
+        params["country"] = country.value
+    if language:
+        params["language"] = language.value
 
     return params
 
@@ -110,7 +138,7 @@ def get_articles(
     page_size: int | None = None,
     page: int | None = None,
 ) -> list[NewsorgArticle]:
-    params = create_params(
+    params = create_articles_params(
         endpoint=endpoint,
         search_text=search_text,
         category=category,
@@ -146,7 +174,9 @@ def get_sources(
     country: Country | None = None,
     language: Language | None = None,
 ) -> list[NewsorgSource]:
-    params = create_params(category=category, language=language, country=country)
+    params = create_sources_params(
+        category=category, language=language, country=country
+    )
 
     http_client = HttpClient()
     resp_json = http_client.send(
