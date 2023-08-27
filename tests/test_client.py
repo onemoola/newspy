@@ -66,10 +66,7 @@ def test_get_sources(newsorg_sources_res_json) -> None:
     newspy.configure(newsorg_api_key=API_KEY)
     actual = newspy.get_sources()
 
-    for a, e in zip(actual, expected):
-        assert a.id == e.id
-        assert a.name == e.name
-        assert a.channel == e.channel
+    assert actual == expected
 
 
 @mock.patch("newspy.rss.get_sources", return_value=[])

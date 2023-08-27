@@ -143,8 +143,8 @@ def get_articles(
 
 def get_sources(
     category: NewsorgCategory | None = None,
-    language: Language | None = None,
     country: Country | None = None,
+    language: Language | None = None,
 ) -> list[NewsorgSource]:
     params = create_params(category=category, language=language, country=country)
 

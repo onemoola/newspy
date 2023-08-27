@@ -2,7 +2,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from newspy import newsorg, rss
-from newspy.shared.models import Source, Channel, Article
+from newspy.shared.models import Source, Channel, Article, Language, Country
 
 default_client_config = {}
 
@@ -23,11 +23,16 @@ def configure(newsorg_api_key: str | None = None) -> None:
     }
 
 
-def get_sources() -> list[Source]:
+def get_sources(
+    country: Country | None = None, language: Language | None = None
+) -> list[Source]:
     sources = []
     with ThreadPoolExecutor() as executor:
         futures = [
-            executor.submit(channels[key].client.get_sources) for key in channels
+            executor.submit(
+                channels[key].client.get_sources, country=country, language=language
+            )
+            for key in channels
         ]
 
         for future in as_completed(futures):
@@ -36,11 +41,16 @@ def get_sources() -> list[Source]:
     return sources
 
 
-def get_articles() -> list[Article]:
+def get_articles(
+    country: Country | None = None, language: Language | None = None
+) -> list[Article]:
     articles = []
     with ThreadPoolExecutor() as executor:
         futures = [
-            executor.submit(channels[key].client.get_articles) for key in channels
+            executor.submit(
+                channels[key].client.get_articles, country=country, language=language
+            )
+            for key in channels
         ]
 
         for future in as_completed(futures):
