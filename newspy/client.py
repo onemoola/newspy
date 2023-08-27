@@ -29,10 +29,7 @@ def get_sources(
     sources = []
     with ThreadPoolExecutor() as executor:
         futures = [
-            executor.submit(
-                channels[key].client.get_sources, country=country, language=language
-            )
-            for key in channels
+            executor.submit(channels[key].client.get_sources) for key in channels
         ]
 
         for future in as_completed(futures):
