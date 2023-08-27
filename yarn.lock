@@ -825,7 +825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/commit-analyzer@npm:^10.0.0, @semantic-release/commit-analyzer@npm:^10.0.1":
+"@semantic-release/commit-analyzer@npm:^10.0.0":
   version: 10.0.1
   resolution: "@semantic-release/commit-analyzer@npm:10.0.1"
   dependencies:
@@ -839,6 +839,23 @@ __metadata:
   peerDependencies:
     semantic-release: ">=20.1.0"
   checksum: 24eba3f82ede83c14df3680a57651872b98c08b39809c180ed7181f40d7d7570bf00b3f2c5dd6e0e0ddc20168767d70b375d23163a6c6d4d3f7f6fdefcf94320
+  languageName: node
+  linkType: hard
+
+"@semantic-release/commit-analyzer@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "@semantic-release/commit-analyzer@npm:10.0.2"
+  dependencies:
+    conventional-changelog-angular: ^6.0.0
+    conventional-commits-filter: ^3.0.0
+    conventional-commits-parser: ^5.0.0
+    debug: ^4.0.0
+    import-from: ^4.0.0
+    lodash-es: ^4.17.21
+    micromatch: ^4.0.2
+  peerDependencies:
+    semantic-release: ">=20.1.0"
+  checksum: 322ecb0a7df599186481e1ff99087b5a99b054d6064f4c72e64f71a0764d836b1bde3b25fd5236de11a1b668e5c322858eb4732b137acf27623bb7a9a85f98b4
   languageName: node
   linkType: hard
 
@@ -949,7 +966,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/release-notes-generator@npm:^11.0.0, @semantic-release/release-notes-generator@npm:^11.0.4":
+"@semantic-release/release-notes-generator@npm:^11.0.0":
   version: 11.0.4
   resolution: "@semantic-release/release-notes-generator@npm:11.0.4"
   dependencies:
@@ -966,6 +983,26 @@ __metadata:
   peerDependencies:
     semantic-release: ">=20.1.0"
   checksum: d34b64bebc36b823fdd32a804b5c90a526d122e74ada50ef95465eb5c5b6c37cdd9151db5fd8c8cc4fbb0005d7b3e57215dbdaac40403850fa09dd55c721f730
+  languageName: node
+  linkType: hard
+
+"@semantic-release/release-notes-generator@npm:^11.0.5":
+  version: 11.0.5
+  resolution: "@semantic-release/release-notes-generator@npm:11.0.5"
+  dependencies:
+    conventional-changelog-angular: ^6.0.0
+    conventional-changelog-writer: ^6.0.0
+    conventional-commits-filter: ^3.0.0
+    conventional-commits-parser: ^5.0.0
+    debug: ^4.0.0
+    get-stream: ^7.0.0
+    import-from: ^4.0.0
+    into-stream: ^7.0.0
+    lodash-es: ^4.17.21
+    read-pkg-up: ^10.0.0
+  peerDependencies:
+    semantic-release: ">=20.1.0"
+  checksum: 0068028e37cb9bdd5bb65b4548e5e9cbbef810836daaccf6ec5ec7082b83569ea5e4722bbf0016d6f759a69f9e6c4bbc2346e372f0ec065238f54b170ee7c23f
   languageName: node
   linkType: hard
 
@@ -1709,6 +1746,20 @@ __metadata:
   bin:
     conventional-commits-parser: cli.js
   checksum: 12d95b5ba8e0710a6d3cd2e01f01dd7818fdf0bb2b33f4b75444e2c9aee49598776b0706a528ed49e83aec5f1896c32cbc7f8e6589f61a15187293707448f928
+  languageName: node
+  linkType: hard
+
+"conventional-commits-parser@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "conventional-commits-parser@npm:5.0.0"
+  dependencies:
+    JSONStream: ^1.3.5
+    is-text-path: ^2.0.0
+    meow: ^12.0.1
+    split2: ^4.0.0
+  bin:
+    conventional-commits-parser: cli.mjs
+  checksum: bb92a0bfe41802330d2d14ddb0f912fd65dd355f1aa294e708f4891aac95c580919a70580b9f26563c24c3335baaed2ce003104394a8fa5ba61eeb3889e45df0
   languageName: node
   linkType: hard
 
@@ -2842,6 +2893,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-text-path@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "is-text-path@npm:2.0.0"
+  dependencies:
+    text-extensions: ^2.0.0
+  checksum: 3a8725fc7c0d4c7741a97993bc2fecc09a0963660394d3ee76145274366c98ad57c6791d20d4ef829835f573b1137265051c05ecd65fbe72f69bb9ab9e3babbd
+  languageName: node
+  linkType: hard
+
 "is-unicode-supported@npm:^1.2.0":
   version: 1.3.0
   resolution: "is-unicode-supported@npm:1.3.0"
@@ -3413,6 +3473,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"meow@npm:^12.0.1":
+  version: 12.1.0
+  resolution: "meow@npm:12.1.0"
+  checksum: 5307980e049a2ec996ec69cc57e49c3cf29c65b4de337019e9ea55606d2e903cae0e8925180661eb3aa534fd0fd694e3017ca366f3ffb0f6df1ceedb829ac156
+  languageName: node
+  linkType: hard
+
 "meow@npm:^8.0.0, meow@npm:^8.1.2":
   version: 8.1.2
   resolution: "meow@npm:8.1.2"
@@ -3681,12 +3748,12 @@ __metadata:
     "@commitlint/cli": ^17.7.1
     "@commitlint/config-conventional": ^17.7.0
     "@semantic-release/changelog": ^6.0.3
-    "@semantic-release/commit-analyzer": ^10.0.1
+    "@semantic-release/commit-analyzer": ^10.0.2
     "@semantic-release/git": ^10.0.1
     "@semantic-release/github": ^9.0.4
-    "@semantic-release/release-notes-generator": ^11.0.4
+    "@semantic-release/release-notes-generator": ^11.0.5
     husky: ^8.0.3
-    semantic-release: ^21.0.9
+    semantic-release: ^21.1.1
   languageName: unknown
   linkType: soft
 
@@ -4747,9 +4814,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semantic-release@npm:^21.0.9":
-  version: 21.0.9
-  resolution: "semantic-release@npm:21.0.9"
+"semantic-release@npm:^21.1.1":
+  version: 21.1.1
+  resolution: "semantic-release@npm:21.1.1"
   dependencies:
     "@semantic-release/commit-analyzer": ^10.0.0
     "@semantic-release/error": ^4.0.0
@@ -4781,7 +4848,7 @@ __metadata:
     yargs: ^17.5.1
   bin:
     semantic-release: bin/semantic-release.js
-  checksum: 7da69393519da1ca6f14b29c38135f5fa48bd241da07eb0705da10a1707021a935960234ada8d0e7d49b8f63c00e1001cfb93683e0d8dbe89379d4857bcfc7ef
+  checksum: 46ebaeac46d7dfe4610617a79b6ceee3b1bd5fb7025cb800ce523b91d22a1f35ff31143164dc4fe7d15a1139488652cde887946b8f33e8839e8ba9875c9f83af
   languageName: node
   linkType: hard
 
@@ -4978,6 +5045,13 @@ __metadata:
   dependencies:
     readable-stream: ^3.0.0
   checksum: 8127ddbedd0faf31f232c0e9192fede469913aa8982aa380752e0463b2e31c2359ef6962eb2d24c125bac59eeec76873678d723b1c7ff696216a1cd071e3994a
+  languageName: node
+  linkType: hard
+
+"split2@npm:^4.0.0":
+  version: 4.2.0
+  resolution: "split2@npm:4.2.0"
+  checksum: 05d54102546549fe4d2455900699056580cca006c0275c334611420f854da30ac999230857a85fdd9914dc2109ae50f80fda43d2a445f2aa86eccdc1dfce779d
   languageName: node
   linkType: hard
 
@@ -5192,6 +5266,13 @@ __metadata:
   version: 1.9.0
   resolution: "text-extensions@npm:1.9.0"
   checksum: 56a9962c1b62d39b2bcb369b7558ca85c1b55e554b38dfd725edcc0a1babe5815782a60c17ff6b839093b163dfebb92b804208aaaea616ec7571c8059ae0cf44
+  languageName: node
+  linkType: hard
+
+"text-extensions@npm:^2.0.0":
+  version: 2.4.0
+  resolution: "text-extensions@npm:2.4.0"
+  checksum: 9bdbc9959e004ccc86a6ec076d6c5bb6765978263e9d0d5febb640d7675c09919ea912f3fe9d50b68c3c7c43cc865610a7cb24954343abb31f74c205fbae4e45
   languageName: node
   linkType: hard
 
