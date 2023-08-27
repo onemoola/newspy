@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [ "ubuntu-latest", "macos-latest", "windows-latest" ]
         python-version: [ "3.10", "3.11" ]
@@ -45,5 +45,5 @@ jobs:
 
       - name: Run tests
         run: |
-          source .venv/bin/activate
-          pytest --exitfirst --verbose --failed-first --cov=newspy
+          source $VENV
+          pytest tests --exitfirst --verbose --failed-first --cov=newspy
