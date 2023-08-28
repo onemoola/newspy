@@ -126,7 +126,7 @@ def test_http_client_when_content_type_is_rss(rss_articles_res_xml) -> None:
             "title": "Three global cities are pulling ahead since the peak of the "
             "pandemic",
             "url": "https://www.ft.com/content/1cf1b55e-bb8d-435a-95a3-5d21149939b6",
-            "source_url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            "source_url": "https://www.ft.com/",
         },
         {
             "description": "‘Lead white knight’ eyeing British arm of tech lender that "
@@ -134,7 +134,7 @@ def test_http_client_when_content_type_is_rss(rss_articles_res_xml) -> None:
             "published": "Sun, 12 Mar 2023 12:54:53 GMT",
             "title": "UK seeks to tap Middle East money to buy out SVB unit",
             "url": "https://www.ft.com/content/cde4aa95-1cb5-408d-b35f-3216eaee46ae",
-            "source_url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            "source_url": "https://www.ft.com/",
         },
     ]
 
@@ -231,7 +231,7 @@ def test_parse_xml() -> None:
         },
     ]
 
-    actual = http_client.parse_xml(xml)
+    actual = http_client.parse_xml(data=xml, source_url="https://www.ft.com/news-feed")
 
     assert actual == expected
 
