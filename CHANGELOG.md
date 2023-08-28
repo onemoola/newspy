@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/onemoola/newspy/compare/v2.2.0...v2.2.1) (2023-08-28)
+
+
+### Bug Fixes
+
+* rss source url not found ([01eacc6](https://github.com/onemoola/newspy/commit/01eacc6a371c0399eec9a0189af2f927950651ad))
+
 # [2.2.0](https://github.com/onemoola/newspy/compare/v2.1.0...v2.2.0) (2023-08-27)
 
 

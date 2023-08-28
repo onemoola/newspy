@@ -1,6 +1,6 @@
 {
   "name": "newspy",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "The news client written in Python that fetches and curates the world news across the web.",
   "repository": "https://github.com/onemoola/newspy.git",
   "author": "Sechaba Mofokeng <sechaba@onemoola.com>",
