@@ -104,7 +104,7 @@ class HttpClient:
                 case "application/json":
                     results = response.json()
                 case "application/rss+xml":
-                    results = parse_xml(response.content)
+                    results = parse_xml(data=response.content, source_url=url)
                 case "application/zip":
                     results = response.content
                 case _:
@@ -144,10 +144,9 @@ class HttpClient:
         return results
 
 
-def parse_xml(data: str) -> list[dict[str, str]] | None:
+def parse_xml(data: str, source_url: str) -> list[dict[str, str]] | None:
     try:
         root = ElementTree.fromstring(data)
-        source_url = root.find("channel/link").text.strip()
         items = []
         for item in root.findall(".//item"):
             title = item.find("title").text.strip()
