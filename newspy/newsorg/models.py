@@ -1,8 +1,7 @@
 from dataclasses import dataclass, field
 from enum import Enum
 
-from newspy.shared import utils
-from newspy.shared.models import (
+from newspy.models import (
     Article,
     Source,
     Country,
@@ -10,6 +9,7 @@ from newspy.shared.models import (
     Channel,
     Category,
 )
+from newspy.shared import utils
 
 
 class NewsorgEndpoint(str, Enum):
@@ -36,7 +36,11 @@ class NewsorgSource:
     country: Country | None = field(default=None)
 
     def to_source(self) -> Source:
-        return Source(id=self.id, name=self.name, channel=Channel.NEWSORG)
+        return Source(
+            id=self.id if self.id is not None else self.name,
+            name=self.name,
+            channel=Channel.NEWSORG,
+        )
 
 
 @dataclass

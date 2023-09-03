@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 import responses
 
 import newspy.client as newspy
-from newspy.shared.models import Source, Channel, Article, Language, Category
+from newspy.models import Source, Channel, Article, Language, Category
 
 API_KEY = "seckfkdLkkekeKy"
 

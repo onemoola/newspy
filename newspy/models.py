@@ -98,7 +98,7 @@ class Channel(str, Enum):
 class Source:
     """Publisher domain model"""
 
-    id: str | None
+    id: str
     name: str
     channel: Channel
 

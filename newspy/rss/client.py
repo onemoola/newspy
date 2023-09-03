@@ -5,9 +5,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import NewType
 
+from newspy.models import Category
 from newspy.rss.models import RssSource, RssArticle
 from newspy.shared.http_client import HttpClient, HttpMethod
-from newspy.shared.models import Category
 
 URL = NewType("URL", str)
 
