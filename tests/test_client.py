@@ -22,6 +22,13 @@ def test_configure_with_newsorg_api_key() -> None:
     assert actual == "test"
 
 
+def test_source_to_string() -> None:
+    expected = "Fortune-NEWSORG"
+    actual = str(Source(id="fortune", name="Fortune", channel=Channel.NEWSORG))
+
+    assert actual == expected
+
+
 @responses.activate
 def test_get_sources(newsorg_sources_res_json) -> None:
     expected = [

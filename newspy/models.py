@@ -102,6 +102,9 @@ class Source:
     name: str
     channel: Channel
 
+    def __str__(self) -> str:
+        return f"{self.name}-{self.channel.value}"
+
 
 @dataclass
 class Article:
