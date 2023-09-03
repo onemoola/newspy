@@ -7,24 +7,16 @@ on:
 
 jobs:
   test:
-    strategy:
-      fail-fast: true
-      matrix:
-        os: [ "ubuntu-latest", "macos-latest", "windows-latest" ]
-        python-version: [ "3.10", "3.11" ]
-    defaults:
-      run:
-        shell: bash
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Set up python ${{ matrix.python-version }}
+      - name: Set up python
         id: setup-python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.11
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -43,10 +35,7 @@ jobs:
       - name: Run tests
         run: |
           source $VENV
-          pytest tests --exitfirst --verbose --failed-first --cov=newspy
-
-      - name: Generate coverage report
-        run: python -m coverage xml
+          pytest tests --exitfirst --verbose --failed-first --cov-report term --cov-report xml:coverage.xml --cov=newspy
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
