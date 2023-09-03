@@ -8,22 +8,13 @@ from newspy.shared.models import (
     Country,
     Language,
     Channel,
+    Category,
 )
 
 
 class NewsorgEndpoint(str, Enum):
     EVERYTHING = "EVERYTHING"
     TOP_HEADLINES = "TOP_HEADLINES"
-
-
-class NewsorgCategory(str, Enum):
-    BUSINESS = "business"
-    ENTERTAINMENT = "entertainment"
-    GENERAL = "general"
-    HEALTH = "health"
-    SCIENCE = "science"
-    SPORTS = "sports"
-    TECHNOLOGY = "technology"
 
 
 @dataclass
@@ -40,7 +31,7 @@ class NewsorgSource:
     id: str | None = field(default=None)
     description: str | None = field(default=None)
     url: str | None = field(default=None)
-    category: NewsorgCategory | None = field(default=None)
+    category: Category | None = field(default=None)
     language: Language | None = field(default=None)
     country: Country | None = field(default=None)
 

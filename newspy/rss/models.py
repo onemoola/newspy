@@ -1,9 +1,8 @@
 import logging
 from dataclasses import dataclass
-from enum import Enum
 
 from newspy.shared import utils
-from newspy.shared.models import Article, Source, Language, Channel
+from newspy.shared.models import Article, Source, Language, Channel, Category
 
 logger = logging.getLogger(__name__)
 
@@ -22,24 +21,13 @@ class RssArticleContent:
     value: str
 
 
-class RssCategory(str, Enum):
-    BUSINESS = "business"
-    FINANCIAL = "financial"
-    ENTERTAINMENT = "entertainment"
-    GENERAL = "general"
-    HEALTH = "health"
-    SCIENCE = "science"
-    SPORTS = "sports"
-    TECHNOLOGY = "technology"
-
-
 @dataclass
 class RssSource:
     id: str
     name: str
     description: str
     url: str
-    category: RssCategory
+    category: Category
     language: Language
 
     def to_source(self) -> Source:

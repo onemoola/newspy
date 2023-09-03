@@ -6,13 +6,12 @@ import responses
 from newspy import client
 from newspy import newsorg
 from newspy.newsorg.models import (
-    NewsorgCategory,
     NewsorgEndpoint,
     NewsorgSource,
     NewsorgArticle,
 )
 from newspy.shared.exceptions import NewspyException
-from newspy.shared.models import Language, Country
+from newspy.shared.models import Language, Country, Category
 
 API_KEY = "seckfkdLkkekeKy"
 BASE_URL = "https://newsapi.org/v2/top-headlines"
@@ -42,7 +41,7 @@ def test_articles_when_category_and_sources_are_not_none() -> None:
         newsorg.get_articles(
             endpoint=NewsorgEndpoint.EVERYTHING,
             search_text="bitcoin",
-            category=NewsorgCategory.BUSINESS,
+            category=Category.BUSINESS,
             sources=[NewsorgSource(id="news-org", name="News Organisation")],
         )
 
@@ -62,7 +61,7 @@ def test_create_articles_params_when_endpoint_is_top_headlines() -> None:
     actual = newsorg.create_articles_params(
         endpoint=NewsorgEndpoint.TOP_HEADLINES,
         search_text="bitcoin",
-        category=NewsorgCategory.BUSINESS,
+        category=Category.BUSINESS,
         country=Country.US,
         language=Language.EN,
         page_size=100,
@@ -94,7 +93,7 @@ def test_create_articles_params_when_category_and_sources_are_not_none() -> None
         newsorg.create_articles_params(
             endpoint=NewsorgEndpoint.TOP_HEADLINES,
             search_text="bitcoin",
-            category=NewsorgCategory.BUSINESS,
+            category=Category.BUSINESS,
             sources=[NewsorgSource(id="news-org", name="News Organisation")],
         )
 
@@ -243,7 +242,7 @@ def test_create_sources_params_when_category_is_not_none() -> None:
     expected = {"apiKey": API_KEY, "category": "business"}
 
     client.configure(newsorg_api_key=API_KEY)
-    actual = newsorg.create_sources_params(category=NewsorgCategory.BUSINESS)
+    actual = newsorg.create_sources_params(category=Category.BUSINESS)
 
     assert actual == expected
 
@@ -357,7 +356,7 @@ def test_get_newsorg_sources(newsorg_sources_res_json) -> None:
             description="Your trusted source for breaking news, analysis, exclusive interviews, headlines, and videos "
             "at ABCNews.com.",
             url="https://abcnews.go.com",
-            category=NewsorgCategory.GENERAL,
+            category=Category.GENERAL,
             language=Language.EN,
             country=Country.US,
         )
@@ -365,7 +364,7 @@ def test_get_newsorg_sources(newsorg_sources_res_json) -> None:
 
     client.configure(newsorg_api_key=API_KEY)
     actual = newsorg.get_sources(
-        category=NewsorgCategory.GENERAL, language=Language.EN, country=Country.US
+        category=Category.GENERAL, language=Language.EN, country=Country.US
     )
 
     assert actual == expected
@@ -387,7 +386,7 @@ def test_get_newsorg_source_exception(newsorg_sources_res_broken_json) -> None:
 
     with pytest.raises(NewspyException) as exc:
         newsorg.get_sources(
-            category=NewsorgCategory.GENERAL, language=Language.EN, country=Country.US
+            category=Category.GENERAL, language=Language.EN, country=Country.US
         )
 
     assert str(exc.value) == (
