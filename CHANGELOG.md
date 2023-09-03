@@ -1,3 +1,10 @@
+## [2.2.4](https://github.com/onemoola/newspy/compare/v2.2.3...v2.2.4) (2023-09-03)
+
+
+### Bug Fixes
+
+* stringify the source model ([820917c](https://github.com/onemoola/newspy/commit/820917c21d734d2e449d0fde469add76f45812f0))
+
 ## [2.2.3](https://github.com/onemoola/newspy/compare/v2.2.2...v2.2.3) (2023-09-03)
 
 
