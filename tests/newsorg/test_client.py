@@ -6,11 +6,7 @@ import responses
 from newspy import client
 from newspy import newsorg
 from newspy.models import Language, Country, Category
-from newspy.newsorg.models import (
-    NewsorgEndpoint,
-    NewsorgSource,
-    NewsorgArticle,
-)
+from newspy.newsorg.models import NewsorgSource, NewsorgArticle, NewsorgEndpoint
 from newspy.shared.exceptions import NewspyException
 
 API_KEY = "seckfkdLkkekeKy"
