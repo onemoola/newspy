@@ -129,10 +129,7 @@ class HttpClient:
             )
         except requests.exceptions.RetryError as retry_error:
             request = retry_error.request
-            try:
-                reason = retry_error.args[0].reason
-            except (AttributeError, IndexError):
-                reason = None
+            reason = retry_error.args[0].reason
             raise NewspyHttpException(
                 status_code=429,
                 msg="%s:\n %s" % (request.path_url, "Max Retries"),

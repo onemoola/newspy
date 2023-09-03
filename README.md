@@ -1,6 +1,10 @@
 # Newspy
+### The news client written in Python that fetches and curates the world news across the web.
 
-The news client written in Python that fetches and curates the world news across the web.
+---
+![PyPI - Version](https://img.shields.io/pypi/v/newspy) ![GitHub](https://img.shields.io/github/license/onemoola/newspy) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/newspy) ![Static Badge](https://img.shields.io/badge/code%20style-black-000000) ![Codecov](https://img.shields.io/codecov/c/gh/onemoola/newspy) ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/onemoola/newspy/release.yml)
+
+---
 
 ## Table of contents
 

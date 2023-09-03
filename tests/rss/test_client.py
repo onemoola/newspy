@@ -4,8 +4,8 @@ import responses
 
 from newspy import rss
 from newspy.rss.client import URL
-from newspy.rss.models import RssSource, RssCategory, RssArticle
-from newspy.shared.models import Language
+from newspy.rss.models import RssSource, RssArticle
+from newspy.shared.models import Language, Category
 
 
 @responses.activate
@@ -27,7 +27,7 @@ def test_get_rss_articles(rss_articles_res_xml) -> None:
                 name="The Wall Street Journal Markets",
                 description="The Wall Street Journal (WSJ) Markets RSS",
                 url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
-                category=RssCategory.FINANCIAL,
+                category=Category.FINANCIAL,
                 language=Language.EN,
             ),
             title="Three global cities are pulling ahead since the peak of the pandemic",
@@ -41,7 +41,7 @@ def test_get_rss_articles(rss_articles_res_xml) -> None:
                 name="The Wall Street Journal Markets",
                 description="The Wall Street Journal (WSJ) Markets RSS",
                 url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
-                category=RssCategory.FINANCIAL,
+                category=Category.FINANCIAL,
                 language=Language.EN,
             ),
             title="UK seeks to tap Middle East money to buy out SVB unit",
@@ -56,7 +56,7 @@ def test_get_rss_articles(rss_articles_res_xml) -> None:
             name="The Wall Street Journal Markets",
             description="The Wall Street Journal (WSJ) Markets RSS",
             url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
-            category=RssCategory.FINANCIAL,
+            category=Category.FINANCIAL,
             language=Language.EN,
         )
     ]
@@ -83,7 +83,7 @@ def test_get_rss_articles_return_none(rss_articles_res_broken_xml) -> None:
             name="The Wall Street Journal Markets",
             description="The Wall Street Journal (WSJ) Markets RSS",
             url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
-            category=RssCategory.FINANCIAL,
+            category=Category.FINANCIAL,
             language=Language.EN,
         )
     ]
@@ -100,7 +100,7 @@ def test_get_rss_sources_from_local_path() -> None:
             name="The Wall Street Journal Markets",
             description="The Wall Street Journal (WSJ) Markets RSS",
             url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
-            category=RssCategory.FINANCIAL,
+            category=Category.FINANCIAL,
             language=Language.EN,
         ),
         RssSource(
@@ -108,11 +108,81 @@ def test_get_rss_sources_from_local_path() -> None:
             name="The Wall Street Journal Business",
             description="The Wall Street Journal (WSJ) Business RSS",
             url="https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
-            category=RssCategory.BUSINESS,
+            category=Category.BUSINESS,
             language=Language.EN,
         ),
     ]
     actual = rss.get_sources(file_path=Path("tests/data/rss_sources.csv.gz"))
+
+    assert actual == expected
+
+
+def test_get_rss_sources_from_invalid_path() -> None:
+    actual = rss.get_sources(file_path=123)  # type: ignore
+
+    assert actual == []
+
+
+def test_get_rss_sources_with_category() -> None:
+    expected = [
+        RssSource(
+            id="wsj-markets",
+            name="The Wall Street Journal Markets",
+            description="The Wall Street Journal (WSJ) Markets RSS",
+            url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            category=Category.FINANCIAL,
+            language=Language.EN,
+        )
+    ]
+    actual = rss.get_sources(
+        file_path=Path("tests/data/rss_sources.csv.gz"), category=Category.FINANCIAL
+    )
+
+    assert actual == expected
+
+
+def test_get_rss_sources_with_language() -> None:
+    expected = [
+        RssSource(
+            id="wsj-markets",
+            name="The Wall Street Journal Markets",
+            description="The Wall Street Journal (WSJ) Markets RSS",
+            url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            category=Category.FINANCIAL,
+            language=Language.EN,
+        ),
+        RssSource(
+            id="wsj-business",
+            name="The Wall Street Journal Business",
+            description="The Wall Street Journal (WSJ) Business RSS",
+            url="https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
+            category=Category.BUSINESS,
+            language=Language.EN,
+        ),
+    ]
+    actual = rss.get_sources(
+        file_path=Path("tests/data/rss_sources.csv.gz"), language=Language.EN
+    )
+
+    assert actual == expected
+
+
+def test_get_rss_sources_with_category_and_language() -> None:
+    expected = [
+        RssSource(
+            id="wsj-business",
+            name="The Wall Street Journal Business",
+            description="The Wall Street Journal (WSJ) Business RSS",
+            url="https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
+            category=Category.BUSINESS,
+            language=Language.EN,
+        ),
+    ]
+    actual = rss.get_sources(
+        file_path=Path("tests/data/rss_sources.csv.gz"),
+        category=Category.BUSINESS,
+        language=Language.EN,
+    )
 
     assert actual == expected
 
@@ -125,7 +195,7 @@ def test_get_rss_resources_from_remote_path():
             name="The Wall Street Journal Markets",
             description="The Wall Street Journal (WSJ) Markets RSS",
             url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
-            category=RssCategory.FINANCIAL,
+            category=Category.FINANCIAL,
             language=Language.EN,
         ),
         RssSource(
@@ -133,7 +203,7 @@ def test_get_rss_resources_from_remote_path():
             name="The Wall Street Journal Business",
             description="The Wall Street Journal (WSJ) Business RSS",
             url="https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
-            category=RssCategory.BUSINESS,
+            category=Category.BUSINESS,
             language=Language.EN,
         ),
     ]

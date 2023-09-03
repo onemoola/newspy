@@ -46,6 +46,71 @@ def test_http_client(newsorg_articles_res_json) -> None:
 
 
 @responses.activate
+def test_http_client_when_requests_session_is_false(newsorg_articles_res_json) -> None:
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": f"{BASE_URL}?apiKey={API_KEY}&sources=bloomberg,business-insider&language=en&pageSize=100",
+            "body": newsorg_articles_res_json,
+            "status": 200,
+            "content_type": "application/json",
+        }
+    )
+
+    client = HttpClient(requests_session=False)
+    actual = client.send(
+        method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS
+    )
+
+    assert actual is not None
+
+
+@responses.activate
+def test_http_client_with_payload(newsorg_articles_res_json) -> None:
+    responses.add(
+        **{
+            "method": responses.POST,
+            "url": BASE_URL,
+            "body": newsorg_articles_res_json,
+            "status": 200,
+            "content_type": "application/json",
+        }
+    )
+
+    client = HttpClient()
+    actual = client.send(
+        method=HttpMethod.POST, url=BASE_URL, headers=HEADERS, payload={"data": "data"}
+    )
+
+    assert actual is not None
+
+
+@responses.activate
+def test_http_client_when_payload_is_string() -> None:
+    responses.add(
+        **{
+            "method": responses.POST,
+            "url": BASE_URL,
+            "body": "Hello World",
+            "status": 200,
+            "content_type": "application/json",
+        }
+    )
+
+    client = HttpClient()
+    actual = client.send(
+        method=HttpMethod.POST,
+        url=BASE_URL,
+        headers={
+            "Content-Type": "application/text",
+        },
+        payload="data",
+    )
+
+    assert actual == "Hello World"
+
+
+@responses.activate
 def test_http_client_when_http_error() -> None:
     responses.add(
         **{
@@ -60,6 +125,29 @@ def test_http_client_when_http_error() -> None:
     with pytest.raises(NewspyHttpException):
         client = HttpClient()
         client.send(method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS)
+
+
+@responses.activate
+def test_http_client_when_http_error_is_text() -> None:
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": f"{BASE_URL}?apiKey={API_KEY}&sources=bloomberg,business-insider&language=en&pageSize=100",
+            "body": "Bad request",
+            "status": 404,
+            "content_type": "application/json",
+        }
+    )
+
+    with pytest.raises(NewspyHttpException) as exc:
+        client = HttpClient()
+        client.send(method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS)
+
+    assert (
+        str(exc.value)
+        == "status code: 404, message: https://localhost/v2/top-headlines?apiKey=seckfkdLkkekeKy&sources=bloomberg"
+        "%2Cbusiness-insider&language=en&pageSize=100:\n Bad request, reason: None"
+    )
 
 
 @responses.activate
@@ -91,9 +179,15 @@ def test_http_client_when_server_error() -> None:
         }
     )
 
-    with pytest.raises(NewspyHttpException):
+    with pytest.raises(NewspyHttpException) as ex:
         client = HttpClient()
         client.send(method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS)
+
+    assert str(ex.value) == (
+        "status code: 429, message: /v2/top-headlines?apiKey=seckfkdLkkekeKy&sources=bloomberg"
+        "%2Cbusiness-insider&language=en&pageSize=100:\n Max Retries, reason: too many 500 error "
+        "responses"
+    )
 
 
 @responses.activate

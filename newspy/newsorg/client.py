@@ -4,7 +4,6 @@ from datetime import date
 from newspy import client
 from newspy.newsorg.models import (
     NewsorgArticlesRes,
-    NewsorgCategory,
     NewsorgEndpoint,
     NewsorgSourceRes,
     NewsorgSource,
@@ -12,7 +11,7 @@ from newspy.newsorg.models import (
 )
 from newspy.shared.exceptions import NewspyException
 from newspy.shared.http_client import HttpClient, HttpMethod
-from newspy.shared.models import Country, Language
+from newspy.shared.models import Country, Language, Category
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +33,7 @@ def create_url(endpoint: NewsorgEndpoint) -> str:
 def create_articles_params(
     endpoint: NewsorgEndpoint = NewsorgEndpoint.TOP_HEADLINES,
     search_text: str | None = None,
-    category: NewsorgCategory | None = None,
+    category: Category | None = None,
     country: Country | None = None,
     language: Language | None = None,
     sources: list[NewsorgSource] | None = None,
@@ -53,11 +52,6 @@ def create_articles_params(
     if category and sources:
         raise NewspyException(
             msg="Choose either the category and sources attributes. Not both.",
-        )
-
-    if country and sources:
-        raise NewspyException(
-            msg="Choose either the country and sources attributes. Not both.",
         )
 
     params = {"apiKey": newsorg_api_key}
@@ -103,7 +97,7 @@ def create_articles_params(
 
 
 def create_sources_params(
-    category: NewsorgCategory | None = None,
+    category: Category | None = None,
     country: Country | None = None,
     language: Language | None = None,
 ) -> dict[str, str]:
@@ -129,7 +123,7 @@ def create_sources_params(
 def get_articles(
     endpoint: NewsorgEndpoint = NewsorgEndpoint.TOP_HEADLINES,
     search_text: str | None = None,
-    category: NewsorgCategory | None = None,
+    category: Category | None = None,
     country: Country | None = None,
     language: Language | None = None,
     sources: list[NewsorgSource] | None = None,
@@ -170,7 +164,7 @@ def get_articles(
 
 
 def get_sources(
-    category: NewsorgCategory | None = None,
+    category: Category | None = None,
     country: Country | None = None,
     language: Language | None = None,
 ) -> list[NewsorgSource]:
