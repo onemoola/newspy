@@ -1,3 +1,11 @@
+## [2.2.3](https://github.com/onemoola/newspy/compare/v2.2.2...v2.2.3) (2023-09-03)
+
+
+### Bug Fixes
+
+* hide shared module ([c82b4f2](https://github.com/onemoola/newspy/commit/c82b4f2dda4a2f6027945c919d70c1c8fc0fdc38))
+* move the models outside shared ([0f49e68](https://github.com/onemoola/newspy/commit/0f49e68645c90aa5a03b8c1aadc9e2f229651227))
+
 ## [2.2.2](https://github.com/onemoola/newspy/compare/v2.2.1...v2.2.2) (2023-09-03)
 
 
