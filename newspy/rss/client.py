@@ -7,13 +7,19 @@ from typing import NewType
 
 from newspy.rss.models import RssSource, RssArticle
 from newspy.shared.http_client import HttpClient, HttpMethod
+from newspy.shared.models import Category
 
 URL = NewType("URL", str)
 
 
-def get_articles(sources: list[RssSource] | None = None, **kwargs) -> list[RssArticle]:
+def get_articles(
+    category: Category | None = None,
+    language: str | None = None,
+    sources: list[RssSource] | None = None,
+    **kwargs,
+) -> list[RssArticle]:
     if not sources:
-        sources = get_sources()
+        sources = get_sources(category=category, language=language)
 
     http_client = HttpClient()
 
@@ -36,26 +42,23 @@ def get_articles(sources: list[RssSource] | None = None, **kwargs) -> list[RssAr
 
             if resp_json:
                 for article in resp_json:
-                    try:
-                        source = filter(
-                            lambda s: s.url == article["source_url"], sources
+                    source = filter(lambda s: s.url == article["source_url"], sources)
+                    articles.append(
+                        RssArticle(
+                            source=next(source),
+                            title=article["title"],
+                            description=article["description"],
+                            url=article["url"],
+                            published=article["published"],
                         )
-                        articles.append(
-                            RssArticle(
-                                source=next(source),
-                                title=article["title"],
-                                description=article["description"],
-                                url=article["url"],
-                                published=article["published"],
-                            )
-                        )
-                    except KeyError:
-                        pass
+                    )
 
     return articles
 
 
 def get_sources(
+    category: Category | None = None,
+    language: str | None = None,
     file_path: (Path | URL) = URL(
         "https://github.com/onemoola/newspy/blob/main/data/rss_sources.csv.gz?raw=true"
     ),
@@ -76,6 +79,21 @@ def get_sources(
 
     with gzip.open(file_content, "rt") as f:
         reader = csv.DictReader(f)
-        sources = [RssSource(**row) for row in reader]
+        if category and language:
+            sources = [
+                RssSource(**row)
+                for row in reader
+                if row["category"] == category and row["language"] == language
+            ]
+        elif category:
+            sources = [
+                RssSource(**row) for row in reader if row["category"] == category
+            ]
+        elif language:
+            sources = [
+                RssSource(**row) for row in reader if row["language"] == language
+            ]
+        else:
+            sources = [RssSource(**row) for row in reader]
 
     return sources

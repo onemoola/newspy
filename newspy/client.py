@@ -2,7 +2,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from newspy import newsorg, rss
-from newspy.shared.models import Source, Channel, Article, Language, Country
+from newspy.shared.models import Source, Channel, Article, Language, Country, Category
 
 default_client_config = {}
 
@@ -24,13 +24,18 @@ def configure(newsorg_api_key: str | None = None) -> None:
 
 
 def get_sources(
-    country: Country | None = None, language: Language | None = None
+    category: Category | None = None,
+    country: Country | None = None,
+    language: Language | None = None,
 ) -> list[Source]:
     sources = []
     with ThreadPoolExecutor() as executor:
         futures = [
             executor.submit(
-                channels[key].client.get_sources, country=country, language=language
+                channels[key].client.get_sources,
+                category=category,
+                country=country,
+                language=language,
             )
             for key in channels
         ]
@@ -42,13 +47,18 @@ def get_sources(
 
 
 def get_articles(
-    country: Country | None = None, language: Language | None = None
+    category: Category | None = None,
+    country: Country | None = None,
+    language: Language | None = None,
 ) -> list[Article]:
     articles = []
     with ThreadPoolExecutor() as executor:
         futures = [
             executor.submit(
-                channels[key].client.get_articles, country=country, language=language
+                channels[key].client.get_articles,
+                category=category,
+                country=country,
+                language=language,
             )
             for key in channels
         ]
@@ -57,3 +67,7 @@ def get_articles(
             articles.extend([r.to_article() for r in future.result()])
 
     return articles
+
+
+def get_categories() -> list[Category]:
+    return [c for c in Category]  # type: ignore

@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 import responses
 
 import newspy.client as newspy
-from newspy.shared.models import Source, Channel, Article, Language
+from newspy.shared.models import Source, Channel, Article, Language, Category
 
 API_KEY = "seckfkdLkkekeKy"
 
@@ -158,5 +158,22 @@ def test_get_articles(newsorg_articles_res_json, rss_articles_res_xml) -> None:
 
     newspy.configure(newsorg_api_key=API_KEY)
     actual = newspy.get_articles(language=Language.EN)
+
+    assert actual == expected
+
+
+def test_categories() -> None:
+    expected = [
+        Category.BUSINESS,
+        Category.FINANCIAL,
+        Category.ENTERTAINMENT,
+        Category.GENERAL,
+        Category.HEALTH,
+        Category.SCIENCE,
+        Category.SPORTS,
+        Category.TECHNOLOGY,
+    ]
+
+    actual = newspy.get_categories()
 
     assert actual == expected

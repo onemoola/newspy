@@ -210,9 +210,6 @@ def rss_articles_res_broken_xml() -> str:
                         <![CDATA[ Newspapers ]]>
                     </category>
                     <item>
-                        <title>
-                            <![CDATA[ Three global cities are pulling ahead since the peak of the pandemic ]]>
-                        </title>
                         <description>
                             <![CDATA[ Miami, Dubai and Singapore boom by welcoming those chased out of rival international hubs ]]>
                         </description>
@@ -221,9 +218,6 @@ def rss_articles_res_broken_xml() -> str:
                         <pubDate>Sun, 12 Mar 2023 13:00:35 GMT</pubDate>
                     </item>
                     <item>
-                        <long_title>
-                            <![CDATA[ UK seeks to tap Middle East money to buy out SVB unit ]]>
-                        </long_title>
                         <description>
                             <![CDATA[ ‘Lead white knight’ eyeing British arm of tech lender that had billions in deposits ]]>
                         </description>
