@@ -3,9 +3,9 @@ from pathlib import Path
 import responses
 
 from newspy import rss
+from newspy.models import Language, Category
 from newspy.rss.client import URL
 from newspy.rss.models import RssSource, RssArticle
-from newspy.shared.models import Language, Category
 
 
 @responses.activate

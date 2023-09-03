@@ -5,13 +5,9 @@ import responses
 
 from newspy import client
 from newspy import newsorg
-from newspy.newsorg.models import (
-    NewsorgEndpoint,
-    NewsorgSource,
-    NewsorgArticle,
-)
+from newspy.models import Language, Country, Category
+from newspy.newsorg.models import NewsorgSource, NewsorgArticle, NewsorgEndpoint
 from newspy.shared.exceptions import NewspyException
-from newspy.shared.models import Language, Country, Category
 
 API_KEY = "seckfkdLkkekeKy"
 BASE_URL = "https://newsapi.org/v2/top-headlines"

@@ -1,8 +1,8 @@
 import logging
 from dataclasses import dataclass
 
+from newspy.models import Article, Source, Language, Channel, Category
 from newspy.shared import utils
-from newspy.shared.models import Article, Source, Language, Channel, Category
 
 logger = logging.getLogger(__name__)
 

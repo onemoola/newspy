@@ -2,7 +2,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from newspy import newsorg, rss
-from newspy.shared.models import Source, Channel, Article, Language, Country, Category
+from newspy.models import Article, Category, Channel, Country, Language, Source
 
 default_client_config = {}
 

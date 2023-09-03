@@ -2,16 +2,16 @@ import logging
 from datetime import date
 
 from newspy import client
+from newspy.models import Country, Language, Category
 from newspy.newsorg.models import (
     NewsorgArticlesRes,
-    NewsorgEndpoint,
     NewsorgSourceRes,
     NewsorgSource,
     NewsorgArticle,
+    NewsorgEndpoint,
 )
 from newspy.shared.exceptions import NewspyException
 from newspy.shared.http_client import HttpClient, HttpMethod
-from newspy.shared.models import Country, Language, Category
 
 logger = logging.getLogger(__name__)
 
