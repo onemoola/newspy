@@ -57,7 +57,7 @@ jobs:
           verbose: true
 
   version:
-    needs: upload
+    needs: test
     permissions:
       contents: write
       issues: read
