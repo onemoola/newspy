@@ -5,14 +5,10 @@ on:
     branches-ignore:
       - main
   pull_request:
-    branches-ignore:
-      - main
+    types: [ opened, reopened ]
 
 jobs:
   test:
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-      cancel-in-progress: true
     strategy:
       fail-fast: true
       matrix:
