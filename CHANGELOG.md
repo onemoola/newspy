@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/onemoola/newspy/compare/v2.2.1...v2.2.2) (2023-09-03)
+
+
+### Bug Fixes
+
+* use the shared category for all ([38282ea](https://github.com/onemoola/newspy/commit/38282ea72b0826b52e170d538d26005fc8b5132e))
+
 ## [2.2.1](https://github.com/onemoola/newspy/compare/v2.2.0...v2.2.1) (2023-08-28)
 
 
