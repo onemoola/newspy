@@ -7,5 +7,10 @@ ft-personal-finance,Financial Times Personal Finance,Financial Times (FT) Person
 yahoo-finance,Yahoo Finance,Yahoo Finance RSS,https://finance.yahoo.com/rss/,financial,en
 investing-com-za,Investing.com ZA,Investing.com ZA RSS,https://za.investing.com/rss/news_25.rss,financial,en
 investing-com-crypto,Investing.com Crypto,Investing.com Crypto RSS,https://za.investing.com/rss/news_301.rss,financial,en
+investing-com-stock-market,Investing.com Stock Market,Investing.com Stock Market RSS,https://www.investing.com/rss/news_25.rss,financial,en
+investing-com-commodities,Investing.com Commodities,Investing.com Commodities RSS,https://www.investing.com/rss/news_11.rss,financial,en
+investing-com-currencies,Investing.com Currencies,Investing.com Currencies RSS,https://www.investing.com/rss/news_1.rss,financial,en
+investing-com-economy,Investing.com Economy,Investing.com Economy RSS,https://www.investing.com/rss/news_14.rss,financial,en
+investing-com-economic-indicators,Investing.com Economic Indicators,Investing.com Economic Indicators RSS,https://www.investing.com/rss/news_95.rss,financial,en
 cnbc-finance,CNBC Finance,CNBC Finance RSS,https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664,financial,en
 cnbc-business,CNBC Business,CNBC Business RSS,https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147,business,en
