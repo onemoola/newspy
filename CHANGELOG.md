@@ -1,3 +1,11 @@
+## [2.2.5](https://github.com/onemoola/newspy/compare/v2.2.4...v2.2.5) (2023-09-20)
+
+
+### Bug Fixes
+
+* add more investing.com sources ([633ba4f](https://github.com/onemoola/newspy/commit/633ba4f01c49d043d34b6be542c35dc0bd3db212))
+* add more investing.com sources ([#70](https://github.com/onemoola/newspy/issues/70)) ([a20001d](https://github.com/onemoola/newspy/commit/a20001d28db87f0b015dd278d2f7aae11f087603))
+
 ## [2.2.4](https://github.com/onemoola/newspy/compare/v2.2.3...v2.2.4) (2023-09-03)
 
 
