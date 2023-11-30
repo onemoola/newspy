@@ -939,9 +939,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:^9.2.3":
-  version: 9.2.3
-  resolution: "@semantic-release/github@npm:9.2.3"
+"@semantic-release/github@npm:^9.2.4":
+  version: 9.2.4
+  resolution: "@semantic-release/github@npm:9.2.4"
   dependencies:
     "@octokit/core": ^5.0.0
     "@octokit/plugin-paginate-rest": ^9.0.0
@@ -956,12 +956,12 @@ __metadata:
     https-proxy-agent: ^7.0.0
     issue-parser: ^6.0.0
     lodash-es: ^4.17.21
-    mime: ^3.0.0
+    mime: ^4.0.0
     p-filter: ^3.0.0
     url-join: ^5.0.0
   peerDependencies:
     semantic-release: ">=20.1.0"
-  checksum: f9ef927a425a70daceb7beaf13f390d8ae868d81ff0c152ec1bfa18c45c4f28d2b06457517e0f3860c63fcee6d3b22c107480d3a9b3e42ca08754c13b165d43b
+  checksum: 8fa0e26f68ca613d56aeed407e090c930357ed6a5fca360eb1aa15b7b55426003473a7994f4eea8c528be91642338c0a533308c9716701bedf2507ae8429c567
   languageName: node
   linkType: hard
 
@@ -3671,6 +3671,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mime@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "mime@npm:4.0.0"
+  bin:
+    mime: bin/cli.js
+  checksum: c257e10b9fa6a805ad1fa8e33eafbdf3de7601dd9057ba8fa606416bccee3252457c903c4666638b6f2249d262f1a0951b2faee36c55a18513b31bf0b8b1b431
+  languageName: node
+  linkType: hard
+
 "mimic-fn@npm:^2.1.0":
   version: 2.1.0
   resolution: "mimic-fn@npm:2.1.0"
@@ -3889,7 +3898,7 @@ __metadata:
     "@semantic-release/changelog": ^6.0.3
     "@semantic-release/commit-analyzer": ^11.1.0
     "@semantic-release/git": ^10.0.1
-    "@semantic-release/github": ^9.2.3
+    "@semantic-release/github": ^9.2.4
     "@semantic-release/release-notes-generator": ^12.1.0
     husky: ^8.0.3
     semantic-release: ^22.0.8
