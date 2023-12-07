@@ -3901,7 +3901,7 @@ __metadata:
     "@semantic-release/github": ^9.2.4
     "@semantic-release/release-notes-generator": ^12.1.0
     husky: ^8.0.3
-    semantic-release: ^22.0.8
+    semantic-release: ^22.0.10
   languageName: unknown
   linkType: soft
 
@@ -5030,9 +5030,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semantic-release@npm:^22.0.8":
-  version: 22.0.8
-  resolution: "semantic-release@npm:22.0.8"
+"semantic-release@npm:^22.0.10":
+  version: 22.0.10
+  resolution: "semantic-release@npm:22.0.10"
   dependencies:
     "@semantic-release/commit-analyzer": ^11.0.0
     "@semantic-release/error": ^4.0.0
@@ -5065,7 +5065,7 @@ __metadata:
     yargs: ^17.5.1
   bin:
     semantic-release: bin/semantic-release.js
-  checksum: 5e82076661dd74924721300b9518f9788b36343637e9de161d1614fbed3c94cb7cef5eed6df01740b87a1e0f0a7b9c09388b9ee17c4afde66109235d75f1e529
+  checksum: 14d22ed21c0ba5ff94dcabc77b3f0ae02b52e01e97174bfa08ba44ab9f84c286768153968cdd154957baeb11ace4ada69993d180de4c065d058c2a38d4b6ffc3
   languageName: node
   linkType: hard
 
