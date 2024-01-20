@@ -1,22 +1,23 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  test:
+  deploy:
+    permissions:
+      contents: write
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check out repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up python
-        id: setup-python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: '3.10'
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -26,46 +27,24 @@ jobs:
           virtualenvs-in-project: true
           installer-parallel: true
 
+      - name: Update version
+        run: |
+          poetry version $VERSION
+          
+          git config --global user.name "newspy"
+          git config --global user.email "newspy@youremail.com"
+          
+          git add pyproject.toml
+          git commit -m "chore: bump version to $VERSION"
+          git push origin main
+
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
 
       - name: Install project
         run: poetry install --no-interaction
 
-      - name: Run tests
+      - name: Build and publish
         run: |
-          source $VENV
-          pytest tests --exitfirst --verbose --failed-first --cov-report term --cov-report xml:coverage.xml --cov=newspy
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        continue-on-error: true
-        with:
-          fail_ci_if_error: true
-          files: ./coverage.xml
-          verbose: true
-
-  version:
-    needs: test
-    permissions:
-      contents: write
-      issues: read
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Semantic release
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+          poetry publish --build
