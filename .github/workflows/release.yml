@@ -14,6 +14,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Extract branch or tag name
+        id: ref
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF/refs\/tags\//};
+            echo "VERSION=${VERSION#v}" >> $GITHUB_ENV
+          else
+            VERSION=${GITHUB_REF/refs\/heads\//}
+            echo "VERSION=${VERSION#v}" >> $GITHUB_ENV
+          fi
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -29,13 +40,13 @@ jobs:
 
       - name: Update version
         run: |
-          poetry version $VERSION
+          poetry version ${{ env.VERSION }}
           
           git config --global user.name "newspy"
           git config --global user.email "newspy@youremail.com"
           
           git add pyproject.toml
-          git commit -m "chore: bump version to $VERSION"
+          git commit -m "chore: bump version to ${{ env.VERSION }}"
           git push origin main
 
       - name: Install dependencies
