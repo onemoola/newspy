@@ -1,7 +1,8 @@
 name: Pre-release
 
 on:
-  push:
+  pull_request:
+    types: [ closed ]
     branches:
       - main
 
