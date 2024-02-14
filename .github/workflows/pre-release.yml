@@ -39,7 +39,7 @@ jobs:
           pytest tests --exitfirst --verbose --failed-first --cov-report term --cov-report xml:coverage.xml --cov=newspy
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         continue-on-error: true
         with:
           fail_ci_if_error: true
