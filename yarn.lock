@@ -97,12 +97,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/config-conventional@npm:^18.4.4":
-  version: 18.4.4
-  resolution: "@commitlint/config-conventional@npm:18.4.4"
+"@commitlint/config-conventional@npm:^19.0.0":
+  version: 19.0.0
+  resolution: "@commitlint/config-conventional@npm:19.0.0"
   dependencies:
+    "@commitlint/types": "npm:^19.0.0"
     conventional-changelog-conventionalcommits: "npm:^7.0.2"
-  checksum: 53238dfac4bef5dcee301cbe1cfc4501054adf9bc1c9bcda47ff0039cf108fd0ffa5e27ff608e62baced9dc976745e7dc2d2a8242704b23251632ed59e303be2
+  checksum: 9db382602918e34c9555de6f59f662d5a30041a8d59ab83fe03f7b53aa7f0f8da2fa5b0a9617d2bb3f307bd8d0e364d14e94f14c4c8cf4ed3e15bf3c5ef5df87
   languageName: node
   linkType: hard
 
@@ -267,6 +268,15 @@ __metadata:
   dependencies:
     chalk: "npm:^4.1.0"
   checksum: bda09adc5f4a7d460120891ad85d2950cb3db17ee9ecf93b820c4782c5a9f8cb235b28fb559a3c4f38fbb5ada43b50bab4c2ee1eb87853be4febbcd8da30fd1f
+  languageName: node
+  linkType: hard
+
+"@commitlint/types@npm:^19.0.0":
+  version: 19.0.0
+  resolution: "@commitlint/types@npm:19.0.0"
+  dependencies:
+    chalk: "npm:^5.3.0"
+  checksum: 8d352473e5dcf7a784cad63790eb3db2c4cd03a55b0c1dd74998397d2a1596cc14b58168bb61df1d09801577baa82df6e9741326ed55127a5bee0ccf7d27819a
   languageName: node
   linkType: hard
 
@@ -3881,7 +3891,7 @@ __metadata:
   resolution: "newspy@workspace:."
   dependencies:
     "@commitlint/cli": "npm:^18.4.4"
-    "@commitlint/config-conventional": "npm:^18.4.4"
+    "@commitlint/config-conventional": "npm:^19.0.0"
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/commit-analyzer": "npm:^11.1.0"
     "@semantic-release/git": "npm:^10.0.1"
