@@ -132,3 +132,9 @@ dmypy.json
 node_modules/
 
 .idea/
+
+### VS Code ###
+.vscode/
+qodana/
+
+.yarn/install-state.gz
