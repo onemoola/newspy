@@ -13,7 +13,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ "ubuntu-latest", "macos-latest", "windows-latest" ]
-        python-version: [ "3.10", "3.11" ]
+        python-version: [ "3.10", "3.11", "3.12" ]
     defaults:
       run:
         shell: bash
@@ -31,7 +31,6 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.5.1
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
