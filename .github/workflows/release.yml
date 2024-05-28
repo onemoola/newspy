@@ -16,12 +16,11 @@ jobs:
         id: setup-python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: 3.12
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.5.1
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true

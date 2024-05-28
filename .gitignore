@@ -128,8 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-/.yarn
-.yarnrc.yml
+.yarn/cache
 node_modules/
+.yarn/install-state.gz
 
 .idea/
