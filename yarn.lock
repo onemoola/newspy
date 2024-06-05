@@ -821,9 +821,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:^10.0.5":
-  version: 10.0.5
-  resolution: "@semantic-release/github@npm:10.0.5"
+"@semantic-release/github@npm:^10.0.6":
+  version: 10.0.6
+  resolution: "@semantic-release/github@npm:10.0.6"
   dependencies:
     "@octokit/core": "npm:^6.0.0"
     "@octokit/plugin-paginate-rest": "npm:^11.0.0"
@@ -843,7 +843,7 @@ __metadata:
     url-join: "npm:^5.0.0"
   peerDependencies:
     semantic-release: ">=20.1.0"
-  checksum: 10/c59c9e37701cc0c4737a92a95bf612d31b1429e024c9840dd105cf6fdf4aac3837f9a93f1b4a034b6b4a99a05ccc46213e2d8d6ac516274836bf65f4027b12be
+  checksum: 10/ea3f2245ade796f62f1c88c42d197b3b25f2bc7d999f923a038353e1bed5fd30fc5c6b686c50c4be59d83d8a69272acdb745ae1a9c103eb62fe0cc735ddd6bf3
   languageName: node
   linkType: hard
 
@@ -3719,7 +3719,7 @@ __metadata:
     "@semantic-release/changelog": "npm:^6.0.3"
     "@semantic-release/commit-analyzer": "npm:^13.0.0"
     "@semantic-release/git": "npm:^10.0.1"
-    "@semantic-release/github": "npm:^10.0.5"
+    "@semantic-release/github": "npm:^10.0.6"
     "@semantic-release/release-notes-generator": "npm:^14.0.0"
     husky: "npm:^9.0.11"
     semantic-release: "npm:^24.0.0"
