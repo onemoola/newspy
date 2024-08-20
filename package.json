@@ -14,7 +14,7 @@
     "@semantic-release/github": "^10.1.6",
     "@semantic-release/release-notes-generator": "^14.0.1",
     "husky": "^9.1.4",
-    "semantic-release": "^24.0.0"
+    "semantic-release": "^24.1.0"
   },
   "private": true,
   "plugins": [
