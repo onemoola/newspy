@@ -22,16 +22,11 @@
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     "@semantic-release/github",
-    "@semantic-release/npm",
     "@semantic-release/git"
   ],
   "release": {
     "branches": [
-      "main",
-      {
-        "name": "beta",
-        "prerelease": true
-      }
+      "release"
     ],
     "prepare": [
       "@semantic-release/changelog",
@@ -47,5 +42,5 @@
       }
     ]
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.5.1"
 }
