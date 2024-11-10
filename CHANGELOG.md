@@ -1,3 +1,11 @@
+## [2.2.9](https://github.com/onemoola/newspy/compare/v2.2.8...v2.2.9) (2024-11-10)
+
+
+### Bug Fixes
+
+* **workflow:** revert release workflow. bump up version before build … ([#274](https://github.com/onemoola/newspy/issues/274)) ([f1796f5](https://github.com/onemoola/newspy/commit/f1796f55cfed63e129511e51b62c0ac13bce1315))
+* **workflow:** revert release workflow. bump up version before build and publish step ([24aa53f](https://github.com/onemoola/newspy/commit/24aa53f224c3fbf17f604fc052e1519532c8d150))
+
 ## [2.2.8](https://github.com/onemoola/newspy/compare/v2.2.7...v2.2.8) (2024-11-10)
 
 
