@@ -1,3 +1,11 @@
+## [2.2.6](https://github.com/onemoola/newspy/compare/v2.2.5...v2.2.6) (2024-11-10)
+
+
+### Bug Fixes
+
+* release off the release branch ([35cf7ff](https://github.com/onemoola/newspy/commit/35cf7ff08503fcf1ec68b970fd0b4c2a5642507b))
+* release off the release branch ([#264](https://github.com/onemoola/newspy/issues/264)) ([2f268c5](https://github.com/onemoola/newspy/commit/2f268c52f0fa7ed08390a06bf46eeda912590e15))
+
 ## [2.2.5](https://github.com/onemoola/newspy/compare/v2.2.4...v2.2.5) (2023-09-20)
 
 
