@@ -4,8 +4,7 @@ on:
   push:
     branches-ignore:
       - main
-  pull_request:
-    types: [ edited, opened, synchronize, reopened ]
+      - release
 
 jobs:
   test:
