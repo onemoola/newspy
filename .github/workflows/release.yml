@@ -7,7 +7,6 @@ jobs:
   deploy:
     permissions:
       contents: read
-      id-token: write
 
     runs-on: ubuntu-latest
 
@@ -43,27 +42,12 @@ jobs:
           virtualenvs-in-project: true
           installer-parallel: true
 
-      - name: Configure Git
-        run: |
-          git config --global user.name "newspy"
-          git config --global user.email "newspy@youremail.com"
-          git checkout release
-
-      - name: Bump version
-        run: |
-          poetry version ${{ env.VERSION }}
-
-          git add pyproject.toml
-          git commit -m "chore: bump version to ${{ env.VERSION }}"
-          git push origin release
-
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
-
-      - name: Install project
-        run: poetry install --no-interaction
 
       - name: Build and publish
         run: |
           poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
           poetry publish --build
+        env:
+          POETRY_VERSION: ${{ env.VERSION }}
