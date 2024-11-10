@@ -14,6 +14,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: release
+          token: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: Extract branch or tag name
         id: ref
@@ -39,16 +43,19 @@ jobs:
           virtualenvs-in-project: true
           installer-parallel: true
 
-      - name: Update version
+      - name: Configure Git
         run: |
-          poetry version ${{ env.VERSION }}
-          
           git config --global user.name "newspy"
           git config --global user.email "newspy@youremail.com"
-          
+          git checkout release
+
+      - name: Bump version
+        run: |
+          poetry version ${{ env.VERSION }}
+
           git add pyproject.toml
           git commit -m "chore: bump version to ${{ env.VERSION }}"
-          git push origin main
+          git push origin release
 
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
