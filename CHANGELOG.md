@@ -1,3 +1,11 @@
+## [2.2.8](https://github.com/onemoola/newspy/compare/v2.2.7...v2.2.8) (2024-11-10)
+
+
+### Bug Fixes
+
+* **workflow:** do not modify and commit the toml version, publish wit… ([#272](https://github.com/onemoola/newspy/issues/272)) ([58caccf](https://github.com/onemoola/newspy/commit/58caccf45689e57ab5dca3b666416f022834a6ce))
+* **workflow:** do not modify and commit the toml version, publish with the version ([1655aeb](https://github.com/onemoola/newspy/commit/1655aeb0eeca161bd7d8e4a78685f03c80ae33ec))
+
 ## [2.2.7](https://github.com/onemoola/newspy/compare/v2.2.6...v2.2.7) (2024-11-10)
 
 
