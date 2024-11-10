@@ -1,53 +1,12 @@
 name: Pre-release
 
 on:
-  pull_request:
-    types: [ closed ]
+  push:
     branches:
-      - main
+      - release
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up python
-        id: setup-python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.13
-
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          version: 1.8.4
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-          installer-parallel: true
-
-      - name: Install dependencies
-        run: poetry install --no-interaction --no-root
-
-      - name: Install project
-        run: poetry install --no-interaction
-
-      - name: Run tests
-        run: |
-          source $VENV
-          pytest tests --exitfirst --verbose --failed-first --cov-report term --cov-report xml:coverage.xml --cov=newspy
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        continue-on-error: true
-        with:
-          fail_ci_if_error: true
-          files: ./coverage.xml
-          verbose: true
-
-  version:
-    needs: test
+  versioning:
     permissions:
       contents: write
       issues: read
@@ -56,11 +15,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Switch to release branch
+        run: git checkout release
 
       - name: Install node
         uses: actions/setup-node@v4
         with:
-          node-version: 23.1.0
+          node-version: 22.11.0
           cache: 'yarn'
 
       - name: Install dependencies
