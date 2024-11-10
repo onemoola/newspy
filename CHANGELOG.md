@@ -1,3 +1,11 @@
+## [2.2.7](https://github.com/onemoola/newspy/compare/v2.2.6...v2.2.7) (2024-11-10)
+
+
+### Bug Fixes
+
+* **workflow:** specify the release branch on the release workflow ([d664c8f](https://github.com/onemoola/newspy/commit/d664c8fd95d51e0fbbbfb209ca93bf4f47e54e8e))
+* **workflow:** specify the release branch on the release workflow ([#271](https://github.com/onemoola/newspy/issues/271)) ([48467a7](https://github.com/onemoola/newspy/commit/48467a79d2c76e10b8c408540d47a9fcd87c8dcd))
+
 ## [2.2.6](https://github.com/onemoola/newspy/compare/v2.2.5...v2.2.6) (2024-11-10)
 
 
