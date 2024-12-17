@@ -852,9 +852,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/release-notes-generator@npm:^14.0.1":
-  version: 14.0.1
-  resolution: "@semantic-release/release-notes-generator@npm:14.0.1"
+"@semantic-release/release-notes-generator@npm:^14.0.2":
+  version: 14.0.2
+  resolution: "@semantic-release/release-notes-generator@npm:14.0.2"
   dependencies:
     conventional-changelog-angular: "npm:^8.0.0"
     conventional-changelog-writer: "npm:^8.0.0"
@@ -868,7 +868,7 @@ __metadata:
     read-package-up: "npm:^11.0.0"
   peerDependencies:
     semantic-release: ">=20.1.0"
-  checksum: 10/3312392cdd47deccc3cff812f42fc6b3f3bfffbe3e5af256f9e37b276a88f5878ce77556faf85f90669d82850a42ca3f1f996bf282952becfe2f0b23d947683b
+  checksum: 10/ad50e70eaf72021772980148a0f92b68588ae1738787f4e2d724d9475afe1f46f2a6fff42e552ba3f8fcb1604881b8f1df60b672e005c7a1da679252d3f42040
   languageName: node
   linkType: hard
 
@@ -3711,7 +3711,7 @@ __metadata:
     "@semantic-release/commit-analyzer": "npm:^13.0.0"
     "@semantic-release/git": "npm:^10.0.1"
     "@semantic-release/github": "npm:^11.0.1"
-    "@semantic-release/release-notes-generator": "npm:^14.0.1"
+    "@semantic-release/release-notes-generator": "npm:^14.0.2"
     husky: "npm:^9.1.7"
     semantic-release: "npm:^24.2.0"
   languageName: unknown
