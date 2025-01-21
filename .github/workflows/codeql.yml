@@ -1,23 +1,29 @@
-name: "CodeQL"
+name: CodeQL
 
 on:
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: '17 11 * * 1'
 
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: "ubuntu-latest"
-    timeout-minutes: 360
+    runs-on: ubuntu-latest
+
     permissions:
+      packages: read
       security-events: write
 
     strategy:
       fail-fast: false
       matrix:
         include:
+          - language: javascript-typescript
+            build-mode: none
           - language: python
             build-mode: none
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
