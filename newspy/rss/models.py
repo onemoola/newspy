@@ -1,5 +1,6 @@
 import logging
 from dataclasses import dataclass
+from typing import Optional, Dict, Any
 
 from newspy.models import Article, Source, Language, Channel, Category
 from newspy.shared import utils
@@ -41,6 +42,7 @@ class RssArticle:
     description: str
     url: str
     published: str
+    archived_data: Optional[Dict[str, Any]] = None
 
     def to_article(self) -> Article:
         source = self.source.to_source()
@@ -48,10 +50,11 @@ class RssArticle:
         return Article(
             slug=f"{utils.slugify(source.name)}-{utils.slugify(self.title)}",
             url=self.url,
-            url_to_image=None,
+            url_to_image=None, # RSS typically doesn't have a standardized image field
             title=self.title,
             abstract=self.description,
-            author=None,
+            author=None, # RSS feeds vary widely in how/if they provide author
             source=source,
             published=utils.to_datetime(self.published),
+            archived_data=self.archived_data,
         )

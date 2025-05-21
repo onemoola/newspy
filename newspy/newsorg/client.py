@@ -120,7 +120,7 @@ def create_sources_params(
     return params
 
 
-def get_articles(
+async def get_articles(
     endpoint: NewsorgEndpoint = NewsorgEndpoint.TOP_HEADLINES,
     search_text: str | None = None,
     category: Category | None = None,
@@ -131,9 +131,13 @@ def get_articles(
     to_date: date | None = None,
     page_size: int | None = None,
     page: int | None = None,
+    http_client: HttpClient | None = None,
+    fetch_archived: bool = False,
 ) -> list[NewsorgArticle]:
-    params = create_articles_params(
-        endpoint=endpoint,
+    # This inner function will handle all fetching logic using a given client.
+    async def _fetch_all_data_with_client(client_to_use: HttpClient) -> list[NewsorgArticle]:
+        params = create_articles_params(
+            endpoint=endpoint,
         search_text=search_text,
         category=category,
         country=country,
@@ -143,41 +147,83 @@ def get_articles(
         to_date=to_date,
         page_size=page_size,
         page=page,
-    )
-
-    http_client = HttpClient()
-    resp_json = http_client.send(
-        method=HttpMethod.GET,
-        url=create_url(endpoint=endpoint),
-        params=params,
-    )
-
-    try:
-        article_res = NewsorgArticlesRes(**resp_json)
-    except TypeError as exc:
-        raise NewspyException(
-            msg=f"Failed to validate the News Org articles response json: {resp_json}",
-            reason=str(exc),
+            search_text=search_text,
+            category=category,
+            country=country,
+            language=language,
+            sources=sources,
+            from_date=from_date,
+            to_date=to_date,
+            page_size=page_size,
+            page=page,
         )
 
-    return article_res.articles
+        resp_json = await client_to_use.send(
+            method=HttpMethod.GET,
+            url=create_url(endpoint=endpoint),
+            params=params,
+        )
+
+        try:
+            article_res = NewsorgArticlesRes(**resp_json)
+        except TypeError as exc:
+            raise NewspyException(
+                msg=f"Failed to validate the News Org articles response json: {resp_json}",
+                reason=str(exc),
+            )
+
+        articles_list = article_res.articles
+
+        if fetch_archived and articles_list:
+            import asyncio # Ensure asyncio is imported
+            from newspy.archiver import fetch_from_archivemd # Import here
+
+            archive_fetch_tasks = [
+                fetch_from_archivemd(article.url, client_to_use) for article in articles_list
+            ]
+            archived_results = await asyncio.gather(*archive_fetch_tasks, return_exceptions=True)
+
+            for i, article in enumerate(articles_list):
+                archived_data = archived_results[i]
+                if isinstance(archived_data, Exception):
+                    # Store error information if fetching archived data failed
+                    article.archived_data = {"status": "failed", "error": str(archived_data)}
+                else:
+                    article.archived_data = archived_data
+        
+        return articles_list
+
+    if http_client:
+        return await _fetch_all_data_with_client(http_client)
+    else:
+        async with HttpClient() as client_instance:
+            return await _fetch_all_data_with_client(client_instance)
 
 
-def get_sources(
+
+async def get_sources(
     category: Category | None = None,
     country: Country | None = None,
     language: Language | None = None,
+    http_client: HttpClient | None = None,
 ) -> list[NewsorgSource]:
     params = create_sources_params(
         category=category, language=language, country=country
     )
 
-    http_client = HttpClient()
-    resp_json = http_client.send(
-        method=HttpMethod.GET,
-        url=f"{BASE_URL}/top-headlines/sources",
-        params=params,
-    )
+    if http_client:
+        resp_json = await http_client.send(
+            method=HttpMethod.GET,
+            url=f"{BASE_URL}/top-headlines/sources",
+            params=params,
+        )
+    else:
+        async with HttpClient() as client_instance:
+            resp_json = await client_instance.send(
+                method=HttpMethod.GET,
+                url=f"{BASE_URL}/top-headlines/sources",
+                params=params,
+            )
 
     try:
         source_res = NewsorgSourceRes(**resp_json)

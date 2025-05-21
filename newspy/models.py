@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
+from typing import Optional, Dict, Any
 
 
 class Language(str, Enum):
@@ -118,3 +119,4 @@ class Article:
     author: str | None
     source: Source
     published: datetime
+    archived_data: Optional[Dict[str, Any]] = None

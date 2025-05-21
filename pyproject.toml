@@ -23,12 +23,15 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.10"
 requests = "2.32.3"
+aiohttp = "^3.9.0" # Added aiohttp
+beautifulsoup4 = "^4.12.0"
 
 [tool.poetry.group.dev.dependencies]
 black = { extras = ["d"], version = ">=23.9,<26.0" }
 pre-commit = "4.2.0"
 pytest = "8.3.5"
 pytest-cov = "6.1.1"
+pytest-asyncio = "0.23.7" # Added pytest-asyncio
 responses = "0.25.7"
 
 [build-system]

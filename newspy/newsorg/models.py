@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import Optional, Dict, Any
 
 from newspy.models import (
     Article,
@@ -70,6 +71,7 @@ class NewsorgArticle:
     urlToImage: str
     publishedAt: str
     content: str
+    archived_data: Optional[Dict[str, Any]] = None
 
     def __post_init__(self):
         if isinstance(self.source, dict):
@@ -87,6 +89,7 @@ class NewsorgArticle:
             author=self.author,
             source=source,
             published=utils.to_datetime(self.publishedAt),
+            archived_data=self.archived_data,
         )
 
 
