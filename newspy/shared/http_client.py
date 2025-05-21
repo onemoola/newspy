@@ -1,9 +1,10 @@
 import json
+import asyncio
 from enum import Enum
 from xml.etree import ElementTree
 
-import requests
-from requests.adapters import HTTPAdapter, Retry
+import aiohttp
+from aiohttp_retry import RetryClient, ExponentialBackoff
 
 from newspy.shared.exceptions import NewspyHttpException
 
@@ -23,54 +24,30 @@ class HttpClient:
 
     def __init__(
         self,
-        requests_session: bool = True,
-        requests_timeout: int = 5,
+        timeout: int = 5,
         status_forcelist: tuple = (429, 500, 502, 503, 504),
         retries: int = MAX_RETRIES,
-        status_retries: int = MAX_RETRIES,
         backoff_factor: float = 0.3,
+        session: aiohttp.ClientSession | None = None,
     ) -> None:
-        """
-        :param requests_timeout:
-            Tell Requests to stop waiting for a response after a given
-            number of seconds
-        :param status_forcelist:
-            Tell requests what type of status codes retries should occur on
-        :param retries:
-            Total number of retries to allow
-        :param status_retries:
-            Number of times to retry on bad status codes
-        :param backoff_factor:
-            A backoff factor to apply between attempts after the second try
-            See urllib3 https://urllib3.readthedocs.io/en/latest/reference/urllib3.util.html
-        """
-        self._requests_timeout = requests_timeout
+        self._timeout = timeout
         self._status_forcelist = status_forcelist
         self._retries = retries
-        self._status_retries = status_retries
         self._backoff_factor = backoff_factor
+        self._session = session
 
-        if requests_session:  # Build a new session.
-            self._build_session()
-        else:  # Use the Requests API module as a "session".
-            self._session = requests.api
+    async def __aenter__(self):
+        if self._session is None:
+            self._session = aiohttp.ClientSession(
+                timeout=aiohttp.ClientTimeout(total=self._timeout)
+            )
+        return self
 
-    def _build_session(self) -> None:
-        self._session = requests.Session()
-        retry = Retry(
-            total=self._retries,
-            connect=1,
-            read=False,
-            allowed_methods=frozenset(["GET", "POST"]),
-            status=self._status_retries,
-            backoff_factor=self._backoff_factor,
-            status_forcelist=self._status_forcelist,
-        )
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        if self._session:
+            await self._session.close()
 
-        adapter = HTTPAdapter(max_retries=retry)
-        self._session.mount("https://", adapter)
-
-    def send(
+    async def send(
         self,
         method: HttpMethod,
         url: str,
@@ -88,52 +65,62 @@ class HttpClient:
             else:
                 args["data"] = str(payload)
 
+        retry_options = ExponentialBackoff(
+            attempts=self._retries,
+            factor=self._backoff_factor,
+            statuses=self._status_forcelist,
+        )
+        retry_client = RetryClient(
+            client_session=self._session, retry_options=retry_options
+        )
+
         try:
-            response = self._session.request(
-                method,
+            async with retry_client.request(
+                method.value,
                 url,
                 headers=headers,
-                timeout=self._requests_timeout,
                 params=params,
                 **args,
-            )
+            ) as response:
+                response.raise_for_status()
 
-            response.raise_for_status()
-
-            match headers["Content-Type"]:
-                case "application/json":
-                    results = response.json()
-                case "application/rss+xml":
-                    results = parse_xml(data=response.content, source_url=url)
-                case "application/zip":
-                    results = response.content
-                case _:
-                    results = response.text
-
-        except requests.exceptions.HTTPError as http_error:
-            response = http_error.response
+                match headers["Content-Type"]:
+                    case "application/json":
+                        results = await response.json()
+                    case "application/rss+xml":
+                        content = await response.read()
+                        results = parse_xml(data=content, source_url=url)
+                    case "application/zip":
+                        results = await response.read()
+                    case _:
+                        # Read bytes and decode to string for text-based content types
+                        content_bytes = await response.read()
+                        try:
+                            results = content_bytes.decode('utf-8')
+                        except UnicodeDecodeError:
+                            # Fallback or error handling if not UTF-8
+                            results = content_bytes.decode('latin-1') # Or some other fallback
+        except aiohttp.ClientResponseError as http_error:
             try:
-                json_response = response.json()
-                error = json_response.get("error", {})
-                msg = error.get("message")
-                reason = error.get("reason")
-            except ValueError:
-                msg = response.text or None
+                # Attempt to parse JSON error response
+                error_data = await http_error.response.json()
+                msg = error_data.get("error", {}).get("message")
+                reason = error_data.get("error", {}).get("reason")
+            except (json.JSONDecodeError, aiohttp.ContentTypeError):
+                msg = http_error.message
                 reason = None
 
             raise NewspyHttpException(
-                status_code=response.status_code,
-                msg="%s:\n %s" % (response.url, msg),
+                status_code=http_error.status,
+                msg=f"{url}:\n {msg}",
                 reason=reason,
-                headers=response.headers,
+                headers=http_error.headers,
             )
-        except requests.exceptions.RetryError as retry_error:
-            request = retry_error.request
-            reason = retry_error.args[0].reason
+        except aiohttp.ClientError as client_error: # Catch other aiohttp client errors
             raise NewspyHttpException(
-                status_code=429,
-                msg="%s:\n %s" % (request.path_url, "Max Retries"),
-                reason=reason,
+                status_code=500, # Generic server error for unexpected client issues
+                msg=f"{url}:\n Client Error: {client_error}",
+                reason=str(client_error)
             )
         except (TypeError, ValueError):
             results = None
@@ -141,7 +128,7 @@ class HttpClient:
         return results
 
 
-def parse_xml(data: str, source_url: str) -> list[dict[str, str]] | None:
+def parse_xml(data: bytes, source_url: str) -> list[dict[str, str]] | None:
     try:
         root = ElementTree.fromstring(data)
         items = []
