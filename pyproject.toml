@@ -22,7 +22,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-requests = "2.32.3"
+requests = "2.32.4"
 
 [tool.poetry.group.dev.dependencies]
 black = { extras = ["d"], version = ">=23.9,<26.0" }
