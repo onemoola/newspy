@@ -30,7 +30,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/cli@npm:^19.8.1":
+"@commitlint/cli@npm:19.8.1":
   version: 19.8.1
   resolution: "@commitlint/cli@npm:19.8.1"
   dependencies:
@@ -47,7 +47,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/config-conventional@npm:^19.8.1":
+"@commitlint/config-conventional@npm:19.8.1":
   version: 19.8.1
   resolution: "@commitlint/config-conventional@npm:19.8.1"
   dependencies:
@@ -490,8 +490,8 @@ __metadata:
   linkType: hard
 
 "@octokit/core@npm:^7.0.0":
-  version: 7.0.2
-  resolution: "@octokit/core@npm:7.0.2"
+  version: 7.0.3
+  resolution: "@octokit/core@npm:7.0.3"
   dependencies:
     "@octokit/auth-token": "npm:^6.0.0"
     "@octokit/graphql": "npm:^9.0.1"
@@ -500,7 +500,7 @@ __metadata:
     "@octokit/types": "npm:^14.0.0"
     before-after-hook: "npm:^4.0.0"
     universal-user-agent: "npm:^7.0.0"
-  checksum: 10/bef39511f3653b9dec239a7e8e8bdb4f17eb43f95d4f69b14eda44a4e2d22ab0239e2a4b0a445f474afd85169928b60420d0be5b316165505851b8a69b3ab596
+  checksum: 10/14e7b0e9f293d9d9330e105f7acd99add5ce54001577bbeafc1533de53035a89fc755485e6e6867e9e8af8dbd6a737dfa875374abadadd40b8533235d01ecee1
   languageName: node
   linkType: hard
 
@@ -533,13 +533,13 @@ __metadata:
   linkType: hard
 
 "@octokit/plugin-paginate-rest@npm:^13.0.0":
-  version: 13.0.1
-  resolution: "@octokit/plugin-paginate-rest@npm:13.0.1"
+  version: 13.1.1
+  resolution: "@octokit/plugin-paginate-rest@npm:13.1.1"
   dependencies:
     "@octokit/types": "npm:^14.1.0"
   peerDependencies:
     "@octokit/core": ">=6"
-  checksum: 10/eb58db6bbe69ccb7ac4f73ddc20f4e491d26cdef820d0676a5682ecfe01c486a3a3059cc5151802dc6efeb2b4766eac84d05eafc9a35ac4855cb4b73b29ce809
+  checksum: 10/26b9b7a233b77fff31d31469879a281e651417df86799387d6563446f037c9969061b833ab0698857c9797ea856f2ef7ed6970d8fb471239879c9298bbabe200
   languageName: node
   linkType: hard
 
@@ -578,15 +578,15 @@ __metadata:
   linkType: hard
 
 "@octokit/request@npm:^10.0.2":
-  version: 10.0.2
-  resolution: "@octokit/request@npm:10.0.2"
+  version: 10.0.3
+  resolution: "@octokit/request@npm:10.0.3"
   dependencies:
     "@octokit/endpoint": "npm:^11.0.0"
     "@octokit/request-error": "npm:^7.0.0"
     "@octokit/types": "npm:^14.0.0"
     fast-content-type-parse: "npm:^3.0.0"
     universal-user-agent: "npm:^7.0.2"
-  checksum: 10/eaddfd49787e8caad664a80c7c665d69bd303f90b5e6be822d571b684a4cd42bdfee29119f838fdfaed2946bc09f38219e1d7a0923388436bff0bfdd0202acca
+  checksum: 10/f32a2c3fe97e0354390c0748a443e2f600a4e169b1014deb0b668ac3c52aa25cab523e87508751a1247806e3998c41f8849ad41ee3da531936975f5d32ab4c02
   languageName: node
   linkType: hard
 
@@ -640,7 +640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/changelog@npm:^6.0.3":
+"@semantic-release/changelog@npm:6.0.3":
   version: 6.0.3
   resolution: "@semantic-release/changelog@npm:6.0.3"
   dependencies:
@@ -654,7 +654,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/commit-analyzer@npm:^13.0.0-beta.1, @semantic-release/commit-analyzer@npm:^13.0.1":
+"@semantic-release/commit-analyzer@npm:13.0.1, @semantic-release/commit-analyzer@npm:^13.0.0-beta.1":
   version: 13.0.1
   resolution: "@semantic-release/commit-analyzer@npm:13.0.1"
   dependencies:
@@ -686,7 +686,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/git@npm:^10.0.1":
+"@semantic-release/git@npm:10.0.1":
   version: 10.0.1
   resolution: "@semantic-release/git@npm:10.0.1"
   dependencies:
@@ -704,7 +704,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:^11.0.0, @semantic-release/github@npm:^11.0.3":
+"@semantic-release/github@npm:11.0.3, @semantic-release/github@npm:^11.0.0":
   version: 11.0.3
   resolution: "@semantic-release/github@npm:11.0.3"
   dependencies:
@@ -753,7 +753,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/release-notes-generator@npm:^14.0.0-beta.1, @semantic-release/release-notes-generator@npm:^14.0.3":
+"@semantic-release/release-notes-generator@npm:14.0.3, @semantic-release/release-notes-generator@npm:^14.0.0-beta.1":
   version: 14.0.3
   resolution: "@semantic-release/release-notes-generator@npm:14.0.3"
   dependencies:
@@ -879,11 +879,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 24.0.1
-  resolution: "@types/node@npm:24.0.1"
+  version: 24.0.15
+  resolution: "@types/node@npm:24.0.15"
   dependencies:
     undici-types: "npm:~7.8.0"
-  checksum: 10/6b77554f8308148e00e9c7c264ccad3e9a3d360f10b75a727d44b9bba2377022179a76905fbe1bb426ea4c6ee9f45186797ec335a5dcab803435336576db18c6
+  checksum: 10/0c55b7f4b0cd4f47e43e587e54545c4f188521678328411033595a6f49f81ed54ec3729ce5025936c51250e31504a32a7f20b520ed9dd71f3ab1530f809975e9
   languageName: node
   linkType: hard
 
@@ -914,9 +914,9 @@ __metadata:
   linkType: hard
 
 "agent-base@npm:^7.1.0, agent-base@npm:^7.1.2":
-  version: 7.1.3
-  resolution: "agent-base@npm:7.1.3"
-  checksum: 10/3db6d8d4651f2aa1a9e4af35b96ab11a7607af57a24f3bc721a387eaa3b5f674e901f0a648b0caefd48f3fd117c7761b79a3b55854e2aebaa96c3f32cf76af84
+  version: 7.1.4
+  resolution: "agent-base@npm:7.1.4"
+  checksum: 10/79bef167247789f955aaba113bae74bf64aa1e1acca4b1d6bb444bdf91d82c3e07e9451ef6a6e2e35e8f71a6f97ce33e3d855a5328eb9fad1bc3cc4cfd031ed8
   languageName: node
   linkType: hard
 
@@ -1008,9 +1008,9 @@ __metadata:
   linkType: hard
 
 "aproba@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "aproba@npm:2.0.0"
-  checksum: 10/c2b9a631298e8d6f3797547e866db642f68493808f5b37cd61da778d5f6ada890d16f668285f7d60bd4fc3b03889bd590ffe62cf81b700e9bb353431238a0a7b
+  version: 2.1.0
+  resolution: "aproba@npm:2.1.0"
+  checksum: 10/cb0e335ac398027d43bf4a139337363e161fa10a642291f7ad5068a2e24797be58270775047cba901a7c1ce945a05c7535b13f6457993517cd7dca40c9b00a00
   languageName: node
   linkType: hard
 
@@ -1178,9 +1178,9 @@ __metadata:
   linkType: hard
 
 "ci-info@npm:^4.0.0, ci-info@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "ci-info@npm:4.2.0"
-  checksum: 10/928d8457f3476ffc4a66dec93b9cdf1944d5e60dba69fbd6a0fc95b652386f6ef64857f6e32372533210ef6d8954634af2c7693d7c07778ee015f3629a5e0dd9
+  version: 4.3.0
+  resolution: "ci-info@npm:4.3.0"
+  checksum: 10/01e359032a34782fa2503530dd350c3ffaecede7d9ea0b120efa2ddda4c8dc80d8c2566caf1ea2287c739fad2bf277c65f70063a21f31f66203b889039c70eea
   languageName: node
   linkType: hard
 
@@ -1364,8 +1364,8 @@ __metadata:
   linkType: hard
 
 "conventional-changelog-writer@npm:^8.0.0":
-  version: 8.1.0
-  resolution: "conventional-changelog-writer@npm:8.1.0"
+  version: 8.2.0
+  resolution: "conventional-changelog-writer@npm:8.2.0"
   dependencies:
     conventional-commits-filter: "npm:^5.0.0"
     handlebars: "npm:^4.7.7"
@@ -1373,7 +1373,7 @@ __metadata:
     semver: "npm:^7.5.2"
   bin:
     conventional-changelog-writer: dist/cli/index.js
-  checksum: 10/7fc71f145a3165c80dbf8d8c4ba3aa941206b00a76826d387ec323bc7a9b63c9f667577b06ca4f27431806958f0cf85001e9ee4145754f0df2dcac8e253b6d5a
+  checksum: 10/050387a37a295bf8d0f91733432ea1e3959478d5b7d71f19654b83943503f2a37f24d69cf7688d9bb371c537693da024bc4e7c72a7029df8d121a44035ff7949
   languageName: node
   linkType: hard
 
@@ -1489,7 +1489,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.0.0, debug@npm:^4.3.4, debug@npm:^4.3.6":
+"debug@npm:4, debug@npm:^4.0.0, debug@npm:^4.3.4, debug@npm:^4.4.1":
   version: 4.4.1
   resolution: "debug@npm:4.4.1"
   dependencies:
@@ -2122,7 +2122,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^9.1.7":
+"husky@npm:9.1.7":
   version: 9.1.7
   resolution: "husky@npm:9.1.7"
   bin:
@@ -2818,7 +2818,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-fetch-happen@npm:^14.0.0, make-fetch-happen@npm:^14.0.1, make-fetch-happen@npm:^14.0.2, make-fetch-happen@npm:^14.0.3":
+"make-fetch-happen@npm:^14.0.0, make-fetch-happen@npm:^14.0.2, make-fetch-happen@npm:^14.0.3":
   version: 14.0.3
   resolution: "make-fetch-happen@npm:14.0.3"
   dependencies:
@@ -3101,15 +3101,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "newspy@workspace:."
   dependencies:
-    "@commitlint/cli": "npm:^19.8.1"
-    "@commitlint/config-conventional": "npm:^19.8.1"
-    "@semantic-release/changelog": "npm:^6.0.3"
-    "@semantic-release/commit-analyzer": "npm:^13.0.1"
-    "@semantic-release/git": "npm:^10.0.1"
-    "@semantic-release/github": "npm:^11.0.3"
-    "@semantic-release/release-notes-generator": "npm:^14.0.3"
-    husky: "npm:^9.1.7"
-    semantic-release: "npm:^24.2.7"
+    "@commitlint/cli": "npm:19.8.1"
+    "@commitlint/config-conventional": "npm:19.8.1"
+    "@semantic-release/changelog": "npm:6.0.3"
+    "@semantic-release/commit-analyzer": "npm:13.0.1"
+    "@semantic-release/git": "npm:10.0.1"
+    "@semantic-release/github": "npm:11.0.3"
+    "@semantic-release/release-notes-generator": "npm:14.0.3"
+    husky: "npm:9.1.7"
+    semantic-release: "npm:24.2.7"
   languageName: unknown
   linkType: soft
 
@@ -3713,9 +3713,9 @@ __metadata:
   linkType: hard
 
 "picomatch@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "picomatch@npm:4.0.2"
-  checksum: 10/ce617b8da36797d09c0baacb96ca8a44460452c89362d7cb8f70ca46b4158ba8bc3606912de7c818eb4a939f7f9015cef3c766ec8a0c6bfc725fdc078e39c717
+  version: 4.0.3
+  resolution: "picomatch@npm:4.0.3"
+  checksum: 10/57b99055f40b16798f2802916d9c17e9744e620a0db136554af01d19598b96e45e2f00014c91d1b8b13874b80caa8c295b3d589a3f72373ec4aaf54baa5962d5
   languageName: node
   linkType: hard
 
@@ -3985,7 +3985,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semantic-release@npm:^24.2.7":
+"semantic-release@npm:24.2.7":
   version: 24.2.7
   resolution: "semantic-release@npm:24.2.7"
   dependencies:
@@ -4139,12 +4139,12 @@ __metadata:
   linkType: hard
 
 "socks@npm:^2.8.3":
-  version: 2.8.5
-  resolution: "socks@npm:2.8.5"
+  version: 2.8.6
+  resolution: "socks@npm:2.8.6"
   dependencies:
     ip-address: "npm:^9.0.5"
     smart-buffer: "npm:^4.2.0"
-  checksum: 10/0109090ec2bcb8d12d3875a987e85539ed08697500ad971a603c3057e4c266b4bf6a603e07af6d19218c422dd9b72d923aaa6c1f20abae275510bba458e4ccc9
+  checksum: 10/7aef197dee914a01a39d5f250a59f0c9fa0a9fd10f8135ee2cff6c42576993ae1c817503a12eb424f1bb69f1e234f8dbaf8cc48bfcfa10c51a12af8f0ea97698
   languageName: node
   linkType: hard
 
@@ -4530,13 +4530,13 @@ __metadata:
   linkType: hard
 
 "tuf-js@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "tuf-js@npm:3.0.1"
+  version: 3.1.0
+  resolution: "tuf-js@npm:3.1.0"
   dependencies:
     "@tufjs/models": "npm:3.0.1"
-    debug: "npm:^4.3.6"
-    make-fetch-happen: "npm:^14.0.1"
-  checksum: 10/880219a55e9575fcbf2c15129284a13d093fb2a053874151df59b11511d1ba097df359deae7b4e731b16fc3abd8fceda5125a167ec0d16eb926a32b8f778faa8
+    debug: "npm:^4.4.1"
+    make-fetch-happen: "npm:^14.0.3"
+  checksum: 10/b0344853c0408312ecf6e6d6e02695f4b1043c28f110a2160d90c8b6716f156ef6d5aeea85b5dd01ee0da0dfee42567b7889a5b89881a116edee37d77c42044a
   languageName: node
   linkType: hard
 
