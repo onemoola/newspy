@@ -26,7 +26,7 @@ requests = "2.32.4"
 
 [tool.poetry.group.dev.dependencies]
 black = { extras = ["d"], version = ">=23.9,<26.0" }
-pre-commit = "4.2.0"
+pre-commit = "4.3.0"
 pytest = "8.4.1"
 pytest-cov = "6.2.1"
 responses = "0.25.7"
