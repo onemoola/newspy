@@ -704,7 +704,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:11.0.5, @semantic-release/github@npm:^11.0.0":
+"@semantic-release/github@npm:11.0.6":
+  version: 11.0.6
+  resolution: "@semantic-release/github@npm:11.0.6"
+  dependencies:
+    "@octokit/core": "npm:^7.0.0"
+    "@octokit/plugin-paginate-rest": "npm:^13.0.0"
+    "@octokit/plugin-retry": "npm:^8.0.0"
+    "@octokit/plugin-throttling": "npm:^11.0.0"
+    "@semantic-release/error": "npm:^4.0.0"
+    aggregate-error: "npm:^5.0.0"
+    debug: "npm:^4.3.4"
+    dir-glob: "npm:^3.0.1"
+    http-proxy-agent: "npm:^7.0.0"
+    https-proxy-agent: "npm:^7.0.0"
+    issue-parser: "npm:^7.0.0"
+    lodash-es: "npm:^4.17.21"
+    mime: "npm:^4.0.0"
+    p-filter: "npm:^4.0.0"
+    tinyglobby: "npm:^0.2.14"
+    url-join: "npm:^5.0.0"
+  peerDependencies:
+    semantic-release: ">=24.1.0"
+  checksum: 10/286a8fd19b83935ec142502282b6f8448ccbe22e711c333ed037e588333eda6ca1590b2f87bce3d5521d0ffecaba6bb193642ab174a7950835c11c248151b650
+  languageName: node
+  linkType: hard
+
+"@semantic-release/github@npm:^11.0.0":
   version: 11.0.5
   resolution: "@semantic-release/github@npm:11.0.5"
   dependencies:
@@ -3096,7 +3122,7 @@ __metadata:
     "@semantic-release/changelog": "npm:6.0.3"
     "@semantic-release/commit-analyzer": "npm:13.0.1"
     "@semantic-release/git": "npm:10.0.1"
-    "@semantic-release/github": "npm:11.0.5"
+    "@semantic-release/github": "npm:11.0.6"
     "@semantic-release/release-notes-generator": "npm:14.1.0"
     husky: "npm:9.1.7"
     semantic-release: "npm:24.2.7"
@@ -4479,7 +4505,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyglobby@npm:^0.2.12":
+"tinyglobby@npm:^0.2.12, tinyglobby@npm:^0.2.14":
   version: 0.2.15
   resolution: "tinyglobby@npm:0.2.15"
   dependencies:
