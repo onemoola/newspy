@@ -23,8 +23,8 @@ class NewspyHttpException(NewspyException):
         super().__init__(msg, reason)
         self.status_code = status_code
         if headers is None:
-            headers = {}
+            headers = CaseInsensitiveDict()
         self.headers = headers
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"status code: {self.status_code}, message: {self.msg}, reason: {self.reason}"
