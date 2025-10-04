@@ -1,3 +1,14 @@
+## [2.2.12](https://github.com/onemoola/newspy/compare/v2.2.11...v2.2.12) (2025-10-04)
+
+
+### Bug Fixes
+
+* **client:** add error handling for conflicting country and sources attributes ([b700671](https://github.com/onemoola/newspy/commit/b700671f7a75dcb87b5f4d02d01026f71a569e34))
+* **client:** remove Content-Type header from RSS feed requests ([b75aaec](https://github.com/onemoola/newspy/commit/b75aaec9f59506d4e6ef7f947aad7adca06fea4c))
+* **client:** remove Content-Type header from RSS feed requests ([1d6cb4e](https://github.com/onemoola/newspy/commit/1d6cb4e9ba97ab3e87cc0e6f8b3576541c969c32))
+* **exceptions:** use CaseInsensitiveDict for headers in custom exception ([3265623](https://github.com/onemoola/newspy/commit/3265623ced5bce5a2b4fd3803dc435b86d2815e5))
+* **http_client:** update error message to use request.url instead of request.path_url ([e2fc3aa](https://github.com/onemoola/newspy/commit/e2fc3aab20ea3a9e54a6f5a4869a6112ba4f59cb))
+
 ## [2.2.11](https://github.com/onemoola/newspy/compare/v2.2.10...v2.2.11) (2025-09-08)
 
 
