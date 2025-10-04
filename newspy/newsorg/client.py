@@ -54,6 +54,11 @@ def create_articles_params(
             msg="Choose either the category and sources attributes. Not both.",
         )
 
+    if country and sources:
+        raise NewspyException(
+            msg="Choose either the country and sources attributes. Not both.",
+        )
+
     params = {"apiKey": newsorg_api_key}
 
     if language:

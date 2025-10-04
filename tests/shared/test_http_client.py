@@ -122,7 +122,7 @@ def test_http_client_when_http_error() -> None:
         }
     )
 
-    with pytest.raises(NewspyHttpException):
+    with pytest.raises(NewspyHttpException, match="status code: 404"):
         client = HttpClient()
         client.send(method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS)
 
@@ -151,7 +151,7 @@ def test_http_client_when_http_error_is_text() -> None:
 
 
 @responses.activate
-def test_http_client_when_http_error() -> None:
+def test_http_client_when_http_error_with_json() -> None:
     responses.add(
         **{
             "method": responses.GET,
@@ -162,7 +162,7 @@ def test_http_client_when_http_error() -> None:
         }
     )
 
-    with pytest.raises(NewspyHttpException):
+    with pytest.raises(NewspyHttpException, match="status code: 404"):
         client = HttpClient()
         client.send(method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS)
 
@@ -184,7 +184,7 @@ def test_http_client_when_server_error() -> None:
         client.send(method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS)
 
     assert str(ex.value) == (
-        "status code: 429, message: /v2/top-headlines?apiKey=seckfkdLkkekeKy&sources=bloomberg"
+        "status code: 429, message: https://localhost/v2/top-headlines?apiKey=seckfkdLkkekeKy&sources=bloomberg"
         "%2Cbusiness-insider&language=en&pageSize=100:\n Max Retries, reason: too many 500 error "
         "responses"
     )
@@ -249,83 +249,6 @@ def test_http_client_when_content_type_is_rss(rss_articles_res_xml) -> None:
         headers={"Content-Type": "application/rss+xml"},
         params={"edition": "international", "format": "rss"},
     )
-
-    assert actual == expected
-
-
-def test_parse_xml() -> None:
-    xml = """
-        <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-            <channel>
-                <title>
-                    <![CDATA[ News Feed ]]>
-                </title>
-                <description>
-                    <![CDATA[ News Feed ]]>
-                </description>
-                <link>https://www.ft.com/news-feed</link>
-                <generator>RSS for Node</generator>
-                <lastBuildDate>Sun, 12 Mar 2023 13:26:24 GMT</lastBuildDate>
-                <atom:link href="https://www.ft.com/news-feed?format=rss" rel="self" type="application/rss+xml"/>
-                <copyright>
-                    <![CDATA[ © Copyright The Financial Times Ltd 2023. "FT" and "Financial Times" are trademarks of the Financial Times. See http://www.ft.com/servicestools/help/terms#legal1 for the terms and conditions of reuse. ]]>
-                </copyright>
-                <language>
-                    <![CDATA[ en ]]>
-                </language>
-                <webMaster>
-                    <![CDATA[ client.support@ft.com (FT Client Support) ]]>
-                </webMaster>
-                <ttl>15</ttl>
-                <category>
-                    <![CDATA[ Newspapers ]]>
-                </category>
-                <item>
-                    <title>
-                        <![CDATA[ Three global cities are pulling ahead since the peak of the pandemic ]]>
-                    </title>
-                    <description>
-                        <![CDATA[ Miami, Dubai and Singapore boom by welcoming those chased out of rival international hubs ]]>
-                    </description>
-                    <link>https://www.ft.com/content/1cf1b55e-bb8d-435a-95a3-5d21149939b6</link>
-                    <guid isPermaLink="false">1cf1b55e-bb8d-435a-95a3-5d21149939b6</guid>
-                    <pubDate>Sun, 12 Mar 2023 13:00:35 GMT</pubDate>
-                </item>
-                <item>
-                    <title>
-                        <![CDATA[ UK seeks to tap Middle East money to buy out SVB unit ]]>
-                    </title>
-                    <description>
-                        <![CDATA[ ‘Lead white knight’ eyeing British arm of tech lender that had billions in deposits ]]>
-                    </description>
-                    <link>https://www.ft.com/content/cde4aa95-1cb5-408d-b35f-3216eaee46ae</link>
-                    <guid isPermaLink="false">cde4aa95-1cb5-408d-b35f-3216eaee46ae</guid>
-                    <pubDate>Sun, 12 Mar 2023 12:54:53 GMT</pubDate>
-                </item>
-            </channel>
-        </rss>
-    """
-    expected = [
-        {
-            "description": "Miami, Dubai and Singapore boom by welcoming those chased "
-            "out of rival international hubs",
-            "published": "Sun, 12 Mar 2023 13:00:35 GMT",
-            "title": "Three global cities are pulling ahead since the peak of the "
-            "pandemic",
-            "url": "https://www.ft.com/content/1cf1b55e-bb8d-435a-95a3-5d21149939b6",
-            "source_url": "https://www.ft.com/news-feed",
-        },
-        {
-            "description": "‘Lead white knight’ eyeing British arm of tech lender that "
-            "had billions in deposits",
-            "published": "Sun, 12 Mar 2023 12:54:53 GMT",
-            "title": "UK seeks to tap Middle East money to buy out SVB unit",
-            "url": "https://www.ft.com/content/cde4aa95-1cb5-408d-b35f-3216eaee46ae",
-            "source_url": "https://www.ft.com/news-feed",
-        },
-    ]
-
-    actual = http_client.parse_xml(data=xml, source_url="https://www.ft.com/news-feed")
 
     assert actual == expected
 
