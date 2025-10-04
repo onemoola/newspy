@@ -30,7 +30,7 @@ def get_articles(
                 http_client.send,
                 method=HttpMethod.GET,
                 url=source.url,
-                headers={"Content-Type": "application/rss+xml"},
+                headers=None,
                 params=None,
                 payload=None,
             )
