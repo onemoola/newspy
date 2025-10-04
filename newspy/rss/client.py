@@ -59,7 +59,7 @@ def get_articles(
 def get_sources(
     category: Category | None = None,
     language: str | None = None,
-    file_path: (Path | URL) = URL(
+    file_path: Path | URL = URL(
         "https://github.com/onemoola/newspy/blob/main/data/rss_sources.csv.gz?raw=true"
     ),
     **kwargs,
