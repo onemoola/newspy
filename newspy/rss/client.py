@@ -40,7 +40,7 @@ def get_articles(
         for future in as_completed(futures):
             resp_json = future.result()
 
-            if resp_json:
+            if resp_json and isinstance(resp_json, list):
                 for article in resp_json:
                     source = filter(lambda s: s.url == article["source_url"], sources)
                     articles.append(

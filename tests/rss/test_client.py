@@ -93,6 +93,68 @@ def test_get_rss_articles_return_none(rss_articles_res_broken_xml) -> None:
     assert actual == []
 
 
+@responses.activate
+def test_get_rss_articles_handles_string_response() -> None:
+    """Test that get_articles handles string responses (like error pages) gracefully."""
+    # Simulate an error page being returned as plain text instead of RSS XML
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            "body": "<html><body>404 Not Found</body></html>",
+            "status": 200,
+            "content_type": "text/html",
+        }
+    )
+
+    rss_sources = [
+        RssSource(
+            id="wsj-markets",
+            name="The Wall Street Journal Markets",
+            description="The Wall Street Journal (WSJ) Markets RSS",
+            url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            category=Category.FINANCIAL,
+            language=Language.EN,
+        )
+    ]
+
+    # This should not raise a TypeError and should return an empty list
+    actual = rss.get_articles(sources=rss_sources)
+
+    assert actual == []
+
+
+@responses.activate
+def test_get_rss_articles_handles_none_response() -> None:
+    """Test that get_articles handles None responses gracefully."""
+    # Simulate a response that returns None
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            "body": "",
+            "status": 200,
+            "content_type": "application/rss+xml",
+        }
+    )
+
+    rss_sources = [
+        RssSource(
+            id="wsj-markets",
+            name="The Wall Street Journal Markets",
+            description="The Wall Street Journal (WSJ) Markets RSS",
+            url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            category=Category.FINANCIAL,
+            language=Language.EN,
+        )
+    ]
+
+    # This should not raise a TypeError and should return an empty list
+    actual = rss.get_articles(sources=rss_sources)
+
+    assert actual == []
+
+
 def test_get_rss_sources_from_local_path() -> None:
     expected = [
         RssSource(
