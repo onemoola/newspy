@@ -113,23 +113,17 @@ def test_create_articles_params_when_category_and_sources_are_not_none() -> None
 
 
 def test_create_articles_params_when_country_and_sources_are_not_none() -> None:
-    expected = {
-        "apiKey": API_KEY,
-        "country": "us",
-        "pageSize": 100,
-        "page": 1,
-        "q": "bitcoin",
-        "sources": "news-org",
-    }
-    client.configure(newsorg_api_key=API_KEY)
-    actual = newsorg.create_articles_params(
-        endpoint=NewsorgEndpoint.TOP_HEADLINES,
-        search_text="bitcoin",
-        country=Country.US,
-        sources=[NewsorgSource(id="news-org", name="News Organisation")],
-    )
-
-    assert actual == expected
+    with pytest.raises(
+        NewspyException,
+        match="Choose either the country and sources attributes. Not both.",
+    ):
+        client.configure(newsorg_api_key=API_KEY)
+        newsorg.create_articles_params(
+            endpoint=NewsorgEndpoint.TOP_HEADLINES,
+            search_text="bitcoin",
+            country=Country.US,
+            sources=[NewsorgSource(id="news-org", name="News Organisation")],
+        )
 
 
 def test_create_articles_params_when_endpoint_is_not_recognised() -> None:
