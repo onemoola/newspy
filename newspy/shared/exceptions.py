@@ -1,32 +1,30 @@
-class NewspyHttpException(Exception):
+from requests.structures import CaseInsensitiveDict
+
+
+class NewspyException(Exception):
+
+    def __init__(self, msg: str, reason: str | None = None) -> None:
+        self.msg = msg
+        self.reason = reason
+
+    def __str__(self) -> str:
+        return f"message: {self.msg}, reason: {self.reason}"
+
+
+class NewspyHttpException(NewspyException):
 
     def __init__(
-            self,
-            status_code: int,
-            msg: str,
-            reason: str | None = None,
-            headers: dict | None = None,
+        self,
+        status_code: int,
+        msg: str,
+        reason: str | None = None,
+        headers: CaseInsensitiveDict[str] | None = None,
     ) -> None:
-        self._status_code = status_code
-        self._msg = msg
-        self._reason = reason
+        super().__init__(msg, reason)
+        self.status_code = status_code
         if headers is None:
             headers = {}
         self.headers = headers
 
     def __str__(self):
-        return f"status code: {self._status_code}, message: {self._msg}, reason: {self._reason}"
-
-
-class NewspyException(Exception):
-
-    def __init__(
-            self,
-            msg: str,
-            reason: str | None = None
-    ) -> None:
-        self._msg = msg
-        self._reason = reason
-
-    def __str__(self) -> str:
-        return f"message: {self._msg}, reason: {self._reason}"
+        return f"status code: {self.status_code}, message: {self.msg}, reason: {self.reason}"
