@@ -1,11 +1,11 @@
 import json
 from enum import Enum
-from xml.etree import ElementTree
 
 import requests
 from requests.adapters import HTTPAdapter, Retry
 
 from newspy.shared.exceptions import NewspyHttpException
+from newspy.shared.xml_parser import parse_xml
 
 
 class ContentType(str, Enum):
@@ -77,10 +77,9 @@ class HttpClient:
         headers: dict | None = None,
         params: dict | None = None,
         payload: dict | None = None,
-    ) -> json:
+    ) -> dict | list | bytes | str | None:
         args = {}
-        if headers is None:
-            headers = {"Content-Type": "application/json"}
+        results = None
 
         if payload:
             if headers["Content-Type"] == "application/json":
@@ -100,7 +99,15 @@ class HttpClient:
 
             response.raise_for_status()
 
-            match headers["Content-Type"]:
+            content_type = None
+            if headers and "Content-Type" in headers:
+                content_type = headers["Content-Type"]
+            else:
+                response_content_type = response.headers.get("Content-Type", "")
+                if response_content_type:
+                    content_type = response_content_type.split(";")[0].strip()
+
+            match content_type:
                 case "application/json":
                     results = response.json()
                 case "application/rss+xml":
@@ -108,7 +115,10 @@ class HttpClient:
                 case "application/zip":
                     results = response.content
                 case _:
-                    results = response.text
+                    try:
+                        results = response.json()
+                    except ValueError:
+                        results = response.text
 
         except requests.exceptions.HTTPError as http_error:
             response = http_error.response
@@ -139,27 +149,3 @@ class HttpClient:
             results = None
 
         return results
-
-
-def parse_xml(data: str, source_url: str) -> list[dict[str, str]] | None:
-    try:
-        root = ElementTree.fromstring(data)
-        items = []
-        for item in root.findall(".//item"):
-            title = item.find("title").text.strip()
-            description = item.find("description").text.strip()
-            link = item.find("link").text.strip()
-            pub_date = item.find("pubDate").text.strip()
-            items.append(
-                {
-                    "source_url": source_url,
-                    "title": title,
-                    "description": description,
-                    "url": link,
-                    "published": pub_date,
-                }
-            )
-        return items
-    except (ElementTree.ParseError, AttributeError):
-        # Handle XML parsing errors
-        return None
