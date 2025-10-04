@@ -28,12 +28,19 @@ def test_create_url_when_endpoint_is_top_headlines() -> None:
 
 
 def test_create_url_when_endpoint_is_not_recognised() -> None:
-    with pytest.raises(NewspyException):
+    with pytest.raises(
+        NewspyException,
+        match="The endpoint has to be one of the following values: 'EVERYTHING' or 'TOP_HEADLINES' or 'SOURCES'",
+    ):
         newsorg.create_url(endpoint="something-else")  # type: ignore
 
 
 def test_articles_when_category_and_sources_are_not_none() -> None:
-    with pytest.raises(NewspyException):
+    with pytest.raises(
+        NewspyException,
+        match="Choose either the category and sources attributes. Not both.",
+    ):
+        client.configure(newsorg_api_key=API_KEY)
         newsorg.get_articles(
             endpoint=NewsorgEndpoint.EVERYTHING,
             search_text="bitcoin",
@@ -70,14 +77,21 @@ def test_create_articles_params_when_endpoint_is_top_headlines() -> None:
 def test_create_articles_params_when_endpoint_is_top_headlines_when_all_params_are_none() -> (
     None
 ):
-    with pytest.raises(NewspyException):
+    with pytest.raises(
+        NewspyException,
+        match="The search text, country, or category attribute is required for the TOP_HEADLINES endpoint.",
+    ):
+        client.configure(newsorg_api_key=API_KEY)
         newsorg.create_articles_params(endpoint=NewsorgEndpoint.TOP_HEADLINES)
 
 
 def test_create_articles_params_when_newsorg_api_key_is_none() -> None:
     client.configure(newsorg_api_key=None)
 
-    with pytest.raises(NewspyException):
+    with pytest.raises(
+        NewspyException,
+        match="The Newsorg API key is not configured. Please configure it by calling the configure function.",
+    ):
         newsorg.create_articles_params(
             endpoint=NewsorgEndpoint.TOP_HEADLINES,
             search_text="bitcoin",
@@ -85,7 +99,11 @@ def test_create_articles_params_when_newsorg_api_key_is_none() -> None:
 
 
 def test_create_articles_params_when_category_and_sources_are_not_none() -> None:
-    with pytest.raises(NewspyException):
+    with pytest.raises(
+        NewspyException,
+        match="Choose either the category and sources attributes. Not both.",
+    ):
+        client.configure(newsorg_api_key=API_KEY)
         newsorg.create_articles_params(
             endpoint=NewsorgEndpoint.TOP_HEADLINES,
             search_text="bitcoin",
@@ -95,17 +113,31 @@ def test_create_articles_params_when_category_and_sources_are_not_none() -> None
 
 
 def test_create_articles_params_when_country_and_sources_are_not_none() -> None:
-    with pytest.raises(NewspyException):
-        newsorg.create_articles_params(
-            endpoint=NewsorgEndpoint.TOP_HEADLINES,
-            search_text="bitcoin",
-            country=Country.US,
-            sources=[NewsorgSource(id="news-org", name="News Organisation")],
-        )
+    expected = {
+        "apiKey": API_KEY,
+        "country": "us",
+        "pageSize": 100,
+        "page": 1,
+        "q": "bitcoin",
+        "sources": "news-org",
+    }
+    client.configure(newsorg_api_key=API_KEY)
+    actual = newsorg.create_articles_params(
+        endpoint=NewsorgEndpoint.TOP_HEADLINES,
+        search_text="bitcoin",
+        country=Country.US,
+        sources=[NewsorgSource(id="news-org", name="News Organisation")],
+    )
+
+    assert actual == expected
 
 
 def test_create_articles_params_when_endpoint_is_not_recognised() -> None:
-    with pytest.raises(NewspyException):
+    with pytest.raises(
+        AttributeError,
+        match="'str' object has no attribute 'TOP_HEADLINES'",
+    ):
+        client.configure(newsorg_api_key=API_KEY)
         newsorg.create_articles_params(
             endpoint="something-else",  # type: ignore
             search_text="bitcoin",
@@ -190,7 +222,10 @@ def test_create_articles_params_when_endpoint_is_everything_and_page_size_and_pa
 
 
 def test_create_articles_params_when_from_date_is_greater_than_to_date() -> None:
-    with pytest.raises(NewspyException):
+    with pytest.raises(
+        NewspyException,
+        match="The from date cannot be greater than the to date.",
+    ):
         newsorg.create_articles_params(
             endpoint=NewsorgEndpoint.EVERYTHING,
             search_text="bitcoin",
@@ -212,7 +247,10 @@ def test_create_sources_params_when_all_params_are_none() -> None:
 def test_create_sources_params_when_newsorg_api_key_is_none() -> None:
     client.configure(newsorg_api_key=None)
 
-    with pytest.raises(NewspyException):
+    with pytest.raises(
+        NewspyException,
+        match="The Newsorg API key is not configured. Please configure it by calling the configure function.",
+    ):
         newsorg.create_sources_params()
 
 

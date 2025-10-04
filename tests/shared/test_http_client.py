@@ -122,7 +122,7 @@ def test_http_client_when_http_error() -> None:
         }
     )
 
-    with pytest.raises(NewspyHttpException):
+    with pytest.raises(NewspyHttpException, match="status code: 404"):
         client = HttpClient()
         client.send(method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS)
 
@@ -151,7 +151,7 @@ def test_http_client_when_http_error_is_text() -> None:
 
 
 @responses.activate
-def test_http_client_when_http_error() -> None:
+def test_http_client_when_http_error_with_json() -> None:
     responses.add(
         **{
             "method": responses.GET,
@@ -162,7 +162,7 @@ def test_http_client_when_http_error() -> None:
         }
     )
 
-    with pytest.raises(NewspyHttpException):
+    with pytest.raises(NewspyHttpException, match="status code: 404"):
         client = HttpClient()
         client.send(method=HttpMethod.GET, url=BASE_URL, headers=HEADERS, params=PARAMS)
 
