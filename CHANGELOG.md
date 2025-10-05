@@ -1,3 +1,13 @@
+## [2.2.13](https://github.com/onemoola/newspy/compare/v2.2.12...v2.2.13) (2025-10-05)
+
+
+### Bug Fixes
+
+* **client:** enhance response handling in get_articles for string and None types ([a0d0994](https://github.com/onemoola/newspy/commit/a0d0994565b752686aefbc1104793f262d963a82))
+* **client:** improve error handling in get_articles and support additional XML content types ([74bcb00](https://github.com/onemoola/newspy/commit/74bcb00958704279a119c82acd5686393313e127))
+* **tests:** add type ignore for invalid file path in get_sources tests ([2bdc273](https://github.com/onemoola/newspy/commit/2bdc27391336efc53926bfd79469cf84dbe8e0d8))
+* **tests:** add type ignore for invalid file path in get_sources tests ([#394](https://github.com/onemoola/newspy/issues/394)) ([9f71d92](https://github.com/onemoola/newspy/commit/9f71d92737c62b5e8f8bba03bba289fa4e480b14))
+
 ## [2.2.12](https://github.com/onemoola/newspy/compare/v2.2.11...v2.2.12) (2025-10-04)
 
 
