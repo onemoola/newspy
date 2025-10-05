@@ -47,6 +47,24 @@ jobs:
           git config --global user.name "newspy"
           git config --global user.email "newspy@youremail.com"
 
+      - name: Install Playwright and get user-agent
+        run: |
+          pip install playwright
+          playwright install chromium
+          
+          USER_AGENT=$(python -c "
+          from playwright.sync_api import sync_playwright
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              page = browser.new_page()
+              ua = page.evaluate('navigator.userAgent')
+              browser.close()
+              print(ua)
+          ")
+          
+          echo "BROWSER_USER_AGENT=$USER_AGENT" >> $GITHUB_ENV
+          echo "Extracted User-Agent: $USER_AGENT"
+
       - name: Bump version
         run: |
           poetry version ${{ env.VERSION }}
@@ -59,6 +77,8 @@ jobs:
         run: poetry install --no-interaction --no-root
 
       - name: Build and publish
+        env:
+          USER_AGENT: ${{ env.BROWSER_USER_AGENT }}
         run: |
           poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
           poetry publish --build

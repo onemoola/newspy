@@ -2,6 +2,7 @@ import csv
 import gzip
 import logging
 import io
+import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import NewType
@@ -11,7 +12,10 @@ from newspy.rss.models import RssSource, RssArticle
 from newspy.shared.http_client import HttpClient, HttpMethod
 from newspy.shared.exceptions import NewspyException
 
-DEFAULT_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+DEFAULT_USER_AGENT = os.getenv(
+    "USER_AGENT",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+)
 URL = NewType("URL", str)
 
 logger = logging.getLogger(__name__)
