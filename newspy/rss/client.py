@@ -11,6 +11,7 @@ from newspy.rss.models import RssSource, RssArticle
 from newspy.shared.http_client import HttpClient, HttpMethod
 from newspy.shared.exceptions import NewspyException
 
+DEFAULT_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
 URL = NewType("URL", str)
 
 logger = logging.getLogger(__name__)
@@ -34,9 +35,7 @@ def get_articles(
                 http_client.send,
                 method=HttpMethod.GET,
                 url=source.url,
-                headers={
-                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
-                },
+                headers={"User-Agent": DEFAULT_USER_AGENT},
                 params=None,
                 payload=None,
             )
