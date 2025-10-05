@@ -1,5 +1,6 @@
 import csv
 import gzip
+import logging
 import io
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -8,8 +9,11 @@ from typing import NewType
 from newspy.models import Category
 from newspy.rss.models import RssSource, RssArticle
 from newspy.shared.http_client import HttpClient, HttpMethod
+from newspy.shared.exceptions import NewspyException
 
 URL = NewType("URL", str)
+
+logger = logging.getLogger(__name__)
 
 
 def get_articles(
@@ -38,7 +42,11 @@ def get_articles(
         ]
 
         for future in as_completed(futures):
-            resp_json = future.result()
+            try:
+                resp_json = future.result()
+            except NewspyException as exc:
+                logger.warning("Skipping a source due to error: %s", exc)
+                continue
 
             if resp_json and isinstance(resp_json, list):
                 for article in resp_json:

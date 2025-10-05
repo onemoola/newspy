@@ -110,7 +110,7 @@ class HttpClient:
             match content_type:
                 case "application/json":
                     results = response.json()
-                case "application/rss+xml":
+                case "application/rss+xml" | "application/xml" | "text/xml":
                     results = parse_xml(data=response.content, source_url=url)
                 case "application/zip":
                     results = response.content
