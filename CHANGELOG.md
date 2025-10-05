@@ -1,3 +1,11 @@
+## [2.2.15](https://github.com/onemoola/newspy/compare/v2.2.14...v2.2.15) (2025-10-05)
+
+
+### Bug Fixes
+
+* **client:** allow configurable User-Agent via environment variable ([08bcb34](https://github.com/onemoola/newspy/commit/08bcb34fb1a3558a70d8227d82ddcab98501ff84))
+* **client:** allow configurable User-Agent via environment variable ([#397](https://github.com/onemoola/newspy/issues/397)) ([e9281b3](https://github.com/onemoola/newspy/commit/e9281b3a016e9c2d790a376281f51ef01d6c568f))
+
 ## [2.2.14](https://github.com/onemoola/newspy/compare/v2.2.13...v2.2.14) (2025-10-05)
 
 
