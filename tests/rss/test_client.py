@@ -93,6 +93,116 @@ def test_get_rss_articles_return_none(rss_articles_res_broken_xml) -> None:
     assert actual == []
 
 
+@responses.activate
+def test_get_rss_articles_handles_string_response() -> None:
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            "body": "<html><body>404 Not Found</body></html>",
+            "status": 200,
+            "content_type": "text/html",
+        }
+    )
+
+    rss_sources = [
+        RssSource(
+            id="wsj-markets",
+            name="The Wall Street Journal Markets",
+            description="The Wall Street Journal (WSJ) Markets RSS",
+            url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            category=Category.FINANCIAL,
+            language=Language.EN,
+        )
+    ]
+
+    actual = rss.get_articles(sources=rss_sources)
+
+    assert actual == []
+
+
+@responses.activate
+def test_get_rss_articles_handles_none_response() -> None:
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            "body": "",
+            "status": 200,
+            "content_type": "application/rss+xml",
+        }
+    )
+
+    rss_sources = [
+        RssSource(
+            id="wsj-markets",
+            name="The Wall Street Journal Markets",
+            description="The Wall Street Journal (WSJ) Markets RSS",
+            url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            category=Category.FINANCIAL,
+            language=Language.EN,
+        )
+    ]
+
+    actual = rss.get_articles(sources=rss_sources)
+
+    assert actual == []
+
+
+@responses.activate
+def test_get_rss_articles_handles_http_exception(rss_articles_res_xml) -> None:
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            "json": {
+                "error": {"message": "Service unavailable", "reason": "server_error"}
+            },
+            "status": 503,
+            "content_type": "application/json",
+        }
+    )
+
+    responses.add(
+        **{
+            "method": responses.GET,
+            "url": "https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
+            "body": rss_articles_res_xml,
+            "status": 200,
+            "content_type": "application/rss+xml",
+        }
+    )
+
+    rss_sources = [
+        RssSource(
+            id="wsj-markets",
+            name="The Wall Street Journal Markets",
+            description="The Wall Street Journal (WSJ) Markets RSS",
+            url="https://feeds.a.dj.com/rss/RSSMarketsMain.xml",
+            category=Category.FINANCIAL,
+            language=Language.EN,
+        ),
+        RssSource(
+            id="wsj-business",
+            name="The Wall Street Journal Business",
+            description="The Wall Street Journal (WSJ) Business RSS",
+            url="https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
+            category=Category.BUSINESS,
+            language=Language.EN,
+        ),
+    ]
+
+    actual = rss.get_articles(sources=rss_sources)
+
+    assert len(actual) == 2
+    assert all(article.source.id == "wsj-business" for article in actual)
+    assert (
+        actual[0].title
+        == "Three global cities are pulling ahead since the peak of the pandemic"
+    )
+    assert actual[1].title == "UK seeks to tap Middle East money to buy out SVB unit"
+
+
 def test_get_rss_sources_from_local_path() -> None:
     expected = [
         RssSource(
@@ -118,7 +228,7 @@ def test_get_rss_sources_from_local_path() -> None:
 
 
 def test_get_rss_sources_from_invalid_path() -> None:
-    actual = rss.get_sources(file_path=123)  # type: ignore
+    actual = rss.get_sources(file_path=123)
 
     assert actual == []
 
@@ -228,6 +338,6 @@ def test_get_rss_resources_from_remote_path():
 
 
 def test_get_rss_resources_from_invalid_path():
-    actual = rss.get_sources(file_path=123)  # type: ignore
+    actual = rss.get_sources(file_path=123)
 
     assert actual == []
