@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "newspy"
-version = "2.2.14"
+version = "2.2.15"
 description = "The news client written in Python that fetches and curates the world news across the web."
 authors = ["Sechaba Mofokeng <sechaba@onemoola.com>"]
 license = "MIT"
