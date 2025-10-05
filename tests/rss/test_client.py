@@ -228,7 +228,7 @@ def test_get_rss_sources_from_local_path() -> None:
 
 
 def test_get_rss_sources_from_invalid_path() -> None:
-    actual = rss.get_sources(file_path=123)
+    actual = rss.get_sources(file_path=123)  # type: ignore
 
     assert actual == []
 
@@ -338,6 +338,6 @@ def test_get_rss_resources_from_remote_path():
 
 
 def test_get_rss_resources_from_invalid_path():
-    actual = rss.get_sources(file_path=123)
+    actual = rss.get_sources(file_path=123)  # type: ignore
 
     assert actual == []
