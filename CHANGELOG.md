@@ -1,3 +1,12 @@
+## [2.2.14](https://github.com/onemoola/newspy/compare/v2.2.13...v2.2.14) (2025-10-05)
+
+
+### Bug Fixes
+
+* **client:** set User-Agent header for HTTP requests in client ([cd927c7](https://github.com/onemoola/newspy/commit/cd927c77052b35dfefea93dd8a4573a3bff47274))
+* **client:** set User-Agent header for HTTP requests in client ([#395](https://github.com/onemoola/newspy/issues/395)) ([e390223](https://github.com/onemoola/newspy/commit/e3902238f3afc01f4da88b7e3df088423dd17da6))
+* **client:** use default User-Agent constant for HTTP requests ([9ad3c25](https://github.com/onemoola/newspy/commit/9ad3c2504ab69c55633631cbf80629857421c09b))
+
 ## [2.2.13](https://github.com/onemoola/newspy/compare/v2.2.12...v2.2.13) (2025-10-05)
 
 
