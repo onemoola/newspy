@@ -1,3 +1,11 @@
+## [2.2.16](https://github.com/onemoola/newspy/compare/v2.2.15...v2.2.16) (2025-10-09)
+
+
+### Bug Fixes
+
+* add python 3.14 support ([5fa1475](https://github.com/onemoola/newspy/commit/5fa147552924a5132735c1646a46b5be3bf8e30b))
+* add python 3.14 support ([#401](https://github.com/onemoola/newspy/issues/401)) ([52ac22d](https://github.com/onemoola/newspy/commit/52ac22dfd2ca787c16149338119c7298a0ab4dc2))
+
 ## [2.2.15](https://github.com/onemoola/newspy/compare/v2.2.14...v2.2.15) (2025-10-05)
 
 
