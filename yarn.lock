@@ -616,6 +616,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@octokit/plugin-paginate-rest@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "@octokit/plugin-paginate-rest@npm:14.0.0"
+  dependencies:
+    "@octokit/types": "npm:^16.0.0"
+  peerDependencies:
+    "@octokit/core": ">=6"
+  checksum: 10/57ddd857528dad9c02431bc6254c2374c06057872cf9656a4a88b162ebe1c2bc9f34fbec360f2ccff72c940f29b120758ce14e8135bd027223d381eb1b8b6579
+  languageName: node
+  linkType: hard
+
 "@octokit/plugin-retry@npm:^8.0.0":
   version: 8.0.3
   resolution: "@octokit/plugin-retry@npm:8.0.3"
@@ -786,7 +797,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@semantic-release/github@npm:12.0.0, @semantic-release/github@npm:^12.0.0":
+"@semantic-release/github@npm:12.0.1":
+  version: 12.0.1
+  resolution: "@semantic-release/github@npm:12.0.1"
+  dependencies:
+    "@octokit/core": "npm:^7.0.0"
+    "@octokit/plugin-paginate-rest": "npm:^14.0.0"
+    "@octokit/plugin-retry": "npm:^8.0.0"
+    "@octokit/plugin-throttling": "npm:^11.0.0"
+    "@semantic-release/error": "npm:^4.0.0"
+    aggregate-error: "npm:^5.0.0"
+    debug: "npm:^4.3.4"
+    dir-glob: "npm:^3.0.1"
+    http-proxy-agent: "npm:^7.0.0"
+    https-proxy-agent: "npm:^7.0.0"
+    issue-parser: "npm:^7.0.0"
+    lodash-es: "npm:^4.17.21"
+    mime: "npm:^4.0.0"
+    p-filter: "npm:^4.0.0"
+    tinyglobby: "npm:^0.2.14"
+    url-join: "npm:^5.0.0"
+  peerDependencies:
+    semantic-release: ">=24.1.0"
+  checksum: 10/14e83e624d7ab4a9734d2fecd91525bbba2079169fd7be719c6b14f85f84683838ad3d304d295f20a047f95a8265e9df9f1e4582a9d379393b3cc71d8c9c996b
+  languageName: node
+  linkType: hard
+
+"@semantic-release/github@npm:^12.0.0":
   version: 12.0.0
   resolution: "@semantic-release/github@npm:12.0.0"
   dependencies:
@@ -3150,7 +3187,7 @@ __metadata:
     "@semantic-release/changelog": "npm:6.0.3"
     "@semantic-release/commit-analyzer": "npm:13.0.1"
     "@semantic-release/git": "npm:10.0.1"
-    "@semantic-release/github": "npm:12.0.0"
+    "@semantic-release/github": "npm:12.0.1"
     "@semantic-release/release-notes-generator": "npm:14.1.0"
     husky: "npm:9.1.7"
     semantic-release: "npm:25.0.1"
