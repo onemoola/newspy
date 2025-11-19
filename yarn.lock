@@ -445,14 +445,14 @@ __metadata:
   linkType: hard
 
 "@npmcli/map-workspaces@npm:^5.0.0":
-  version: 5.0.1
-  resolution: "@npmcli/map-workspaces@npm:5.0.1"
+  version: 5.0.2
+  resolution: "@npmcli/map-workspaces@npm:5.0.2"
   dependencies:
     "@npmcli/name-from-folder": "npm:^4.0.0"
     "@npmcli/package-json": "npm:^7.0.0"
-    glob: "npm:^11.0.3"
+    glob: "npm:^12.0.0"
     minimatch: "npm:^10.0.3"
-  checksum: 10/014fbc8fb98c867fab1aa81ef80c1738950c9bc94a24812552d1da8a8cf127b7b052555043f32b7321f820d3a4861d57f671f5a6058c5078d434c43eec215ee2
+  checksum: 10/8f095b7fb0149c0aff56c1fa0037132252212f89012ca149dc767b9e743376eb99607c059bc17a1ac086f3c725115025e3c43cf27abbbe34e73da7c3d6dcf10c
   languageName: node
   linkType: hard
 
@@ -498,17 +498,17 @@ __metadata:
   linkType: hard
 
 "@npmcli/package-json@npm:^7.0.0, @npmcli/package-json@npm:^7.0.1":
-  version: 7.0.2
-  resolution: "@npmcli/package-json@npm:7.0.2"
+  version: 7.0.3
+  resolution: "@npmcli/package-json@npm:7.0.3"
   dependencies:
     "@npmcli/git": "npm:^7.0.0"
-    glob: "npm:^11.0.3"
+    glob: "npm:^12.0.0"
     hosted-git-info: "npm:^9.0.0"
     json-parse-even-better-errors: "npm:^5.0.0"
     proc-log: "npm:^6.0.0"
     semver: "npm:^7.5.3"
     validate-npm-package-license: "npm:^3.0.4"
-  checksum: 10/68dc3d50d9aa7a7a25f439606d90cb352a3c937818b3bb37ff5f69cb02bdbf5b86883cf93183a5d8f2d8810c098b1bcec7e2fe35da5017038c84cab05826c630
+  checksum: 10/0a0d6e6d18b3d49094e0ae5776b268bd2bd5a2c4002ddd824a04ed27f7bbfb0a3a43096ff05e965ecdb153b55f47bf50ac0c5d031f15c1a666b02907cc7a18e2
   languageName: node
   linkType: hard
 
@@ -1210,8 +1210,8 @@ __metadata:
   linkType: hard
 
 "cacache@npm:^20.0.0, cacache@npm:^20.0.1":
-  version: 20.0.1
-  resolution: "cacache@npm:20.0.1"
+  version: 20.0.2
+  resolution: "cacache@npm:20.0.2"
   dependencies:
     "@npmcli/fs": "npm:^4.0.0"
     fs-minipass: "npm:^3.0.0"
@@ -1222,9 +1222,9 @@ __metadata:
     minipass-flush: "npm:^1.0.5"
     minipass-pipeline: "npm:^1.2.4"
     p-map: "npm:^7.0.2"
-    ssri: "npm:^12.0.0"
+    ssri: "npm:^13.0.0"
     unique-filename: "npm:^4.0.0"
-  checksum: 10/b52a3ed18539608092f69db00cb0dba8c888876a6a9efebd3e275fec4d884df025372d018bc05560df9a4f36a08b880b9cbe03edaf52686789513228d0204bc9
+  checksum: 10/1b4a0748c73b6dc6c57779a6d6d20b27c619443aac63375bbae386b5541d5d1db6e90eb9a6f475fbac218179711b8f9f39d47d2ee32b0141c863976dbd7dc69c
   languageName: node
   linkType: hard
 
@@ -2059,18 +2059,34 @@ __metadata:
   linkType: hard
 
 "glob@npm:^11.0.3":
-  version: 11.0.3
-  resolution: "glob@npm:11.0.3"
+  version: 11.1.0
+  resolution: "glob@npm:11.1.0"
   dependencies:
     foreground-child: "npm:^3.3.1"
     jackspeak: "npm:^4.1.1"
-    minimatch: "npm:^10.0.3"
+    minimatch: "npm:^10.1.1"
     minipass: "npm:^7.1.2"
     package-json-from-dist: "npm:^1.0.0"
     path-scurry: "npm:^2.0.0"
   bin:
     glob: dist/esm/bin.mjs
-  checksum: 10/2ae536c1360c0266b523b2bfa6aadc10144a8b7e08869b088e37ac3c27cd30774f82e4bfb291cde796776e878f9e13200c7ff44010eb7054e00f46f649397893
+  checksum: 10/da4501819633daff8822c007bb3f93d5c4d2cbc7b15a8e886660f4497dd251a1fb4f53a85fba1e760b31704eff7164aeb2c7a82db10f9f2c362d12c02fe52cf3
+  languageName: node
+  linkType: hard
+
+"glob@npm:^12.0.0":
+  version: 12.0.0
+  resolution: "glob@npm:12.0.0"
+  dependencies:
+    foreground-child: "npm:^3.3.1"
+    jackspeak: "npm:^4.1.1"
+    minimatch: "npm:^10.1.1"
+    minipass: "npm:^7.1.2"
+    package-json-from-dist: "npm:^1.0.0"
+    path-scurry: "npm:^2.0.0"
+  bin:
+    glob: dist/esm/bin.mjs
+  checksum: 10/6e21b3f1f1fa635836d45e54bbe50704884cc3e310e0cc011cfb5429db65a030e12936d99b07e66236370efe45dc8c8b26fa5334dbf555d6f8709e0315c77c30
   languageName: node
   linkType: hard
 
@@ -2327,8 +2343,8 @@ __metadata:
   linkType: hard
 
 "init-package-json@npm:^8.2.2":
-  version: 8.2.2
-  resolution: "init-package-json@npm:8.2.2"
+  version: 8.2.3
+  resolution: "init-package-json@npm:8.2.3"
   dependencies:
     "@npmcli/package-json": "npm:^7.0.0"
     npm-package-arg: "npm:^13.0.0"
@@ -2336,8 +2352,8 @@ __metadata:
     read: "npm:^4.0.0"
     semver: "npm:^7.7.2"
     validate-npm-package-license: "npm:^3.0.4"
-    validate-npm-package-name: "npm:^6.0.2"
-  checksum: 10/6e8c6aea9ef75900ba02173b371a7ba5a0211a269376853152b78edeb764d53bb65592387c059910c928dbb4723f7e5424c118a671ba90e44b71891975637821
+    validate-npm-package-name: "npm:^7.0.0"
+  checksum: 10/c02e3b9ff164c834b1535515e55d93753380f5f6cd00a6eb1730fc1506558a9f9cc1dfb55d1c6d7e34819a88c3f96022f7a22a5959dae7e68df00a0eade55b6c
   languageName: node
   linkType: hard
 
@@ -3023,7 +3039,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^10.0.3":
+"minimatch@npm:^10.0.3, minimatch@npm:^10.1.1":
   version: 10.1.1
   resolution: "minimatch@npm:10.1.1"
   dependencies:
