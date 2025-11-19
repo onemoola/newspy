@@ -35,7 +35,7 @@
         "path": "@semantic-release/git",
         "assets": [
           "package.json",
-          "package-lock.json",
+          "yarn.lock",
           "CHANGELOG.md"
         ],
         "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
