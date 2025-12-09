@@ -1,3 +1,10 @@
+## [2.2.17](https://github.com/onemoola/newspy/compare/v2.2.16...v2.2.17) (2025-12-09)
+
+
+### Bug Fixes
+
+* **deps:** bump to latest ([c1e3a58](https://github.com/onemoola/newspy/commit/c1e3a58ce0b57384ee208b0d4e1557b2c4697e9b))
+
 ## [2.2.16](https://github.com/onemoola/newspy/compare/v2.2.15...v2.2.16) (2025-10-09)
 
 
