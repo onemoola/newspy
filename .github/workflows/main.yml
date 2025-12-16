@@ -52,10 +52,10 @@ jobs:
 
       - name: Create Pull Request (if none exists)
         run: |
-          existing_pr=$(gh pr list --base release --head main --search "Merge main into release" --state open --limit 1)
+          existing_pr=$(gh pr list --base release --head main --search "chore: merge main into release" --state open --limit 1)
           if [ -z "$existing_pr" ]; then
             echo "No existing PR found. Creating a new one."
-            gh pr create --title "Merge main into release" --body "This PR merges changes from the main branch into the release branch." --base release --head main
+            gh pr create --title "chore: merge main into release" --body "This PR merges changes from the main branch into the release branch." --base release --head main
           else
             echo "Pull Request already exists. Skipping creation."
           fi
