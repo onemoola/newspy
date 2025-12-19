@@ -5,33 +5,17 @@ on:
     branches:
       - release
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   versioning:
-    permissions:
-      contents: write
-      issues: read
-
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - uses: googleapis/release-please-action@v4
         with:
-          fetch-depth: 0
-
-      - name: Switch to release branch
-        run: git checkout release
-
-      - name: Install node
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22.21.1
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Semantic release
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: simple
+          target-branch: 'release'
