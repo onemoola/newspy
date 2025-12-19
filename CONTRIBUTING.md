@@ -93,18 +93,6 @@ poetry install
 pre-commit install
 ```
 
-### Yarn install semantic-release dependencies
-
-```bash
-yarn install
-```
-
-### Set up husky pre-commit hook
-
-```bash
-yarn husky add .husky/commit-msg 'yarn commitlint --edit $1'
-```
-
 ## License
 
 Any contributions you make to this project will fall under the [MIT License](LICENSE) that covers the Newspy project.
