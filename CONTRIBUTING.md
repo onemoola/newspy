@@ -44,6 +44,16 @@ git clone git@github.com:<username>/newspy.git
 cd newspy/
 ```
 
+### Setup Git Hooks
+
+We use git hooks to enforce commit message standards (Conventional Commits). Run the setup script immediately after
+cloning:
+
+```bash
+chmod +x setup-hooks.sh
+./setup-hooks.sh
+```
+
 ### Picking an issue
 
 Pick an issue by going through the [issue tracker](https://github.com/onemoola/newspy/issues) and finding an issue you
