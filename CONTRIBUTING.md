@@ -96,3 +96,9 @@ pre-commit install
 ## License
 
 Any contributions you make to this project will fall under the [MIT License](LICENSE) that covers the Newspy project.
+
+---
+
+### Release Automation
+
+This repository uses [Google Release Please](https://github.com/googleapis/release-please-action) for automated releases. Follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages to ensure proper versioning.
