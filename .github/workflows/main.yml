@@ -5,12 +5,13 @@ on:
     branches:
       - main
 
-jobs:
-  test:
-    permissions:
-      contents: write
-      pull-requests: write
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
 
+jobs:
+  versioning:
     runs-on: ubuntu-latest
 
     steps:
@@ -50,14 +51,9 @@ jobs:
           files: ./coverage.xml
           verbose: true
 
-      - name: Create Pull Request (if none exists)
-        run: |
-          existing_pr=$(gh pr list --base release --head main --search "chore: merge main into release" --state open --limit 1)
-          if [ -z "$existing_pr" ]; then
-            echo "No existing PR found. Creating a new one."
-            gh pr create --title "chore: merge main into release" --body "This PR merges changes from the main branch into the release branch." --base release --head main
-          else
-            echo "Pull Request already exists. Skipping creation."
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Version the release
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: simple
+          target-branch: 'main'
