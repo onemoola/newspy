@@ -1,3 +1,110 @@
+## [2.2.18](https://github.com/onemoola/newspy/compare/v2.2.17...v2.2.18) (2025-12-16)
+
+
+### Bug Fixes
+
+* **deps:** update package versions in poetry.lock ([033061e](https://github.com/onemoola/newspy/commit/033061e85cbe45a1dfb1633d274fb19bcd8f7214))
+
+## [2.2.17](https://github.com/onemoola/newspy/compare/v2.2.16...v2.2.17) (2025-12-09)
+
+
+### Bug Fixes
+
+* **deps:** bump to latest ([c1e3a58](https://github.com/onemoola/newspy/commit/c1e3a58ce0b57384ee208b0d4e1557b2c4697e9b))
+
+## [2.2.16](https://github.com/onemoola/newspy/compare/v2.2.15...v2.2.16) (2025-10-09)
+
+
+### Bug Fixes
+
+* add python 3.14 support ([5fa1475](https://github.com/onemoola/newspy/commit/5fa147552924a5132735c1646a46b5be3bf8e30b))
+* add python 3.14 support ([#401](https://github.com/onemoola/newspy/issues/401)) ([52ac22d](https://github.com/onemoola/newspy/commit/52ac22dfd2ca787c16149338119c7298a0ab4dc2))
+
+## [2.2.15](https://github.com/onemoola/newspy/compare/v2.2.14...v2.2.15) (2025-10-05)
+
+
+### Bug Fixes
+
+* **client:** allow configurable User-Agent via environment variable ([08bcb34](https://github.com/onemoola/newspy/commit/08bcb34fb1a3558a70d8227d82ddcab98501ff84))
+* **client:** allow configurable User-Agent via environment variable ([#397](https://github.com/onemoola/newspy/issues/397)) ([e9281b3](https://github.com/onemoola/newspy/commit/e9281b3a016e9c2d790a376281f51ef01d6c568f))
+
+## [2.2.14](https://github.com/onemoola/newspy/compare/v2.2.13...v2.2.14) (2025-10-05)
+
+
+### Bug Fixes
+
+* **client:** set User-Agent header for HTTP requests in client ([cd927c7](https://github.com/onemoola/newspy/commit/cd927c77052b35dfefea93dd8a4573a3bff47274))
+* **client:** set User-Agent header for HTTP requests in client ([#395](https://github.com/onemoola/newspy/issues/395)) ([e390223](https://github.com/onemoola/newspy/commit/e3902238f3afc01f4da88b7e3df088423dd17da6))
+* **client:** use default User-Agent constant for HTTP requests ([9ad3c25](https://github.com/onemoola/newspy/commit/9ad3c2504ab69c55633631cbf80629857421c09b))
+
+## [2.2.13](https://github.com/onemoola/newspy/compare/v2.2.12...v2.2.13) (2025-10-05)
+
+
+### Bug Fixes
+
+* **client:** enhance response handling in get_articles for string and None types ([a0d0994](https://github.com/onemoola/newspy/commit/a0d0994565b752686aefbc1104793f262d963a82))
+* **client:** improve error handling in get_articles and support additional XML content types ([74bcb00](https://github.com/onemoola/newspy/commit/74bcb00958704279a119c82acd5686393313e127))
+* **tests:** add type ignore for invalid file path in get_sources tests ([2bdc273](https://github.com/onemoola/newspy/commit/2bdc27391336efc53926bfd79469cf84dbe8e0d8))
+* **tests:** add type ignore for invalid file path in get_sources tests ([#394](https://github.com/onemoola/newspy/issues/394)) ([9f71d92](https://github.com/onemoola/newspy/commit/9f71d92737c62b5e8f8bba03bba289fa4e480b14))
+
+## [2.2.12](https://github.com/onemoola/newspy/compare/v2.2.11...v2.2.12) (2025-10-04)
+
+
+### Bug Fixes
+
+* **client:** add error handling for conflicting country and sources attributes ([b700671](https://github.com/onemoola/newspy/commit/b700671f7a75dcb87b5f4d02d01026f71a569e34))
+* **client:** remove Content-Type header from RSS feed requests ([b75aaec](https://github.com/onemoola/newspy/commit/b75aaec9f59506d4e6ef7f947aad7adca06fea4c))
+* **client:** remove Content-Type header from RSS feed requests ([1d6cb4e](https://github.com/onemoola/newspy/commit/1d6cb4e9ba97ab3e87cc0e6f8b3576541c969c32))
+* **exceptions:** use CaseInsensitiveDict for headers in custom exception ([3265623](https://github.com/onemoola/newspy/commit/3265623ced5bce5a2b4fd3803dc435b86d2815e5))
+* **http_client:** update error message to use request.url instead of request.path_url ([e2fc3aa](https://github.com/onemoola/newspy/commit/e2fc3aab20ea3a9e54a6f5a4869a6112ba4f59cb))
+
+## [2.2.11](https://github.com/onemoola/newspy/compare/v2.2.10...v2.2.11) (2025-09-08)
+
+
+### Bug Fixes
+
+* **deps:** bump to latest versions ([8951d1c](https://github.com/onemoola/newspy/commit/8951d1c7e851b7be9b064e211787bbc37424b76b))
+
+## [2.2.10](https://github.com/onemoola/newspy/compare/v2.2.9...v2.2.10) (2025-08-10)
+
+
+### Bug Fixes
+
+* **deps:** update poetry.lock to bump package versions ([553f9e2](https://github.com/onemoola/newspy/commit/553f9e211015661d6b0f6f800248370ed604670d))
+* **deps:** update poetry.lock to bump package versions ([#357](https://github.com/onemoola/newspy/issues/357)) ([da95377](https://github.com/onemoola/newspy/commit/da95377417a9a60ce5ec6fb888fbea7a09f244db))
+
+## [2.2.9](https://github.com/onemoola/newspy/compare/v2.2.8...v2.2.9) (2024-11-10)
+
+
+### Bug Fixes
+
+* **workflow:** revert release workflow. bump up version before build … ([#274](https://github.com/onemoola/newspy/issues/274)) ([f1796f5](https://github.com/onemoola/newspy/commit/f1796f55cfed63e129511e51b62c0ac13bce1315))
+* **workflow:** revert release workflow. bump up version before build and publish step ([24aa53f](https://github.com/onemoola/newspy/commit/24aa53f224c3fbf17f604fc052e1519532c8d150))
+
+## [2.2.8](https://github.com/onemoola/newspy/compare/v2.2.7...v2.2.8) (2024-11-10)
+
+
+### Bug Fixes
+
+* **workflow:** do not modify and commit the toml version, publish wit… ([#272](https://github.com/onemoola/newspy/issues/272)) ([58caccf](https://github.com/onemoola/newspy/commit/58caccf45689e57ab5dca3b666416f022834a6ce))
+* **workflow:** do not modify and commit the toml version, publish with the version ([1655aeb](https://github.com/onemoola/newspy/commit/1655aeb0eeca161bd7d8e4a78685f03c80ae33ec))
+
+## [2.2.7](https://github.com/onemoola/newspy/compare/v2.2.6...v2.2.7) (2024-11-10)
+
+
+### Bug Fixes
+
+* **workflow:** specify the release branch on the release workflow ([d664c8f](https://github.com/onemoola/newspy/commit/d664c8fd95d51e0fbbbfb209ca93bf4f47e54e8e))
+* **workflow:** specify the release branch on the release workflow ([#271](https://github.com/onemoola/newspy/issues/271)) ([48467a7](https://github.com/onemoola/newspy/commit/48467a79d2c76e10b8c408540d47a9fcd87c8dcd))
+
+## [2.2.6](https://github.com/onemoola/newspy/compare/v2.2.5...v2.2.6) (2024-11-10)
+
+
+### Bug Fixes
+
+* release off the release branch ([35cf7ff](https://github.com/onemoola/newspy/commit/35cf7ff08503fcf1ec68b970fd0b4c2a5642507b))
+* release off the release branch ([#264](https://github.com/onemoola/newspy/issues/264)) ([2f268c5](https://github.com/onemoola/newspy/commit/2f268c52f0fa7ed08390a06bf46eeda912590e15))
+
 ## [2.2.5](https://github.com/onemoola/newspy/compare/v2.2.4...v2.2.5) (2023-09-20)
 
 
