@@ -13,10 +13,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          ref: release
-          token: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: Extract branch or tag name
         id: ref
