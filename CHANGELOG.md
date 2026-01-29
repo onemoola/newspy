@@ -5,6 +5,13 @@
 
 * **deps:** update package versions in poetry.lock ([033061e](https://github.com/onemoola/newspy/commit/033061e85cbe45a1dfb1633d274fb19bcd8f7214))
 
+## [2.2.21](https://github.com/onemoola/newspy/compare/v2.2.20...v2.2.21) (2026-01-29)
+
+
+### Bug Fixes
+
+* **workflow:** add fetch-depth and token to allow version update ([4cb88ec](https://github.com/onemoola/newspy/commit/4cb88ecc96debd3c9ae5f3f413192868ecb3c2ee))
+
 ## [2.2.20](https://github.com/onemoola/newspy/compare/v2.2.19...v2.2.20) (2026-01-29)
 
 
