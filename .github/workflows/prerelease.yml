@@ -1,0 +1,51 @@
+name: Prelease
+
+on:
+  push:
+    branches:
+      - release
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up python
+        id: setup-python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.14
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 2.2.1
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root
+
+      - name: Install project
+        run: poetry install --no-interaction
+
+      - name: Run tests
+        run: |
+          source $VENV
+          pytest tests --exitfirst --verbose --failed-first --cov-report term --cov-report xml:coverage.xml --cov=newspy
+
+      - name: Version the release
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: simple
+          target-branch: 'release'

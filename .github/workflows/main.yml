@@ -6,12 +6,11 @@ on:
       - main
 
 permissions:
-  contents: write
-  issues: write
+  contents: read
   pull-requests: write
 
 jobs:
-  versioning:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -51,9 +50,29 @@ jobs:
           files: ./coverage.xml
           verbose: true
 
-      - name: Version the release
-        uses: googleapis/release-please-action@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: simple
-          target-branch: 'main'
+      - name: Create or Update Release PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_TITLE="🚀 Release Preparation: Merge main into release"
+          PR_BODY="This Pull Request is automatically created to merge changes from \`main\` into \`release\`.
+
+          It acts as a staging area for the next release.
+
+          ### 📋 Release Checklist
+          - [ ] Review the changes included in this release.
+          - [ ] Ensure all tests are passing.
+          - [ ] Update documentation if necessary.
+          - [ ] Bump version numbers if not already done.
+
+          Once reviewed and approved, merge this PR to update the \`release\` branch."
+
+          EXISTING_PR=$(gh pr list --base release --head main --json number --jq '.[0].number')
+
+          if [ -z "$EXISTING_PR" ]; then
+            echo "Creating new PR from main to release..."
+            gh pr create --base release --head main --title "$PR_TITLE" --body "$PR_BODY"
+          else
+            echo "Updating existing PR #$EXISTING_PR..."
+            gh pr edit "$EXISTING_PR" --title "$PR_TITLE" --body "$PR_BODY"
+          fi
