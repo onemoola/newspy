@@ -26,7 +26,7 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 2.2.1
+          version: 2.3.2
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
@@ -54,7 +54,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PR_TITLE="🚀 Release Preparation: Merge main into release"
+          PR_TITLE="🚀 Release: Merge main into release"
           PR_BODY="This Pull Request is automatically created to merge changes from \`main\` into \`release\`.
 
           It acts as a staging area for the next release.
