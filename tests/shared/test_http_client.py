@@ -4,7 +4,6 @@ import pytest
 import responses
 
 from newspy.newsorg.models import NewsorgArticlesRes
-from newspy.shared import http_client
 from newspy.shared.exceptions import NewspyHttpException
 from newspy.shared.http_client import HttpClient, HttpMethod
 

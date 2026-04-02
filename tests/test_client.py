@@ -58,11 +58,14 @@ def test_get_sources(newsorg_sources_res_json) -> None:
         }
     )
 
+    with open("tests/data/rss_sources.csv.gz", "rb") as f:
+        rss_sources_data = f.read()
+
     responses.add(
         **{
             "method": responses.GET,
             "url": "https://github.com/onemoola/newspy/blob/main/data/rss_sources.csv.gz?raw=true",
-            "body": open("tests/data/rss_sources.csv.gz", "rb").read(),
+            "body": rss_sources_data,
             "status": 200,
             "content_type": "application/zip",
         }
@@ -123,11 +126,14 @@ def test_get_articles(newsorg_articles_res_json, rss_articles_res_xml) -> None:
         ),
     ]
 
+    with open("tests/data/rss_sources.csv.gz", "rb") as f:
+        rss_sources_data = f.read()
+
     responses.add(
         **{
             "method": responses.GET,
             "url": "https://github.com/onemoola/newspy/blob/main/data/rss_sources.csv.gz?raw=true",
-            "body": open("tests/data/rss_sources.csv.gz", "rb").read(),
+            "body": rss_sources_data,
             "status": 200,
             "content_type": "application/zip",
         }
