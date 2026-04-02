@@ -5,6 +5,15 @@
 
 * **deps:** update package versions in poetry.lock ([033061e](https://github.com/onemoola/newspy/commit/033061e85cbe45a1dfb1633d274fb19bcd8f7214))
 
+## [2.2.22](https://github.com/onemoola/newspy/compare/v2.2.21...v2.2.22) (2026-04-02)
+
+
+### Bug Fixes
+
+* close files to prevent leaks ([3b0a57d](https://github.com/onemoola/newspy/commit/3b0a57d478b1a346e46975b0ae0599c37ac5a7eb))
+* **deps:** update aiohttp to 3.13.5, pygments to 2.20.0, python-discovery to 1.2.1, and tomli to 2.4.1 ([3d95c85](https://github.com/onemoola/newspy/commit/3d95c85a1495457adba2be2e9c99bbe932dd1a63))
+* explicit str return ([8e435cf](https://github.com/onemoola/newspy/commit/8e435cfbfe0d2ece3688ca993d388beb87ab093e))
+
 ## [2.2.21](https://github.com/onemoola/newspy/compare/v2.2.20...v2.2.21) (2026-01-29)
 
 
