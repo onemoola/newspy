@@ -74,7 +74,7 @@ def test_get_sources(newsorg_sources_res_json) -> None:
     newspy.configure(newsorg_api_key=API_KEY)
     actual = newspy.get_sources()
 
-    assert actual.sort(key=lambda x: x.id) == expected.sort(key=lambda x: x.id)
+    assert sorted(actual, key=lambda x: x.id) == sorted(expected, key=lambda x: x.id)
 
 
 @responses.activate
