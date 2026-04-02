@@ -23,7 +23,7 @@ from newspy.shared import utils
         ),
         (
             "Sun, 12 Mar 2023 13:00:35 GMT",
-            datetime(2023, 3, 12, 13, 0, 35),
+            datetime(2023, 3, 12, 13, 0, 35, tzinfo=timezone.utc),
         ),
     ],
 )

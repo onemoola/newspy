@@ -1,11 +1,13 @@
 from datetime import datetime, timezone
 
+import os
+
 import responses
 
 import newspy.client as newspy
 from newspy.models import Source, Channel, Article, Language, Category
 
-API_KEY = "seckfkdLkkekeKy"
+API_KEY = os.getenv("NEWSPY_TEST_NEWSORG_API_KEY", "test-api-key")
 
 
 def test_configure_without_newsorg_api_key() -> None:
@@ -107,7 +109,7 @@ def test_get_articles(newsorg_articles_res_json, rss_articles_res_xml) -> None:
                 name="The Wall Street Journal Markets",
                 channel=Channel.RSS,
             ),
-            published=datetime(2023, 3, 12, 13, 0, 35),
+            published=datetime(2023, 3, 12, 13, 0, 35, tzinfo=timezone.utc),
         ),
         Article(
             slug="the-wall-street-journal-markets-uk-seeks-to-tap-middle-east-money-to-buy-out-svb-unit",
@@ -122,7 +124,7 @@ def test_get_articles(newsorg_articles_res_json, rss_articles_res_xml) -> None:
                 name="The Wall Street Journal Markets",
                 channel=Channel.RSS,
             ),
-            published=datetime(2023, 3, 12, 12, 54, 53),
+            published=datetime(2023, 3, 12, 12, 54, 53, tzinfo=timezone.utc),
         ),
     ]
 
