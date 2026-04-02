@@ -1,5 +1,5 @@
 import string
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 def to_datetime(date_string: str) -> datetime:
@@ -19,9 +19,11 @@ def to_datetime(date_string: str) -> datetime:
                         date_string, "%a, %d %b %Y %H:%M:%S %z"
                     )
                 except ValueError:
+                    # %Z parses timezone abbreviations (e.g. "GMT") but produces
+                    # a naive datetime; replace with an aware UTC datetime.
                     transformed = datetime.strptime(
                         date_string, "%a, %d %b %Y %H:%M:%S %Z"
-                    )
+                    ).replace(tzinfo=timezone.utc)
 
     return transformed
 
