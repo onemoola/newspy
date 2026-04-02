@@ -21,13 +21,15 @@ BASE_URL = "https://newsapi.org/v2"
 def create_url(endpoint: NewsorgEndpoint) -> str:
     match endpoint:
         case NewsorgEndpoint.EVERYTHING:
-            return f"{BASE_URL}/everything"
+            url = f"{BASE_URL}/everything"
         case NewsorgEndpoint.TOP_HEADLINES:
-            return f"{BASE_URL}/top-headlines"
+            url = f"{BASE_URL}/top-headlines"
         case _:
             raise NewspyException(
-                msg=f"The endpoint has to be one of the following values: 'EVERYTHING' or 'TOP_HEADLINES' or 'SOURCES'",
+                msg="The endpoint has to be one of the following values: 'EVERYTHING' or 'TOP_HEADLINES' or 'SOURCES'",
             )
+
+    return url
 
 
 def create_articles_params(
