@@ -63,7 +63,6 @@ jobs:
           - [ ] Review the changes included in this release.
           - [ ] Ensure all tests are passing.
           - [ ] Update documentation if necessary.
-          - [ ] Bump version numbers if not already done.
 
           Once reviewed and approved, merge this PR to update the \`release\` branch."
 
