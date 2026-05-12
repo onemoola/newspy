@@ -44,7 +44,7 @@ jobs:
           pytest tests --exitfirst --verbose --failed-first --cov-report term --cov-report xml:coverage.xml --cov=newspy
 
       - name: Version the release
-        uses: googleapis/release-please-action@v4
+        uses: googleapis/release-please-action@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: simple
