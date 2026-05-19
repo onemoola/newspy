@@ -71,6 +71,13 @@ poetry --version
 > Poetry (version 2.4.1) # or higher
 ```
 
+### Activate the virtual environment
+
+```bash
+poetry venv .venv
+source .venv/bin/activate
+```
+
 ### Install the requirements and git hooks
 
 ```bash
