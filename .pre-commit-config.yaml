@@ -1,11 +1,22 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c
     hooks:
+      - id: check-added-large-files
+      - id: check-toml
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+
   - repo: https://github.com/psf/black
-    rev: 22.10.0
+    rev: 87928e6d6761a4a6d22250e1fee5601b3998086e
     hooks:
       - id: black
+
+  - repo: local
+    hooks:
+      - id: commit-msg
+        name: Commit message check
+        language: script
+        entry: .githooks/commit-msg
+        stages: [commit-msg]

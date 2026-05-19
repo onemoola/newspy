@@ -44,16 +44,6 @@ git clone git@github.com:<username>/newspy.git
 cd newspy/
 ```
 
-### Setup Git Hooks
-
-We use git hooks to enforce commit message standards (Conventional Commits). Run the setup script immediately after
-cloning:
-
-```bash
-chmod +x setup-hooks.sh
-./setup-hooks.sh
-```
-
 ### Picking an issue
 
 Pick an issue by going through the [issue tracker](https://github.com/onemoola/newspy/issues) and finding an issue you
@@ -71,26 +61,27 @@ You may use the issue to discuss possible solutions.
 
 ### Setting up your local environment
 
-### Install the right versions of Python (3.10+) and Poetry (1.4.2+)
+### Install the right versions of Python (3.10+) and Poetry (2.4.1+)
 
 ```bash
 python --version
-> Python 3.10.11 # or 3.11.5
+> Python 3.10.11 # or higher
 
 poetry --version
-> Poetry (version 1.4.2) # or higher
+> Poetry (version 2.4.1) # or higher
 ```
 
-### Install the requirements
+### Activate the virtual environment
 
 ```bash
-poetry install
+poetry venv .venv
+source .venv/bin/activate
 ```
 
-### Install the git hook scripts
+### Install the requirements and git hooks
 
 ```bash
-pre-commit install
+make install
 ```
 
 ## License
