@@ -10,3 +10,11 @@ repos:
     rev: 87928e6d6761a4a6d22250e1fee5601b3998086e
     hooks:
       - id: black
+
+  - repo: local
+    hooks:
+      - id: commit-msg
+        name: Commit message check
+        language: script
+        entry: .githooks/commit-msg
+        stages: [commit-msg]
