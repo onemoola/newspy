@@ -71,26 +71,20 @@ You may use the issue to discuss possible solutions.
 
 ### Setting up your local environment
 
-### Install the right versions of Python (3.10+) and Poetry (1.4.2+)
+### Install the right versions of Python (3.10+) and Poetry (2.4.1+)
 
 ```bash
 python --version
-> Python 3.10.11 # or 3.11.5
+> Python 3.10.11 # or higher
 
 poetry --version
-> Poetry (version 1.4.2) # or higher
+> Poetry (version 2.4.1) # or higher
 ```
 
-### Install the requirements
+### Install the requirements and git hooks
 
 ```bash
-poetry install
-```
-
-### Install the git hook scripts
-
-```bash
-pre-commit install
+make install
 ```
 
 ## License
