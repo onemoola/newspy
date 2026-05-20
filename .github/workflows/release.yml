@@ -51,7 +51,7 @@ jobs:
         run: |
           pip install playwright
           playwright install chromium
-          
+
           USER_AGENT=$(python -c "
           from playwright.sync_api import sync_playwright
           with sync_playwright() as p:
@@ -61,17 +61,13 @@ jobs:
               browser.close()
               print(ua)
           ")
-          
+
           echo "BROWSER_USER_AGENT=$USER_AGENT" >> $GITHUB_ENV
           echo "Extracted User-Agent: $USER_AGENT"
 
       - name: Bump version
         run: |
           poetry version ${{ env.VERSION }}
-
-          git add pyproject.toml
-          git commit -m "chore: bump version to ${{ env.VERSION }}"
-          git push origin release
 
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
