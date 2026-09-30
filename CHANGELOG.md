@@ -5,6 +5,13 @@
 
 * **deps:** update package versions in poetry.lock ([033061e](https://github.com/onemoola/newspy/commit/033061e85cbe45a1dfb1633d274fb19bcd8f7214))
 
+## [2.2.24](https://github.com/onemoola/newspy/compare/v2.2.23...v2.2.24) (2026-09-30)
+
+
+### Bug Fixes
+
+* **deps:** bump to latest ([d1132ae](https://github.com/onemoola/newspy/commit/d1132aeb8a35e894546a1d5c3e84b420f24a1c04))
+
 ## [2.2.23](https://github.com/onemoola/newspy/compare/v2.2.22...v2.2.23) (2026-05-12)
 
 
